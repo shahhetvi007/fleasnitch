@@ -1,0 +1,10 @@
+const TITLE_TEXT_FONT_SIZE = 24.0;
+const SUBTITLE_FONT_SIZE = 14.0;
+const TAGLINE_FONT_SIZE = 40.0;
+const BORDER_RADIUS = 10.0;
+const ICON_SIZE = 24.0;
+
+//Padding
+
+const HORIZONTAL_PADDING = 16.0;
+const VERTICAL_PADDING = 8.0;

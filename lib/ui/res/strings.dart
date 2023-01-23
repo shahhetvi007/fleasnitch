@@ -1,0 +1,13 @@
+const String appName = "FLEASNITCH";
+const String login = "Login";
+const String tagline = "Experience the lifestyle.";
+const String or = "OR";
+const String email = "Email";
+const String fullName = "Full Name";
+const String password = "Password";
+const String confirmPassword = "Confirm Password";
+const String mobileNumber = "Mobile Number";
+const String billingAddress = "Billing Address";
+const String dontHaveAccount = "Don't have an account? ";
+const String alreadyHaveAccount = "Already have an account? ";
+const String signUp = "Sign Up";

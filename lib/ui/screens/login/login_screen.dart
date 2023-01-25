@@ -1,9 +1,11 @@
+import 'package:fleasnitch/bloc/main_bloc.dart';
 import 'package:fleasnitch/ui/res/dimen_resources.dart';
 import 'package:fleasnitch/ui/res/image_resources.dart';
 import 'package:fleasnitch/ui/res/strings.dart';
 import 'package:fleasnitch/utils/common_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rive/rive.dart';
 
 import '../../../base/base_screen.dart';
@@ -21,87 +23,84 @@ class _LoginScreenState extends BaseState<LoginScreen> with BasicScreen {
   Widget buildBody(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
     return SafeArea(
-      child: Scaffold(
-        body: Stack(
-          children: [
-            Container(
-              // color: Color(0xffA2E0E1)
-              height: mediaQuery.height,
-              child: Image.asset(
-                "assets/images/shopping2-gif.gif",
-                fit: BoxFit.fitWidth,
-              ),
-            ),
-            AnimatedPositioned(
-              top: isSignInDialogShown ? -30 : 0,
-              duration: const Duration(milliseconds: 240),
-              height: mediaQuery.height,
-              width: mediaQuery.width,
-              child: SafeArea(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: mediaQuery.width,
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.symmetric(vertical: VERTICAL_PADDING * 8),
-                      child: getTitle(
-                        appName,
-                        color: colorBlack,
-                        softWrap: true,
-                        fontSize: TAGLINE_FONT_SIZE,
-                        weight: FontWeight.w700,
+        child: Scaffold(
+      body: Stack(children: [
+        Container(
+          color: Color(0xffA2E0E1),
+          height: mediaQuery.height,
+          child: Image.asset(
+            "assets/images/shopping2-gif.gif",
+            fit: BoxFit.fitWidth,
+          ),
+        ),
+        AnimatedPositioned(
+          top: isSignInDialogShown ? -30 : 0,
+          duration: const Duration(milliseconds: 240),
+          height: mediaQuery.height,
+          width: mediaQuery.width,
+          child: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: mediaQuery.width,
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(vertical: VERTICAL_PADDING * 8),
+                  child: getTitle(
+                    appName,
+                    color: colorBlack,
+                    softWrap: true,
+                    fontSize: TAGLINE_FONT_SIZE,
+                    weight: FontWeight.w700,
+                  ),
+                ),
+                // Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: VERTICAL_PADDING * 10),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      width: mediaQuery.width / 1.8,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(BORDER_RADIUS * 2),
                       ),
-                    ),
-                    // Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: VERTICAL_PADDING * 10),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          width: mediaQuery.width / 1.8,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
-                            borderRadius: BorderRadius.circular(BORDER_RADIUS * 2),
-                          ),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Future.delayed(
-                                const Duration(milliseconds: 800),
-                                () {
-                                  setState(() {
-                                    isSignInDialogShown = true;
-                                  });
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Future.delayed(
+                            const Duration(milliseconds: 800),
+                            () {
+                              setState(() {
+                                isSignInDialogShown = true;
+                              });
 
-                                  customLoginDialog(context, onClosed: (value) {
-                                    setState(() {
-                                      isSignInDialogShown = false;
-                                    });
-                                  });
-                                },
-                              );
+                              customLoginDialog(context, onClosed: (value) {
+                                setState(() {
+                                  isSignInDialogShown = false;
+                                });
+                              });
                             },
-                            child: getSmallText(login, weight: FontWeight.w500),
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: VERTICAL_PADDING * 2),
-                              primary: colorTransparent,
-                              shadowColor: colorTransparent,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(BORDER_RADIUS * 2)),
-                            ),
-                          ),
+                          );
+                        },
+                        child: getSmallText(login, weight: FontWeight.w500),
+                        style: ElevatedButton.styleFrom(
+                          padding:
+                              const EdgeInsets.symmetric(vertical: VERTICAL_PADDING * 2),
+                          primary: colorTransparent,
+                          shadowColor: colorTransparent,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(BORDER_RADIUS * 2)),
                         ),
                       ),
                     ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
-    );
+      ]),
+    ));
   }
 
   Future<Object?> customLoginDialog(BuildContext context,
@@ -141,6 +140,7 @@ class _LoginScreenState extends BaseState<LoginScreen> with BasicScreen {
                   backgroundColor: colorTransparent,
                   resizeToAvoidBottomInset: false,
                   body: Stack(
+                    clipBehavior: Clip.none,
                     children: [
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -157,9 +157,7 @@ class _LoginScreenState extends BaseState<LoginScreen> with BasicScreen {
                           // const SizedBox(height: VERTICAL_PADDING * 2),
                           AnimatedCrossFade(
                             firstChild: const SignUpForm(),
-                            secondChild: SignInForm(
-                              setState: setState,
-                            ),
+                            secondChild: SignInForm(setState: setState),
                             crossFadeState: isSignUp
                                 ? CrossFadeState.showFirst
                                 : CrossFadeState.showSecond,
@@ -169,20 +167,20 @@ class _LoginScreenState extends BaseState<LoginScreen> with BasicScreen {
                           // const SizedBox(height: VERTICAL_PADDING * 2),
                           socialLogin(),
                           // const SizedBox(height: VERTICAL_PADDING * 2),
-                          dontHaveAccountText(setState),
+                          dontHaveAccountText(context, setState),
                           // Spacer(),
                         ],
                       ),
-                      const Positioned(
+                      Positioned(
                         left: 0,
                         right: 0,
-                        bottom: -48,
+                        bottom: -40,
                         child: CircleAvatar(
-                          radius: 16,
-                          backgroundColor: Colors.white,
-                          child: Icon(
+                          radius: BORDER_RADIUS * 1.6,
+                          backgroundColor: primaryColor.withOpacity(0.7),
+                          child: const Icon(
                             Icons.close,
-                            color: Colors.black,
+                            color: colorBlack,
                           ),
                         ),
                       ),
@@ -204,7 +202,7 @@ class _LoginScreenState extends BaseState<LoginScreen> with BasicScreen {
         )),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL_PADDING),
-          child: getSmallText(or),
+          child: getSmallText(or, weight: FontWeight.w700),
         ),
         const Expanded(
             child: Divider(
@@ -246,20 +244,22 @@ class _LoginScreenState extends BaseState<LoginScreen> with BasicScreen {
     );
   }
 
-  Widget dontHaveAccountText(setState) {
+  Widget dontHaveAccountText(ctx, setState) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         getSmallText(isSignUp ? alreadyHaveAccount : dontHaveAccount, color: colorBlack),
         GestureDetector(
           onTap: () {
-            setState(() {
-              isSignUp = !isSignUp;
-            });
+            if (mounted) {
+              setState(() {
+                isSignUp = !isSignUp;
+              });
+            }
           },
           child: getSmallText(
             isSignUp ? login : signUp,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(ctx).primaryColor,
             weight: FontWeight.w700,
           ),
         ),
@@ -282,6 +282,7 @@ class SignInForm extends StatefulWidget {
 
 class _SignInFormState extends State<SignInForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  MainBloc bloc = MainBloc();
   // bool showConfetti = false;
   // bool isShowLoading = false;
   //
@@ -298,42 +299,54 @@ class _SignInFormState extends State<SignInForm> {
   //   return controller;
   // }
   //
-  // void signIn(BuildContext context) {
-  //   widget.setState(() {
-  //     isShowLoading = true;
-  //     showConfetti = true;
-  //     print('inSetState');
-  //     print(isShowLoading);
-  //   });
-  //   Future.delayed(const Duration(seconds: 2), () {
-  //     if (_formKey.currentState!.validate()) {
-  //       // If everything looks good it shows the success animation
-  //       check.fire();
-  //       Future.delayed(const Duration(seconds: 2), () {
-  //         widget.setState(() {
-  //           isShowLoading = false;
-  //         });
-  //         // After closing it want to show the confetti animation
-  //         // First let's add the animation
-  //         // restart it
-  //         confetti.fire();
-  //         // Once all success we will navigate to the Next screen
-  //         // TODO: Navigate to next screen
-  //       });
-  //     } else {
-  //       // or error animation
-  //       error.fire();
-  //       Future.delayed(const Duration(seconds: 2), () {
-  //         widget.setState(() {
-  //           isShowLoading = false;
-  //         });
-  //       });
-  //     }
-  //   });
-  // }
+  void signIn(BuildContext context) {
+    //   widget.setState(() {
+    //     isShowLoading = true;
+    //     showConfetti = true;
+    //     print('inSetState');
+    //     print(isShowLoading);
+    //   });
+    //   Future.delayed(const Duration(seconds: 2), () {
+    if (_formKey.currentState!.validate()) {
+      // changeLoadStatus();
+      Navigator.pop(context);
+      bloc.add(HomeScreenEvent());
+      // changeLoadStatus();
+      //       // If everything looks good it shows the success animation
+      //       check.fire();
+      //       Future.delayed(const Duration(seconds: 2), () {
+      //         widget.setState(() {
+      //           isShowLoading = false;
+      //         });
+      //         // After closing it want to show the confetti animation
+      //         // First let's add the animation
+      //         // restart it
+      //         confetti.fire();
+      //         // Once all success we will navigate to the Next screen
+      //       });
+    } else {
+      // showMessage(message, () {
+      //   if (mounted) {
+      //     setState(() {
+      //       isShowMessage = false;
+      //       Navigator.pop(context);
+      //     });
+      //   }
+      // });
+      //       // or error animation
+      //       error.fire();
+      //       Future.delayed(const Duration(seconds: 2), () {
+      //         widget.setState(() {
+      //           isShowLoading = false;
+      //         });
+      //       });
+    }
+    //   });
+  }
 
   @override
   Widget build(BuildContext context) {
+    bloc = BlocProvider.of<MainBloc>(context);
     print('build called');
     return Stack(
       children: [
@@ -405,7 +418,7 @@ class _SignInFormState extends State<SignInForm> {
                     top: VERTICAL_PADDING, bottom: VERTICAL_PADDING * 3),
                 child: ElevatedButton.icon(
                   onPressed: () {
-                    // signIn(context);
+                    signIn(context);
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 56),

@@ -9,15 +9,15 @@ class MainBloc extends Bloc<MainEvent, MainStates> {
   MainBloc() : super(MainStates.SplashIn);
 
   init() {
-    add(Login());
+    add(HomeScreenEvent());
   }
 
   @override
   Stream<MainStates> mapEventToState(MainEvent event) async* {
     // sets state based on events
-    if (event is SplashIn) {
+    if (event is SplashInEvent) {
       yield MainStates.SplashIn;
-    } else if (event is Login) {
+    } else if (event is LoginEvent) {
       yield MainStates.LoggedLoading;
       yield MainStates.Login;
     } else if (event is HomeScreenEvent) {

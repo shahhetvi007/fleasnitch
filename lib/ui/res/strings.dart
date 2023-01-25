@@ -11,3 +11,17 @@ const String billingAddress = "Billing Address";
 const String dontHaveAccount = "Don't have an account? ";
 const String alreadyHaveAccount = "Already have an account? ";
 const String signUp = "Sign Up";
+const String home = "Home";
+const String categories = "Categories";
+const String notifications = "Notifications";
+const String myOrders = "My Orders";
+const String account = "Account";
+const String seeAll = "See All";
+
+//Categories
+const String mobiles = "Mobiles";
+const String beauty = "Beauty";
+const String electronics = "Electronics";
+const String fashion = "Fashion";
+const String grocery = "Grocery";
+const String pharmacy = "Pharmacy";

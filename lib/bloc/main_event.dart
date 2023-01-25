@@ -4,12 +4,12 @@ part of 'main_bloc.dart';
 abstract class MainEvent {}
 
 // to show splash screen
-class SplashIn extends MainEvent {
-  SplashIn();
+class SplashInEvent extends MainEvent {
+  SplashInEvent();
 }
 
-class Login extends MainEvent {
-  Login();
+class LoginEvent extends MainEvent {
+  LoginEvent();
 }
 
 class HomeScreenEvent extends MainEvent {

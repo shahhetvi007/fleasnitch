@@ -1,6 +1,14 @@
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:fleasnitch/base/base_screen.dart';
+import 'package:fleasnitch/ui/res/color_resources.dart';
+import 'package:fleasnitch/ui/res/image_resources.dart';
+import 'package:fleasnitch/ui/res/strings.dart';
 import 'package:fleasnitch/utils/common_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import '../../res/dimen_resources.dart';
 
 class HomeScreen extends BaseStatefulWidget {
   @override
@@ -8,10 +16,245 @@ class HomeScreen extends BaseStatefulWidget {
 }
 
 class _HomeScreenState extends BaseState<HomeScreen> with BasicScreen {
+  int _currentIndex = 0;
+  int _carouselActiveIndex = 0;
+  List bannerList = [BANNER2, BANNER1, BANNER3, BANNER11, BANNER12, BANNER13];
+
+  void changePage(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   Widget buildBody(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Center(child: getTitle('Home')),
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: getTitle(
+          home,
+          fontSize: APPBAR_FONT_SIZE,
+          color: Theme.of(context).secondaryHeaderColor,
+          weight: FontWeight.w700,
+        ),
+        centerTitle: true,
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.favorite_border)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart_outlined)),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: HORIZONTAL_PADDING, vertical: VERTICAL_PADDING),
+          child: Column(
+            children: [
+              Container(
+                height: size.height * 0.05,
+                width: size.width,
+                decoration: BoxDecoration(
+                  border: Border.all(color: darkGrey),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(BORDER_RADIUS),
+                  ),
+                ),
+                child: TextField(
+                  // focusNode: searchFocusNode,
+                  // controller: searchcontroller,
+                  onChanged: (value) {
+                    // _debouncer.run(() {
+                    //   _onSearchChanged(
+                    //       searchcontroller.text
+                    //           .trim());
+                  },
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(
+                      Icons.search,
+                    ),
+                    hintText: "Search",
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: VERTICAL_PADDING * 2),
+                child: Container(
+                  height: size.height * 0.25,
+                  width: size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(BORDER_RADIUS * 5),
+                  ),
+                  child: CarouselSlider(
+                    options: CarouselOptions(
+                        viewportFraction: 1,
+                        onPageChanged: (index, reason) {
+                          setState(() {
+                            _carouselActiveIndex = index;
+                          });
+                        }),
+                    items: List.generate(
+                        bannerList.length,
+                        (index) =>
+                            customCarouselItem(size, bannerList[_carouselActiveIndex])),
+                  ),
+                ),
+              ),
+              Center(
+                child: Container(
+                  child: AnimatedSmoothIndicator(
+                    effect: WormEffect(
+                      spacing: 5,
+                      dotHeight: 7,
+                      dotWidth: 7,
+                      type: WormType.normal,
+                      strokeWidth: 0.2,
+                      activeDotColor: Theme.of(context).secondaryHeaderColor,
+                      dotColor: darkGrey.withOpacity(0.2),
+                    ),
+                    activeIndex: _carouselActiveIndex,
+                    count: bannerList.length,
+                    onDotClicked: (index) {
+                      setState(() {
+                        _carouselActiveIndex = index;
+                      });
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: VERTICAL_PADDING),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    getTitle(
+                      categories,
+                      color: colorBlack,
+                      bold: true,
+                      weight: FontWeight.w700,
+                    ),
+                    getSmallText(
+                      seeAll,
+                      color: Theme.of(context).secondaryHeaderColor,
+                      weight: FontWeight.w700,
+                    ),
+                  ],
+                ),
+              ),
+              categoryTab(),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: DotNavigationBar(
+        backgroundColor: Theme.of(context).accentColor,
+        enablePaddingAnimation: false,
+        dotIndicatorColor: colorTransparent,
+        paddingR: const EdgeInsets.only(bottom: VERTICAL_PADDING / 2, right: 0),
+        marginR: EdgeInsets.symmetric(
+            horizontal: size.width * 0.1, vertical: VERTICAL_PADDING * 2.5),
+        currentIndex: _currentIndex,
+        onTap: changePage,
+        items: [
+          DotNavigationBarItem(
+            icon: const Icon(Icons.home_outlined),
+          ),
+          DotNavigationBarItem(
+            icon: const Icon(Icons.category_outlined),
+          ),
+          DotNavigationBarItem(
+            icon: const Icon(Icons.notifications_none),
+          ),
+          DotNavigationBarItem(
+            icon: const Icon(Icons.shopping_bag_outlined),
+          ),
+          DotNavigationBarItem(
+            icon: const Icon(Icons.account_circle_outlined),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget customCarouselItem(Size size, String image) {
+    return Container(
+        height: size.height * 0.18,
+        width: size.width,
+        padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL_PADDING / 4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(BORDER_RADIUS * 5),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(BORDER_RADIUS),
+          child: Image.asset(
+            image,
+            fit: BoxFit.cover,
+          ),
+        ));
+  }
+
+  Widget homeCategoryItem(String image, String title, Function f) {
+    final size = MediaQuery.of(context).size;
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () {
+            f();
+          },
+          child: Card(
+            shape: const CircleBorder(),
+            child: Container(
+              height: size.height * 0.06,
+              width: size.width * 0.15,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: secondaryColor,
+              ),
+              child: Center(
+                child: Image.asset(
+                  image,
+                  height: size.height * 0.03,
+                  width: size.width * 0.075,
+                  fit: BoxFit.fill,
+                  color: secondaryDarkColor,
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: size.height * 0.004),
+        getSmallText(
+          title,
+          color: secondaryDarkColor,
+          weight: FontWeight.w700,
+        )
+      ],
+    );
+  }
+
+  Widget categoryTab() {
+    final size = MediaQuery.of(context).size;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL_PADDING * 0.5),
+      width: MediaQuery.of(context).size.width,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            homeCategoryItem(IC_MOBILE, mobiles, () {}),
+            SizedBox(width: size.width * 0.025),
+            homeCategoryItem(IC_BEAUTY, beauty, () {}),
+            SizedBox(width: size.width * 0.025),
+            homeCategoryItem(IC_FASHION, fashion, () {}),
+            SizedBox(width: size.width * 0.025),
+            homeCategoryItem(IC_GROCERY, grocery, () {}),
+            SizedBox(width: size.width * 0.025),
+            homeCategoryItem(IC_PHARMACY, pharmacy, () {}),
+            SizedBox(width: size.width * 0.025),
+            homeCategoryItem(IC_ELECTRONICS, electronics, () {}),
+          ],
+        ),
+      ),
     );
   }
 }

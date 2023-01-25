@@ -41,7 +41,7 @@ Text getTitle(
     // maxLines: lines,
     textAlign: isCenter ? TextAlign.center : TextAlign.start,
     style: TextStyle(
-        color: color, fontSize: fontSize, fontWeight: weight, fontFamily: 'Jost'),
+        color: color, fontSize: fontSize, fontWeight: weight, fontFamily: 'Nunito'),
     softWrap: softWrap,
     overflow: softWrap ? TextOverflow.visible : TextOverflow.ellipsis,
   );

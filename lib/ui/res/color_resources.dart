@@ -24,6 +24,8 @@ const colorWhite = Color(0xffffffff);
 const colorTransparent = Colors.transparent;
 const primaryColor = Colors.orange;
 const secondaryColor = Color(0xffA2E0E1);
+const secondaryDarkColor = Color(0xff16AEAF);
+final darkGrey = Colors.grey.shade800;
 
 final primaryGradient = LinearGradient(
     begin: Alignment.topLeft,

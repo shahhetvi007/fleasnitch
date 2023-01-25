@@ -28,14 +28,24 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      themeMode: ThemeMode.dark,
-      theme: ThemeData.dark(),
-      darkTheme: ThemeData(
+      debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.light,
+      // theme: ThemeData.dark(),
+      theme: ThemeData(
         primarySwatch: Colors.orange,
         primaryColor: primaryColor,
         backgroundColor: secondaryColor,
         accentColor: secondaryColor,
-        scaffoldBackgroundColor: secondaryColor,
+        scaffoldBackgroundColor: colorWhite,
+        secondaryHeaderColor: secondaryDarkColor,
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          unselectedItemColor: darkGrey,
+          selectedItemColor: primaryColor,
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: colorWhite,
+          elevation: 0,
+        ),
       ),
       home: const NavigationPage(),
     );

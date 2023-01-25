@@ -14,6 +14,7 @@ abstract class BaseState<Screen extends BaseStatefulWidget> extends State<Screen
 mixin BasicScreen<Screen extends BaseStatefulWidget> on BaseState<Screen> {
   MainBloc bloc = MainBloc();
 
+  Color appBarColor = colorWhite;
   bool isLoading = false;
   bool isBlurred = false;
   bool isShowMessage = false;

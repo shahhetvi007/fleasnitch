@@ -1,4 +1,5 @@
 import 'package:fleasnitch/bloc/main_bloc.dart';
+import 'package:fleasnitch/ui/screens/home/home_screen.dart';
 import 'package:fleasnitch/ui/screens/login/login_screen.dart';
 import 'package:fleasnitch/ui/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class _NavigationPageState extends State<NavigationPage> {
   @override
   Widget build(BuildContext context) {
     bloc = BlocProvider.of<MainBloc>(context);
-    bloc.add(SplashIn());
+    bloc.add(SplashInEvent());
     return WillPopScope(child: Scaffold(
       body: BlocBuilder<MainBloc, MainStates>(
         builder: (context, state) {
@@ -25,7 +26,7 @@ class _NavigationPageState extends State<NavigationPage> {
           } else if (state == MainStates.Login) {
             return LoginScreen();
           } else if (state == MainStates.HomeScreen) {
-            return LoginScreen();
+            return HomeScreen();
           } else if (state == MainStates.LoggedLoading) {
             return Scaffold(
               body: Center(

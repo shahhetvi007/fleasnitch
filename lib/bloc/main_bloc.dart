@@ -9,7 +9,7 @@ class MainBloc extends Bloc<MainEvent, MainStates> {
   MainBloc() : super(MainStates.SplashIn);
 
   init() {
-    add(HomeScreenEvent());
+    add(LoginEvent());
   }
 
   @override

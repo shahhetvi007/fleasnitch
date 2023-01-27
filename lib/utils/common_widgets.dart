@@ -1,7 +1,7 @@
 import 'package:fleasnitch/ui/res/color_resources.dart';
 import 'package:fleasnitch/ui/res/dimen_resources.dart';
+import 'package:fleasnitch/ui/res/image_resources.dart';
 import 'package:fleasnitch/ui/res/strings.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Text getSmallText(String text,
@@ -10,14 +10,15 @@ Text getSmallText(String text,
     double fontSize = SUBTITLE_FONT_SIZE,
     // TextAlign align,
     FontWeight weight = FontWeight.w400,
+    int maxLines = 5,
     bool isCenter = false,
-    bool underLine = false}) {
+    bool lineThrough = false}) {
   return Text(
     text,
     // textAlign: align,
-    maxLines: 5,
+    maxLines: maxLines,
     style: TextStyle(
-        decoration: underLine ? TextDecoration.underline : null,
+        decoration: lineThrough ? TextDecoration.lineThrough : null,
         color: color,
         fontWeight: weight,
         fontSize: fontSize,
@@ -106,5 +107,199 @@ Widget commonTextFormField({
           borderSide: const BorderSide(color: colorBlack),
           borderRadius: BorderRadius.circular(BORDER_RADIUS),
         )),
+  );
+}
+
+Widget customButton(String text, Function f) {
+  return ElevatedButton(
+    onPressed: () {
+      f();
+    },
+    style: ElevatedButton.styleFrom(
+      minimumSize: const Size(double.infinity, 56),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(BORDER_RADIUS / 2),
+          topRight: Radius.circular(BORDER_RADIUS * 2),
+          bottomRight: Radius.circular(BORDER_RADIUS * 2),
+          bottomLeft: Radius.circular(BORDER_RADIUS * 2),
+        ),
+      ),
+    ),
+    child: getSmallText(text),
+  );
+}
+
+Widget cartItem(String image, String itemDescription, String itemPrice,
+    String sizeSelected, String qtySelected) {
+  return Container(
+    width: double.infinity,
+    padding: const EdgeInsets.all(VERTICAL_PADDING / 1.5),
+    margin: const EdgeInsets.symmetric(vertical: VERTICAL_PADDING),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 2,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(BORDER_RADIUS / 2),
+              border: Border.all(color: darkGrey),
+            ),
+            padding: const EdgeInsets.all(VERTICAL_PADDING),
+            child: Image.asset(image),
+          ),
+        ),
+        const SizedBox(width: HORIZONTAL_PADDING),
+        Expanded(
+          flex: 8,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              getSmallText(
+                itemDescription,
+                color: darkGrey,
+                maxLines: 1,
+                weight: FontWeight.w700,
+              ),
+              const SizedBox(height: VERTICAL_PADDING / 2),
+              getSmallText(
+                itemPrice,
+                color: darkGrey,
+                maxLines: 1,
+              ),
+              const SizedBox(height: VERTICAL_PADDING / 2),
+              Row(
+                children: [
+                  getSmallText(
+                    size,
+                    color: darkGrey,
+                  ),
+                  getSmallText(
+                    sizeSelected,
+                    color: darkGrey,
+                  ),
+                  const SizedBox(width: HORIZONTAL_PADDING),
+                  getSmallText(
+                    qty,
+                    color: darkGrey,
+                  ),
+                  getSmallText(
+                    qtySelected,
+                    color: darkGrey,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+Widget popularProductItem() {
+  return Card(
+    margin: const EdgeInsets.all(VERTICAL_PADDING),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(BORDER_RADIUS),
+    ),
+    elevation: 8,
+    color: colorWhite,
+    child: Container(
+      height: deviceHeight / 5,
+      width: deviceWidth / 3,
+      margin: const EdgeInsets.all(VERTICAL_PADDING),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: deviceHeight / 6,
+            width: deviceWidth / 3,
+            decoration: BoxDecoration(
+              color: itemBackground,
+              borderRadius: BorderRadius.circular(BORDER_RADIUS / 2),
+            ),
+            child: Image.asset(IC_DRESS),
+          ),
+          getSmallText(
+            dress,
+            color: colorBlack,
+            weight: FontWeight.w800,
+          )
+        ],
+      ),
+    ),
+  );
+}
+
+Widget productItem() {
+  return Card(
+    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Expanded(
+        flex: 5,
+        child: SizedBox(
+          width: double.infinity,
+          child: Image.asset(
+            'assets/images/dress2.jpeg',
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+      Expanded(
+        flex: 2,
+        child: Container(
+          margin: const EdgeInsets.all(VERTICAL_PADDING / 1.5),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              getSmallText(
+                'Yellow Attractive Dress',
+                color: grey,
+                fontSize: SMALL_TEXT,
+                weight: FontWeight.w600,
+              ),
+              Row(
+                children: [
+                  getSmallText(
+                    '₹365',
+                    color: colorBlack,
+                    weight: FontWeight.w700,
+                  ),
+                  const SizedBox(width: 5),
+                  getSmallText(
+                    '400',
+                    color: grey,
+                    fontSize: SMALL_TEXT,
+                    lineThrough: true,
+                  ),
+                  const SizedBox(width: 8),
+                  getSmallText(
+                    '15% off',
+                    color: grey,
+                    fontSize: SMALL_TEXT,
+                  ),
+                ],
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL_PADDING / 2),
+                decoration: BoxDecoration(
+                  color: grey.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(BORDER_RADIUS / 2),
+                ),
+                child: getSmallText(
+                  freeDelivery,
+                  color: colorBlack,
+                  fontSize: SMALLER_TEXT,
+                  weight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+      )
+    ]),
   );
 }

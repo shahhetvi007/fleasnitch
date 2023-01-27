@@ -3,10 +3,8 @@ import 'package:fleasnitch/ui/res/dimen_resources.dart';
 import 'package:fleasnitch/ui/res/image_resources.dart';
 import 'package:fleasnitch/ui/res/strings.dart';
 import 'package:fleasnitch/utils/common_widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rive/rive.dart';
 
 import '../../../base/base_screen.dart';
 import '../../res/color_resources.dart';
@@ -24,12 +22,13 @@ class _LoginScreenState extends BaseState<LoginScreen> with BasicScreen {
     final mediaQuery = MediaQuery.of(context).size;
     return SafeArea(
         child: Scaffold(
+      backgroundColor: secondaryColor,
       body: Stack(children: [
         Container(
-          color: Color(0xffA2E0E1),
+          color: secondaryColor,
           height: mediaQuery.height,
           child: Image.asset(
-            "assets/images/shopping2-gif.gif",
+            SHOPPING_GIF,
             fit: BoxFit.fitWidth,
           ),
         ),
@@ -416,26 +415,9 @@ class _SignInFormState extends State<SignInForm> {
               Padding(
                 padding: const EdgeInsets.only(
                     top: VERTICAL_PADDING, bottom: VERTICAL_PADDING * 3),
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    signIn(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 56),
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(BORDER_RADIUS / 2),
-                        topRight: Radius.circular(BORDER_RADIUS * 2),
-                        bottomRight: Radius.circular(BORDER_RADIUS * 2),
-                        bottomLeft: Radius.circular(BORDER_RADIUS * 2),
-                      ),
-                    ),
-                  ),
-                  icon: const Icon(
-                    CupertinoIcons.arrow_right,
-                  ),
-                  label: getSmallText(login),
-                ),
+                child: customButton(login, () {
+                  signIn(context);
+                }),
               ),
             ],
           ),
@@ -536,26 +518,7 @@ class _SignUpFormState extends State<SignUpForm> {
             Padding(
               padding: const EdgeInsets.only(
                   top: VERTICAL_PADDING, bottom: VERTICAL_PADDING * 3),
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  // TODO: Show the loading animation
-                },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(double.infinity, 56),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(BORDER_RADIUS / 2),
-                      topRight: Radius.circular(BORDER_RADIUS * 2),
-                      bottomRight: Radius.circular(BORDER_RADIUS * 2),
-                      bottomLeft: Radius.circular(BORDER_RADIUS * 2),
-                    ),
-                  ),
-                ),
-                icon: const Icon(
-                  CupertinoIcons.arrow_right,
-                ),
-                label: getSmallText(signUp),
-              ),
+              child: customButton(signUp, () {}),
             ),
           ],
         ),

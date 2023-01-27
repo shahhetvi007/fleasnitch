@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:fleasnitch/bloc/main_bloc.dart';
 import 'package:fleasnitch/ui/res/color_resources.dart';
 import 'package:fleasnitch/ui/res/dimen_resources.dart';
+import 'package:fleasnitch/utils/globals.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../utils/common_widgets.dart';
@@ -23,10 +27,18 @@ mixin BasicScreen<Screen extends BaseStatefulWidget> on BaseState<Screen> {
   Function f = () {};
 
   @override
+  void initState() {
+    if (Platform.isIOS) SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     bloc = BlocProvider.of<MainBloc>(context);
+    Globals.globalContext = context;
     return Scaffold(
       backgroundColor: colorTransparent,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Stack(
           children: [
@@ -37,6 +49,7 @@ mixin BasicScreen<Screen extends BaseStatefulWidget> on BaseState<Screen> {
                       return Future.value(false);
                     },
                     child: Scaffold(
+                      resizeToAvoidBottomInset: false,
                       body: AlertDialog(
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,6 +93,7 @@ mixin BasicScreen<Screen extends BaseStatefulWidget> on BaseState<Screen> {
                     : isBlurred
                         ? const Scaffold(
                             backgroundColor: colorTransparent,
+                            resizeToAvoidBottomInset: false,
                             body: Center(),
                           )
                         : GestureDetector(

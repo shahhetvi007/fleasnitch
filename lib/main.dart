@@ -3,11 +3,11 @@ import 'package:fleasnitch/navigation/navigation_page.dart';
 import 'package:fleasnitch/ui/res/color_resources.dart';
 import 'package:fleasnitch/utils/shared_pref_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   // SharedPreference initialization
   await SharedPrefHelper.createInstance();
   runApp(MultiBlocProvider(

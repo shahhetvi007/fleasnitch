@@ -17,6 +17,15 @@ const String notifications = "Notifications";
 const String myOrders = "My Orders";
 const String account = "Account";
 const String seeAll = "See All";
+const String search = "Search";
+const String popularProducts = "Popular Products";
+const String productsForYou = "Products For You";
+const String freeDelivery = "Free Delivery";
+
+//cart item
+const String cartItems = "Cart Items";
+const String size = "Size: ";
+const String qty = "Qty: ";
 
 //Categories
 const String mobiles = "Mobiles";
@@ -25,3 +34,6 @@ const String electronics = "Electronics";
 const String fashion = "Fashion";
 const String grocery = "Grocery";
 const String pharmacy = "Pharmacy";
+
+//products
+const String dress = "Dresses";

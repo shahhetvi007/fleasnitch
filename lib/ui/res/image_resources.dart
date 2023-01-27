@@ -1,4 +1,4 @@
-const SHOPPING_IMAGE = "assets/images/shopping.jpg";
+const SHOPPING_GIF = "assets/images/shopping.gif";
 const PHONE_ICON = "assets/images/phone.png";
 const GOOGLE_ICON = "assets/images/google.png";
 
@@ -22,3 +22,6 @@ const IC_ELECTRONICS = "assets/images/ic_electronics.png";
 const IC_FASHION = "assets/images/ic_fashion.png";
 const IC_GROCERY = "assets/images/ic_grocery.png";
 const IC_PHARMACY = "assets/images/ic_pharmacy.png";
+
+//product items
+const IC_DRESS = "assets/images/dress.png";

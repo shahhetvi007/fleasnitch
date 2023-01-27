@@ -191,7 +191,7 @@ class _HomeScreenState extends BaseState<HomeScreen> with BasicScreen {
                   const SizedBox(height: VERTICAL_PADDING),
                   GridView.builder(
                       shrinkWrap: true,
-                      physics: ScrollPhysics(),
+                      physics: const ScrollPhysics(),
                       itemCount: 10,
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2, childAspectRatio: 0.7),

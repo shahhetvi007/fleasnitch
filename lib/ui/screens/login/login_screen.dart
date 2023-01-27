@@ -20,8 +20,7 @@ class _LoginScreenState extends BaseState<LoginScreen> with BasicScreen {
   @override
   Widget buildBody(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       backgroundColor: secondaryColor,
       body: Stack(children: [
         Container(
@@ -99,7 +98,7 @@ class _LoginScreenState extends BaseState<LoginScreen> with BasicScreen {
           ),
         ),
       ]),
-    ));
+    );
   }
 
   Future<Object?> customLoginDialog(BuildContext context,
@@ -346,7 +345,6 @@ class _SignInFormState extends State<SignInForm> {
   @override
   Widget build(BuildContext context) {
     bloc = BlocProvider.of<MainBloc>(context);
-    print('build called');
     return Stack(
       children: [
         Form(

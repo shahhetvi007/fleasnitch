@@ -1,11 +1,8 @@
-import 'dart:io';
-
-import 'package:fleasnitch/bloc/main_bloc.dart';
-import 'package:fleasnitch/ui/res/color_resources.dart';
-import 'package:fleasnitch/ui/res/dimen_resources.dart';
-import 'package:fleasnitch/utils/globals.dart';
+import '../bloc/main_bloc.dart';
+import '../ui/res/color_resources.dart';
+import '../ui/res/dimen_resources.dart';
+import '../utils/globals.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../utils/common_widgets.dart';
@@ -27,82 +24,74 @@ mixin BasicScreen<Screen extends BaseStatefulWidget> on BaseState<Screen> {
   Function f = () {};
 
   @override
-  void initState() {
-    if (Platform.isIOS) SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     bloc = BlocProvider.of<MainBloc>(context);
     Globals.globalContext = context;
     return Scaffold(
       backgroundColor: colorTransparent,
       resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            isShowMessage
-                ? WillPopScope(
-                    onWillPop: () {
-                      bloc.add(HomeScreenEvent());
-                      return Future.value(false);
-                    },
-                    child: Scaffold(
-                      resizeToAvoidBottomInset: false,
-                      body: AlertDialog(
-                        title: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            getTitle("Fleasnitch",
-                                bold: true,
-                                isCenter: true,
-                                fontSize: TITLE_TEXT_FONT_SIZE,
-                                color: colorWhite,
-                                weight: FontWeight.w700),
-                          ],
-                        ),
-                        content: GestureDetector(
-                          child: getSmallText(
-                            message,
-                            bold: true,
-                            isCenter: true,
-                            fontSize: SUBTITLE_FONT_SIZE,
-                            color: colorBlack,
-                            weight: FontWeight.w500,
-                          ),
-                          onTap: gestureEnabled
-                              ? () {
-                                  Navigator.pop(context);
-                                }
-                              : null,
-                        ),
-                        actions: [
-                          TextButton(
-                              onPressed: () {
-                                f();
-                              },
-                              child: Text('OK'))
+      body: Stack(
+        children: [
+          isShowMessage
+              ? WillPopScope(
+                  onWillPop: () {
+                    bloc.add(HomeScreenEvent());
+                    return Future.value(false);
+                  },
+                  child: Scaffold(
+                    resizeToAvoidBottomInset: false,
+                    body: AlertDialog(
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          getTitle("Fleasnitch",
+                              bold: true,
+                              isCenter: true,
+                              fontSize: TITLE_TEXT_FONT_SIZE,
+                              color: colorWhite,
+                              weight: FontWeight.w700),
                         ],
                       ),
-                    ),
-                  )
-                : isLoading
-                    ? loader()
-                    : isBlurred
-                        ? const Scaffold(
-                            backgroundColor: colorTransparent,
-                            resizeToAvoidBottomInset: false,
-                            body: Center(),
-                          )
-                        : GestureDetector(
-                            onTap: () {
-                              FocusScope.of(context).requestFocus(new FocusNode());
+                      content: GestureDetector(
+                        child: getSmallText(
+                          message,
+                          bold: true,
+                          isCenter: true,
+                          fontSize: SUBTITLE_FONT_SIZE,
+                          color: colorBlack,
+                          weight: FontWeight.w500,
+                        ),
+                        onTap: gestureEnabled
+                            ? () {
+                                Navigator.pop(context);
+                              }
+                            : null,
+                      ),
+                      actions: [
+                        TextButton(
+                            onPressed: () {
+                              f();
                             },
-                            child: buildBody(context)),
-          ],
-        ),
+                            child: const Text('OK'))
+                      ],
+                    ),
+                  ),
+                )
+              : isLoading
+                  ? loader()
+                  : isBlurred
+                      ? const Scaffold(
+                          backgroundColor: colorTransparent,
+                          resizeToAvoidBottomInset: false,
+                          body: Center(),
+                        )
+                      : GestureDetector(
+                          onTap: () {
+                            FocusScope.of(context).requestFocus(FocusNode());
+                          },
+                          child: buildBody(context)),
+        ],
       ),
     );
   }

@@ -15,3 +15,11 @@ class LoginEvent extends MainEvent {
 class HomeScreenEvent extends MainEvent {
   HomeScreenEvent();
 }
+
+class CategoryEvent extends MainEvent {
+  CategoryEvent();
+}
+
+class SubCategoryEvent extends MainEvent {
+  SubCategoryEvent();
+}

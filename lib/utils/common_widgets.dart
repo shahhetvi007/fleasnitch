@@ -1,12 +1,16 @@
+import 'package:dot_navigation_bar/dot_navigation_bar.dart';
+import 'package:fleasnitch/bloc/main_bloc.dart';
 import 'package:fleasnitch/ui/res/color_resources.dart';
 import 'package:fleasnitch/ui/res/dimen_resources.dart';
 import 'package:fleasnitch/ui/res/image_resources.dart';
 import 'package:fleasnitch/ui/res/strings.dart';
+import 'package:fleasnitch/ui/screens/categories/sub_category_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 Text getSmallText(String text,
     {bool bold = false,
-    Color color = colorWhite,
+    Color color = colorBlack,
     double fontSize = SUBTITLE_FONT_SIZE,
     // TextAlign align,
     FontWeight weight = FontWeight.w400,
@@ -33,7 +37,7 @@ Text getTitle(
   bool isCenter = false,
   FontWeight weight = FontWeight.w500,
   double fontSize = TITLE_TEXT_FONT_SIZE,
-  Color color = colorWhite,
+  Color color = colorBlack,
   bool softWrap = false,
   // int lines
 }) {
@@ -117,6 +121,7 @@ Widget customButton(String text, Function f) {
     },
     style: ElevatedButton.styleFrom(
       minimumSize: const Size(double.infinity, 56),
+      primary: primaryColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(BORDER_RADIUS / 2),
@@ -301,5 +306,147 @@ Widget productItem() {
         ),
       )
     ]),
+  );
+}
+
+class BottomNav extends StatefulWidget {
+  int currentIndex;
+
+  BottomNav(this.currentIndex);
+
+  @override
+  State<BottomNav> createState() => _BottomNavState();
+}
+
+class _BottomNavState extends State<BottomNav> {
+  MainBloc bloc = MainBloc();
+  // int _currentIndex = 0;
+
+  void changePage(int index) {
+    setState(() {
+      widget.currentIndex = index;
+    });
+    switch (index) {
+      case 0:
+        bloc.add(HomeScreenEvent());
+        break;
+
+      case 1:
+        bloc.add(CategoryEvent());
+        break;
+
+      case 2:
+        bloc.add(HomeScreenEvent());
+        break;
+
+      case 3:
+        bloc.add(HomeScreenEvent());
+        break;
+
+      case 4:
+        bloc.add(HomeScreenEvent());
+        break;
+
+      default:
+        bloc.add(HomeScreenEvent());
+        break;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    bloc = BlocProvider.of<MainBloc>(context);
+    return DotNavigationBar(
+      backgroundColor: Theme.of(context).accentColor,
+      enablePaddingAnimation: false,
+      dotIndicatorColor: colorTransparent,
+      paddingR: const EdgeInsets.only(bottom: VERTICAL_PADDING / 2, right: 0),
+      marginR: EdgeInsets.only(
+        left: deviceWidth * 0.1,
+        right: deviceWidth * 0.1,
+        bottom: VERTICAL_PADDING * 2.5,
+      ),
+      currentIndex: widget.currentIndex,
+      onTap: (index) {
+        changePage(index);
+      },
+      items: [
+        DotNavigationBarItem(
+          icon: const Icon(Icons.home_outlined),
+        ),
+        DotNavigationBarItem(
+          icon: const Icon(Icons.category_outlined),
+        ),
+        DotNavigationBarItem(
+          icon: const Icon(Icons.notifications_none),
+        ),
+        DotNavigationBarItem(
+          icon: const Icon(Icons.shopping_bag_outlined),
+        ),
+        DotNavigationBarItem(
+          icon: const Icon(Icons.account_circle_outlined),
+        ),
+      ],
+    );
+  }
+}
+
+Widget categoryGrid(BuildContext context, String categoryName) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Padding(
+        padding: const EdgeInsets.all(VERTICAL_PADDING),
+        child: getSmallText(
+          categoryName,
+          color: colorBlack,
+          weight: FontWeight.w700,
+          fontSize: APPBAR_FONT_SIZE,
+        ),
+      ),
+      Expanded(
+        child: SizedBox(
+          // height: deviceHeight,
+          child: GridView.builder(
+              itemCount: 30,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate:
+                  const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+              itemBuilder: (ctx, index) {
+                return Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (ctx) => SubCategoryScreen()));
+                      },
+                      child: Card(
+                        shape: const CircleBorder(),
+                        elevation: 5,
+                        color: colorWhite,
+                        child: Container(
+                          height: deviceHeight * 0.087,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: Image.asset(
+                            IC_DRESS,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                    getSmallText(
+                      dress,
+                      color: grey,
+                      weight: FontWeight.w500,
+                      fontSize: CATEGORY_TEXT_SIZE,
+                    )
+                  ],
+                );
+              }),
+        ),
+      ),
+    ],
   );
 }

@@ -1,4 +1,6 @@
 import 'package:fleasnitch/bloc/main_bloc.dart';
+import 'package:fleasnitch/ui/screens/categories/category_screen.dart';
+import 'package:fleasnitch/ui/screens/categories/sub_category_screen.dart';
 import 'package:fleasnitch/ui/screens/home/home_screen.dart';
 import 'package:fleasnitch/ui/screens/login/login_screen.dart';
 import 'package:fleasnitch/ui/screens/splash/splash_screen.dart';
@@ -27,6 +29,10 @@ class _NavigationPageState extends State<NavigationPage> {
             return LoginScreen();
           } else if (state == MainStates.HomeScreen) {
             return HomeScreen();
+          } else if (state == MainStates.Category) {
+            return CategoryScreen();
+          } else if (state == MainStates.SubCategory) {
+            return SubCategoryScreen();
           } else if (state == MainStates.LoggedLoading) {
             return Scaffold(
               body: Center(

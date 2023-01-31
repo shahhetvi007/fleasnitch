@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'main_event.dart';
 
-enum MainStates { SplashIn, Login, HomeScreen, LoggedLoading }
+enum MainStates { SplashIn, Login, HomeScreen, Category, SubCategory, LoggedLoading }
 
 class MainBloc extends Bloc<MainEvent, MainStates> {
   MainBloc() : super(MainStates.SplashIn);
 
   init() {
-    add(LoginEvent());
+    add(HomeScreenEvent());
   }
 
   @override
@@ -23,6 +23,12 @@ class MainBloc extends Bloc<MainEvent, MainStates> {
     } else if (event is HomeScreenEvent) {
       yield MainStates.LoggedLoading;
       yield MainStates.HomeScreen;
+    } else if (event is CategoryEvent) {
+      yield MainStates.LoggedLoading;
+      yield MainStates.Category;
+    } else if (event is SubCategoryEvent) {
+      yield MainStates.LoggedLoading;
+      yield MainStates.SubCategory;
     }
   }
 }

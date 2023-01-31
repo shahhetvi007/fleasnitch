@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:fleasnitch/base/base_screen.dart';
+import 'package:fleasnitch/bloc/main_bloc.dart';
 import 'package:fleasnitch/ui/res/color_resources.dart';
 import 'package:fleasnitch/ui/res/image_resources.dart';
 import 'package:fleasnitch/ui/res/strings.dart';
@@ -17,15 +18,8 @@ class HomeScreen extends BaseStatefulWidget {
 }
 
 class _HomeScreenState extends BaseState<HomeScreen> with BasicScreen {
-  int _currentIndex = 0;
   int _carouselActiveIndex = 0;
   List bannerList = [BANNER2, BANNER1, BANNER3, BANNER11, BANNER12, BANNER13];
-
-  void changePage(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
 
   @override
   Widget buildBody(BuildContext context) {
@@ -200,38 +194,7 @@ class _HomeScreenState extends BaseState<HomeScreen> with BasicScreen {
               ),
             ),
           ),
-          bottomNavigationBar: isKeyboardVisible
-              ? null
-              : DotNavigationBar(
-                  backgroundColor: Theme.of(context).accentColor,
-                  enablePaddingAnimation: false,
-                  dotIndicatorColor: colorTransparent,
-                  paddingR: const EdgeInsets.only(bottom: VERTICAL_PADDING / 2, right: 0),
-                  marginR: EdgeInsets.only(
-                    left: size.width * 0.1,
-                    right: size.width * 0.1,
-                    bottom: VERTICAL_PADDING * 2.5,
-                  ),
-                  currentIndex: _currentIndex,
-                  onTap: changePage,
-                  items: [
-                    DotNavigationBarItem(
-                      icon: const Icon(Icons.home_outlined),
-                    ),
-                    DotNavigationBarItem(
-                      icon: const Icon(Icons.category_outlined),
-                    ),
-                    DotNavigationBarItem(
-                      icon: const Icon(Icons.notifications_none),
-                    ),
-                    DotNavigationBarItem(
-                      icon: const Icon(Icons.shopping_bag_outlined),
-                    ),
-                    DotNavigationBarItem(
-                      icon: const Icon(Icons.account_circle_outlined),
-                    ),
-                  ],
-                ),
+          bottomNavigationBar: isKeyboardVisible ? null : BottomNav(0),
         );
       },
     );

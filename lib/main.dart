@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.light,
       // theme: ThemeData.dark(),
       theme: ThemeData(
-        primarySwatch: Colors.orange,
+        primarySwatch: Colors.pink,
         primaryColor: primaryColor,
         backgroundColor: secondaryColor,
         accentColor: secondaryColor,
@@ -45,6 +45,7 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(
           backgroundColor: colorWhite,
           elevation: 0,
+          foregroundColor: colorBlack,
         ),
       ),
       home: const NavigationPage(),

@@ -21,6 +21,8 @@ const String search = "Search";
 const String popularProducts = "Popular Products";
 const String productsForYou = "Products For You";
 const String freeDelivery = "Free Delivery";
+const String sort = "Sort";
+const String filters = "Filters";
 
 //cart item
 const String cartItems = "Cart Items";

@@ -3,6 +3,7 @@ import 'package:fleasnitch/ui/screens/categories/category_screen.dart';
 import 'package:fleasnitch/ui/screens/categories/sub_category_screen.dart';
 import 'package:fleasnitch/ui/screens/home/home_screen.dart';
 import 'package:fleasnitch/ui/screens/login/login_screen.dart';
+import 'package:fleasnitch/ui/screens/products/product_detail_screen.dart';
 import 'package:fleasnitch/ui/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,6 +34,8 @@ class _NavigationPageState extends State<NavigationPage> {
             return CategoryScreen();
           } else if (state == MainStates.SubCategory) {
             return SubCategoryScreen();
+          } else if (state == MainStates.ProductDetail) {
+            return ProductDetailScreen();
           } else if (state == MainStates.LoggedLoading) {
             return Scaffold(
               body: Center(

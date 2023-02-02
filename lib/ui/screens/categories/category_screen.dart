@@ -112,10 +112,10 @@ class _CategoryScreenState extends BaseState<CategoryScreen> with BasicScreen {
                     scrollDirection: Axis.vertical,
                     allowImplicitScrolling: true,
                     physics: const ScrollPhysics(),
-                    pageSnapping: atEdge ? false : true,
+                    pageSnapping: false,
                     itemCount: 10,
                     itemBuilder: (ctx, index) {
-                      return categoryGrid(context, 'Jewellery');
+                      return categoryGrid(bloc, context, 'Jewellery');
                     },
                     onPageChanged: (val) {
                       setState(() {

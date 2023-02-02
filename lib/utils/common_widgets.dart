@@ -120,7 +120,7 @@ Widget customButton(String text, Function f) {
       f();
     },
     style: ElevatedButton.styleFrom(
-      minimumSize: const Size(double.infinity, 56),
+      minimumSize: const Size(double.infinity, 50),
       primary: primaryColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -209,7 +209,7 @@ Widget popularProductItem() {
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(BORDER_RADIUS),
     ),
-    elevation: 8,
+    elevation: 6,
     color: colorWhite,
     child: Container(
       height: deviceHeight / 5,
@@ -232,6 +232,7 @@ Widget popularProductItem() {
             dress,
             color: colorBlack,
             weight: FontWeight.w800,
+            maxLines: 1,
           )
         ],
       ),
@@ -239,73 +240,87 @@ Widget popularProductItem() {
   );
 }
 
-Widget productItem() {
-  return Card(
-    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Expanded(
-        flex: 5,
-        child: SizedBox(
-          width: double.infinity,
-          child: Image.asset(
-            'assets/images/dress2.jpeg',
-            fit: BoxFit.cover,
+Widget productItem(MainBloc bloc) {
+  return GestureDetector(
+    onTap: () {
+      bloc.add(ProductDetailEvent());
+    },
+    child: Card(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Expanded(
+          flex: 5,
+          child: SizedBox(
+            width: double.infinity,
+            child: Image.asset(
+              DRESS,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
-      ),
-      Expanded(
-        flex: 2,
-        child: Container(
-          margin: const EdgeInsets.all(VERTICAL_PADDING / 1.5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              getSmallText(
-                'Yellow Attractive Dress',
-                color: grey,
-                fontSize: SMALL_TEXT,
-                weight: FontWeight.w600,
-              ),
-              Row(
-                children: [
-                  getSmallText(
-                    '₹365',
+        Expanded(
+          flex: 2,
+          child: Container(
+            margin: const EdgeInsets.all(VERTICAL_PADDING / 1.5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                getSmallText('Yellow Attractive Dress',
+                    color: grey,
+                    fontSize: SMALL_TEXT,
+                    weight: FontWeight.w600,
+                    maxLines: 1),
+                Row(
+                  children: [
+                    Flexible(
+                      child: getSmallText(
+                        '₹365',
+                        color: colorBlack,
+                        weight: FontWeight.w700,
+                        maxLines: 1,
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Flexible(
+                      child: getSmallText(
+                        '400',
+                        color: grey,
+                        fontSize: SMALL_TEXT,
+                        lineThrough: true,
+                        maxLines: 1,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Flexible(
+                      child: getSmallText(
+                        '15% off',
+                        color: grey,
+                        fontSize: SMALL_TEXT,
+                        maxLines: 1,
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL_PADDING / 2),
+                  decoration: BoxDecoration(
+                    color: grey.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(BORDER_RADIUS / 2),
+                  ),
+                  child: getSmallText(
+                    freeDelivery,
                     color: colorBlack,
-                    weight: FontWeight.w700,
+                    fontSize: SMALLER_TEXT,
+                    weight: FontWeight.w600,
+                    maxLines: 1,
                   ),
-                  const SizedBox(width: 5),
-                  getSmallText(
-                    '400',
-                    color: grey,
-                    fontSize: SMALL_TEXT,
-                    lineThrough: true,
-                  ),
-                  const SizedBox(width: 8),
-                  getSmallText(
-                    '15% off',
-                    color: grey,
-                    fontSize: SMALL_TEXT,
-                  ),
-                ],
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL_PADDING / 2),
-                decoration: BoxDecoration(
-                  color: grey.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(BORDER_RADIUS / 2),
                 ),
-                child: getSmallText(
-                  freeDelivery,
-                  color: colorBlack,
-                  fontSize: SMALLER_TEXT,
-                  weight: FontWeight.w600,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      )
-    ]),
+        )
+      ]),
+    ),
   );
 }
 
@@ -391,7 +406,7 @@ class _BottomNavState extends State<BottomNav> {
   }
 }
 
-Widget categoryGrid(BuildContext context, String categoryName) {
+Widget categoryGrid(MainBloc bloc, BuildContext context, String categoryName) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -417,8 +432,9 @@ Widget categoryGrid(BuildContext context, String categoryName) {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (ctx) => SubCategoryScreen()));
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(builder: (ctx) => SubCategoryScreen()));
+                        bloc.add(SubCategoryEvent());
                       },
                       child: Card(
                         shape: const CircleBorder(),

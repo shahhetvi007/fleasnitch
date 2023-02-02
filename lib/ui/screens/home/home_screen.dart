@@ -151,17 +151,23 @@ class _HomeScreenState extends BaseState<HomeScreen> with BasicScreen {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      getTitle(
-                        popularProducts,
-                        color: colorBlack,
-                        bold: true,
-                        weight: FontWeight.w700,
-                        fontSize: HOME_TITLE_SIZE,
+                      Flexible(
+                        flex: 2,
+                        child: getTitle(
+                          popularProducts,
+                          color: colorBlack,
+                          bold: true,
+                          weight: FontWeight.w700,
+                          fontSize: HOME_TITLE_SIZE,
+                        ),
                       ),
-                      getSmallText(
-                        seeAll,
-                        color: Theme.of(context).secondaryHeaderColor,
-                        weight: FontWeight.w700,
+                      Flexible(
+                        child: getSmallText(
+                          seeAll,
+                          color: Theme.of(context).secondaryHeaderColor,
+                          weight: FontWeight.w700,
+                          maxLines: 1,
+                        ),
                       ),
                     ],
                   ),
@@ -189,7 +195,7 @@ class _HomeScreenState extends BaseState<HomeScreen> with BasicScreen {
                       itemCount: 10,
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2, childAspectRatio: 0.7),
-                      itemBuilder: (ctx, index) => productItem()),
+                      itemBuilder: (ctx, index) => productItem(bloc)),
                 ],
               ),
             ),
@@ -249,8 +255,10 @@ class _HomeScreenState extends BaseState<HomeScreen> with BasicScreen {
         SizedBox(height: size.height * 0.004),
         getSmallText(
           title,
+          fontSize: CATEGORY_TEXT_SIZE,
           color: secondaryDarkColor,
-          weight: FontWeight.w700,
+          weight: FontWeight.w600,
+          maxLines: 2,
         )
       ],
     );

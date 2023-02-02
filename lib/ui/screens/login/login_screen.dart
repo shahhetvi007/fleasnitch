@@ -53,47 +53,51 @@ class _LoginScreenState extends BaseState<LoginScreen> with BasicScreen {
                   ),
                 ),
                 // Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: VERTICAL_PADDING * 10),
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      width: mediaQuery.width / 1.8,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(BORDER_RADIUS * 2),
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Future.delayed(
-                            const Duration(milliseconds: 800),
-                            () {
-                              setState(() {
-                                isSignInDialogShown = true;
-                              });
+              ],
+            ),
+          ),
+        ),
+        AnimatedPositioned(
+          bottom: isSignInDialogShown ? -40 : 0,
+          duration: const Duration(milliseconds: 240),
+          width: mediaQuery.width,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: VERTICAL_PADDING * 10),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                width: mediaQuery.width / 1.8,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(BORDER_RADIUS * 2),
+                ),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Future.delayed(
+                      const Duration(milliseconds: 800),
+                      () {
+                        setState(() {
+                          isSignInDialogShown = true;
+                        });
 
-                              customLoginDialog(context, onClosed: (value) {
-                                setState(() {
-                                  isSignInDialogShown = false;
-                                });
-                              });
-                            },
-                          );
-                        },
-                        child: getSmallText(login, weight: FontWeight.w500),
-                        style: ElevatedButton.styleFrom(
-                          padding:
-                              const EdgeInsets.symmetric(vertical: VERTICAL_PADDING * 2),
-                          primary: colorTransparent,
-                          shadowColor: colorTransparent,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(BORDER_RADIUS * 2)),
-                        ),
-                      ),
-                    ),
+                        customLoginDialog(context, onClosed: (value) {
+                          setState(() {
+                            isSignInDialogShown = false;
+                          });
+                        });
+                      },
+                    );
+                  },
+                  child: getSmallText(login, weight: FontWeight.w700, color: colorWhite),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: VERTICAL_PADDING * 2),
+                    primary: colorTransparent,
+                    shadowColor: colorTransparent,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(BORDER_RADIUS * 2)),
                   ),
                 ),
-              ],
+              ),
             ),
           ),
         ),

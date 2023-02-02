@@ -7,10 +7,6 @@ import 'package:fleasnitch/base/base_screen.dart';
 import '../../res/strings.dart';
 
 class SubCategoryScreen extends BaseStatefulWidget {
-  // final String subCategoryName;
-  //
-  // SubCategoryScreen({required this.subCategoryName});
-
   @override
   _SubCategoryScreenState createState() => _SubCategoryScreenState();
 }
@@ -74,7 +70,7 @@ class _SubCategoryScreenState extends BaseState<SubCategoryScreen> with BasicScr
             ),
           ),
           const Divider(
-            height: 0.5,
+            height: 0.7,
             color: grey,
           ),
           Expanded(
@@ -82,7 +78,7 @@ class _SubCategoryScreenState extends BaseState<SubCategoryScreen> with BasicScr
                 itemCount: 10,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2, childAspectRatio: 0.7),
-                itemBuilder: (ctx, index) => productItem()),
+                itemBuilder: (ctx, index) => productItem(bloc)),
           ),
         ],
       ),

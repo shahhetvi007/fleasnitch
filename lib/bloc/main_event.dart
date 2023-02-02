@@ -23,3 +23,7 @@ class CategoryEvent extends MainEvent {
 class SubCategoryEvent extends MainEvent {
   SubCategoryEvent();
 }
+
+class ProductDetailEvent extends MainEvent {
+  ProductDetailEvent();
+}

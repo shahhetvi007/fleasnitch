@@ -23,6 +23,9 @@ const String productsForYou = "Products For You";
 const String freeDelivery = "Free Delivery";
 const String sort = "Sort";
 const String filters = "Filters";
+const String wishlist = "Wishlist";
+const String share = "Share";
+const String soldBy = "Sold By";
 
 //cart item
 const String cartItems = "Cart Items";

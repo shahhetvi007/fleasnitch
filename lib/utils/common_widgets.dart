@@ -131,75 +131,126 @@ Widget customButton(String text, Function f) {
         ),
       ),
     ),
-    child: getSmallText(text),
+    child: getSmallText(text, color: colorWhite),
   );
 }
 
 Widget cartItem(String image, String itemDescription, String itemPrice,
-    String sizeSelected, String qtySelected) {
-  return Container(
-    width: double.infinity,
-    padding: const EdgeInsets.all(VERTICAL_PADDING / 1.5),
-    margin: const EdgeInsets.symmetric(vertical: VERTICAL_PADDING),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 2,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(BORDER_RADIUS / 2),
-              border: Border.all(color: darkGrey),
+    String sizeSelected, String qtySelected, String soldByName) {
+  return Column(
+    children: [
+      Container(
+        width: double.infinity,
+        // padding: const EdgeInsets.all(VERTICAL_PADDING / 1.5),
+        margin: const EdgeInsets.symmetric(
+            vertical: VERTICAL_PADDING, horizontal: HORIZONTAL_PADDING),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 1,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(BORDER_RADIUS / 2),
+                  border: Border.all(color: darkGrey),
+                ),
+                padding: const EdgeInsets.all(VERTICAL_PADDING),
+                child: Image.asset(image),
+              ),
             ),
-            padding: const EdgeInsets.all(VERTICAL_PADDING),
-            child: Image.asset(image),
-          ),
-        ),
-        const SizedBox(width: HORIZONTAL_PADDING),
-        Expanded(
-          flex: 8,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              getSmallText(
-                itemDescription,
-                color: darkGrey,
-                maxLines: 1,
-                weight: FontWeight.w700,
-              ),
-              const SizedBox(height: VERTICAL_PADDING / 2),
-              getSmallText(
-                itemPrice,
-                color: darkGrey,
-                maxLines: 1,
-              ),
-              const SizedBox(height: VERTICAL_PADDING / 2),
-              Row(
+            const SizedBox(width: HORIZONTAL_PADDING),
+            Expanded(
+              flex: 8,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   getSmallText(
-                    size,
+                    itemDescription,
                     color: darkGrey,
+                    maxLines: 1,
+                    weight: FontWeight.w800,
+                    fontSize: CATEGORY_TEXT_SIZE,
                   ),
+                  const SizedBox(height: VERTICAL_PADDING / 2),
                   getSmallText(
-                    sizeSelected,
+                    itemPrice,
                     color: darkGrey,
+                    maxLines: 1,
+                    fontSize: CATEGORY_TEXT_SIZE,
                   ),
-                  const SizedBox(width: HORIZONTAL_PADDING),
-                  getSmallText(
-                    qty,
-                    color: darkGrey,
+                  const SizedBox(height: VERTICAL_PADDING / 2),
+                  Row(
+                    children: [
+                      getSmallText(
+                        size,
+                        color: darkGrey,
+                        fontSize: CATEGORY_TEXT_SIZE,
+                      ),
+                      getSmallText(
+                        sizeSelected,
+                        color: darkGrey,
+                        fontSize: CATEGORY_TEXT_SIZE,
+                      ),
+                      const SizedBox(width: HORIZONTAL_PADDING),
+                      getSmallText(
+                        qty,
+                        color: darkGrey,
+                        fontSize: CATEGORY_TEXT_SIZE,
+                      ),
+                      getSmallText(
+                        qtySelected,
+                        color: darkGrey,
+                        fontSize: CATEGORY_TEXT_SIZE,
+                      ),
+                    ],
                   ),
-                  getSmallText(
-                    qtySelected,
-                    color: darkGrey,
+                  const SizedBox(height: VERTICAL_PADDING),
+                  Container(
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.close,
+                          size: 16,
+                        ),
+                        const SizedBox(width: 4),
+                        getSmallText(
+                          remove,
+                          color: darkGrey,
+                          maxLines: 1,
+                          weight: FontWeight.w700,
+                          fontSize: CATEGORY_TEXT_SIZE,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ],
-          ),
-        )
-      ],
-    ),
+            )
+          ],
+        ),
+      ),
+      const Divider(thickness: 1),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL_PADDING),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            getSmallText(
+              soldBy + " : " + soldByName,
+              color: darkGrey,
+              fontSize: CATEGORY_TEXT_SIZE,
+            ),
+            getSmallText(
+              freeDelivery,
+              color: darkGrey,
+              fontSize: CATEGORY_TEXT_SIZE,
+            ),
+          ],
+        ),
+      ),
+      const Divider(thickness: 4),
+      const SizedBox(height: VERTICAL_PADDING * 2),
+    ],
   );
 }
 
@@ -420,48 +471,46 @@ Widget categoryGrid(MainBloc bloc, BuildContext context, String categoryName) {
         ),
       ),
       Expanded(
-        child: SizedBox(
-          // height: deviceHeight,
-          child: GridView.builder(
-              itemCount: 30,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate:
-                  const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-              itemBuilder: (ctx, index) {
-                return Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        // Navigator.push(context,
-                        //     MaterialPageRoute(builder: (ctx) => SubCategoryScreen()));
-                        bloc.add(SubCategoryEvent());
-                      },
-                      child: Card(
-                        shape: const CircleBorder(),
-                        elevation: 5,
-                        color: colorWhite,
-                        child: Container(
-                          height: deviceHeight * 0.087,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: Image.asset(
-                            IC_DRESS,
-                            fit: BoxFit.cover,
-                          ),
+        child: GridView.builder(
+            itemCount: 30,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate:
+                const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+            itemBuilder: (ctx, index) {
+              return Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (ctx) => SubCategoryScreen()));
+                      bloc.add(SubCategoryEvent());
+                    },
+                    child: Card(
+                      shape: const CircleBorder(),
+                      elevation: 5,
+                      color: colorWhite,
+                      child: Container(
+                        height: deviceHeight * 0.087,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: Image.asset(
+                          IC_DRESS,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
-                    getSmallText(
-                      dress,
-                      color: grey,
-                      weight: FontWeight.w500,
-                      fontSize: CATEGORY_TEXT_SIZE,
-                    )
-                  ],
-                );
-              }),
-        ),
+                  ),
+                  getSmallText(
+                    dress,
+                    color: grey,
+                    weight: FontWeight.w500,
+                    fontSize: CATEGORY_TEXT_SIZE,
+                  )
+                ],
+              );
+            }),
       ),
     ],
   );

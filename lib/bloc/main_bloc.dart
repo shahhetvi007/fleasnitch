@@ -10,6 +10,7 @@ enum MainStates {
   Category,
   SubCategory,
   ProductDetail,
+  Cart,
   LoggedLoading
 }
 
@@ -17,7 +18,7 @@ class MainBloc extends Bloc<MainEvent, MainStates> {
   MainBloc() : super(MainStates.SplashIn);
 
   init() {
-    add(HomeScreenEvent());
+    add(LoginEvent());
   }
 
   @override
@@ -40,6 +41,9 @@ class MainBloc extends Bloc<MainEvent, MainStates> {
     } else if (event is ProductDetailEvent) {
       yield MainStates.LoggedLoading;
       yield MainStates.ProductDetail;
+    } else if (event is CartEvent) {
+      yield MainStates.LoggedLoading;
+      yield MainStates.Cart;
     }
   }
 }

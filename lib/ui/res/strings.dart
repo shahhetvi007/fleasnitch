@@ -26,11 +26,21 @@ const String filters = "Filters";
 const String wishlist = "Wishlist";
 const String share = "Share";
 const String soldBy = "Sold By";
+const String viewShop = "View Shop";
+const String selectSize = "Select Size";
+const String followers = "Followers";
+const String products = "Products";
+const String productDetails = "Product Details";
+const String addToCart = "Add to Cart";
+const String buyNow = "Buy Now";
+const String remove = "Remove";
 
 //cart item
-const String cartItems = "Cart Items";
+const String cart = "Cart";
 const String size = "Size: ";
 const String qty = "Qty: ";
+const String viewPriceDetails = "View Price Details";
+const String continueText = "Continue";
 
 //Categories
 const String mobiles = "Mobiles";

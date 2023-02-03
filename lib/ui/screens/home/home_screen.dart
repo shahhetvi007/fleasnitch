@@ -40,7 +40,10 @@ class _HomeScreenState extends BaseState<HomeScreen> with BasicScreen {
             actions: [
               IconButton(onPressed: () {}, icon: const Icon(Icons.favorite_border)),
               IconButton(
-                  onPressed: () {}, icon: const Icon(Icons.shopping_cart_outlined)),
+                  onPressed: () {
+                    bloc.add(CartEvent());
+                  },
+                  icon: const Icon(Icons.shopping_cart_outlined)),
             ],
           ),
           body: SingleChildScrollView(

@@ -110,7 +110,6 @@ class _CategoryScreenState extends BaseState<CategoryScreen> with BasicScreen {
                   child: PageView.builder(
                     controller: _pageController,
                     scrollDirection: Axis.vertical,
-                    allowImplicitScrolling: true,
                     physics: const ScrollPhysics(),
                     pageSnapping: false,
                     itemCount: 10,

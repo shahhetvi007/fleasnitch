@@ -27,3 +27,7 @@ class SubCategoryEvent extends MainEvent {
 class ProductDetailEvent extends MainEvent {
   ProductDetailEvent();
 }
+
+class CartEvent extends MainEvent {
+  CartEvent();
+}

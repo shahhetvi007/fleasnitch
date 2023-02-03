@@ -1,4 +1,5 @@
 import 'package:fleasnitch/bloc/main_bloc.dart';
+import 'package:fleasnitch/ui/screens/cart/cart_screen.dart';
 import 'package:fleasnitch/ui/screens/categories/category_screen.dart';
 import 'package:fleasnitch/ui/screens/categories/sub_category_screen.dart';
 import 'package:fleasnitch/ui/screens/home/home_screen.dart';
@@ -36,6 +37,8 @@ class _NavigationPageState extends State<NavigationPage> {
             return SubCategoryScreen();
           } else if (state == MainStates.ProductDetail) {
             return ProductDetailScreen();
+          } else if (state == MainStates.Cart) {
+            return CartScreen();
           } else if (state == MainStates.LoggedLoading) {
             return Scaffold(
               body: Center(

@@ -1,5 +1,8 @@
 import 'package:fleasnitch/bloc/main_bloc.dart';
+import 'package:fleasnitch/ui/screens/cart/add_new_address_screen.dart';
 import 'package:fleasnitch/ui/screens/cart/cart_screen.dart';
+import 'package:fleasnitch/ui/screens/cart/delivery_address_screen.dart';
+import 'package:fleasnitch/ui/screens/cart/payment_method_screen.dart';
 import 'package:fleasnitch/ui/screens/categories/category_screen.dart';
 import 'package:fleasnitch/ui/screens/categories/sub_category_screen.dart';
 import 'package:fleasnitch/ui/screens/home/home_screen.dart';
@@ -39,6 +42,12 @@ class _NavigationPageState extends State<NavigationPage> {
             return ProductDetailScreen();
           } else if (state == MainStates.Cart) {
             return CartScreen();
+          } else if (state == MainStates.AddDeliveryAddress) {
+            return AddNewAddressScreen();
+          } else if (state == MainStates.DeliveryAddress) {
+            return DeliveryAddressScreen();
+          } else if (state == MainStates.PaymentMethod) {
+            return PaymentMethodScreen();
           } else if (state == MainStates.LoggedLoading) {
             return Scaffold(
               body: Center(

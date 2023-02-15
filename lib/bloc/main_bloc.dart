@@ -11,6 +11,9 @@ enum MainStates {
   SubCategory,
   ProductDetail,
   Cart,
+  AddDeliveryAddress,
+  DeliveryAddress,
+  PaymentMethod,
   LoggedLoading
 }
 
@@ -18,7 +21,7 @@ class MainBloc extends Bloc<MainEvent, MainStates> {
   MainBloc() : super(MainStates.SplashIn);
 
   init() {
-    add(LoginEvent());
+    add(HomeScreenEvent());
   }
 
   @override
@@ -44,6 +47,15 @@ class MainBloc extends Bloc<MainEvent, MainStates> {
     } else if (event is CartEvent) {
       yield MainStates.LoggedLoading;
       yield MainStates.Cart;
+    } else if (event is DeliveryAddressEvent) {
+      yield MainStates.LoggedLoading;
+      yield MainStates.DeliveryAddress;
+    } else if (event is AddDeliveryAddressEvent) {
+      yield MainStates.LoggedLoading;
+      yield MainStates.AddDeliveryAddress;
+    } else if (event is PaymentEvent) {
+      yield MainStates.LoggedLoading;
+      yield MainStates.PaymentMethod;
     }
   }
 }

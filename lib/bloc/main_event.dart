@@ -31,3 +31,15 @@ class ProductDetailEvent extends MainEvent {
 class CartEvent extends MainEvent {
   CartEvent();
 }
+
+class DeliveryAddressEvent extends MainEvent {
+  DeliveryAddressEvent();
+}
+
+class AddDeliveryAddressEvent extends MainEvent {
+  AddDeliveryAddressEvent();
+}
+
+class PaymentEvent extends MainEvent {
+  PaymentEvent();
+}

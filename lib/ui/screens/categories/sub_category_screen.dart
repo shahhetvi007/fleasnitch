@@ -1,3 +1,4 @@
+import 'package:fleasnitch/bloc/main_bloc.dart';
 import 'package:fleasnitch/ui/res/color_resources.dart';
 import 'package:fleasnitch/ui/res/dimen_resources.dart';
 import 'package:fleasnitch/utils/common_widgets.dart';
@@ -30,7 +31,11 @@ class _SubCategoryScreenState extends BaseState<SubCategoryScreen> with BasicScr
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
           IconButton(onPressed: () {}, icon: const Icon(Icons.favorite_border)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart_outlined)),
+          IconButton(
+              onPressed: () {
+                bloc.add(CartEvent());
+              },
+              icon: const Icon(Icons.shopping_cart_outlined)),
         ],
       ),
       body: Column(

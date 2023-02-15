@@ -41,6 +41,35 @@ const String size = "Size: ";
 const String qty = "Qty: ";
 const String viewPriceDetails = "View Price Details";
 const String continueText = "Continue";
+const String removeFromCart = "Remove Product From Cart";
+const String moveToWishlist = "Move to Wishlist";
+const String priceDetails = "Price Details";
+const String totalProductPrice = "Total Product Price";
+const String orderTotal = "Order Total";
+const String discount = "Discount";
+
+//Delivery Address
+const String deliveryAddress = "Delivery Address";
+const String searchAddByNameNo = "Search Address by Name or Phone Number";
+const String addNewAddress = "Add New Address";
+const String edit = "Edit";
+const String deliverToThisAdd = "Deliver to this Address";
+const String addDeliveryAddress = "Add Delivery Address";
+const String contactDetails = "Contact Details";
+const String name = "Name";
+const String phoneNumber = "Phone Number";
+const String address = "Address";
+const String houseNoBuildingName = "House No. / Building Name";
+const String roadNameAreaColony = "Road Name / Area / Colony";
+const String pinCode = "Pin Code";
+const String city = "City";
+const String state = "State";
+const String nearbyLocation = "Nearby Location (optional)";
+const String saveAddressAndContinue = "Save Address and Continue";
+
+//payment method
+const String paymentMethod = "Payment Method";
+const String makePayment = "Make Payment";
 
 //Categories
 const String mobiles = "Mobiles";

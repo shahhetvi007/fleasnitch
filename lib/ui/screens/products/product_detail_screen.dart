@@ -22,7 +22,7 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> with Basi
     DRESS,
     DRESS,
   ];
-  List sizeList = ['S', 'M', 'L', 'XL', 'XXL'];
+  List sizeList = ['S', 'M', 'L', 'XL', 'XXL', 'DSDS', 'SDSD', 'FDF', 'SFS'];
   @override
   Widget buildBody(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -44,7 +44,11 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> with Basi
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
           IconButton(onPressed: () {}, icon: const Icon(Icons.favorite_border)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart_outlined)),
+          IconButton(
+              onPressed: () {
+                bloc.add(CartEvent());
+              },
+              icon: const Icon(Icons.shopping_cart_outlined)),
         ],
       ),
       body: Column(
@@ -223,7 +227,7 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> with Basi
                   ),
                   Container(
                     height: 65,
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                         vertical: VERTICAL_PADDING, horizontal: HORIZONTAL_PADDING),
                     child: ListView.builder(
                       itemBuilder: (ctx, index) {
@@ -305,7 +309,7 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> with Basi
                                 color: secondaryDarkColor,
                               ),
                               style: OutlinedButton.styleFrom(
-                                side: BorderSide(color: secondaryDarkColor),
+                                side: const BorderSide(color: secondaryDarkColor),
                               ),
                             ),
                           ],
@@ -323,7 +327,7 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> with Basi
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                         vertical: VERTICAL_PADDING, horizontal: HORIZONTAL_PADDING),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -348,9 +352,11 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> with Basi
                 child: Padding(
                   padding: const EdgeInsets.all(VERTICAL_PADDING),
                   child: OutlinedButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      addToCartBottomSheet(context, sizeList);
+                    },
                     label: getSmallText(addToCart, weight: FontWeight.w700),
-                    icon: Icon(Icons.shopping_cart_outlined),
+                    icon: const Icon(Icons.shopping_cart_outlined),
                   ),
                 ),
               ),
@@ -361,7 +367,7 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> with Basi
                     onPressed: () {},
                     label:
                         getSmallText(buyNow, weight: FontWeight.w700, color: colorWhite),
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.double_arrow,
                       color: colorWhite,
                     ),
@@ -371,22 +377,6 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> with Basi
             ],
           ),
         ],
-      ),
-    );
-  }
-
-  Widget sizeContainer(String size) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-          vertical: VERTICAL_PADDING, horizontal: HORIZONTAL_PADDING),
-      margin: const EdgeInsets.all(VERTICAL_PADDING),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(BORDER_RADIUS * 2),
-        border: Border.all(color: colorBlack),
-      ),
-      child: getSmallText(
-        size,
-        weight: FontWeight.w600,
       ),
     );
   }

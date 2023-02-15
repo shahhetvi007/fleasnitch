@@ -76,6 +76,12 @@ class _HomeScreenState extends BaseState<HomeScreen> with BasicScreen {
                           Icons.search,
                         ),
                         hintText: search,
+                        hintStyle: TextStyle(
+                            color: grey,
+                            fontSize: CATEGORY_TEXT_SIZE,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Nunito'),
+                        contentPadding: EdgeInsets.only(bottom: 0, top: 4),
                         border: InputBorder.none,
                       ),
                     ),

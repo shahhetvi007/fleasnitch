@@ -1,4 +1,5 @@
 import 'package:fleasnitch/base/base_screen.dart';
+import 'package:fleasnitch/bloc/main_bloc.dart';
 import 'package:fleasnitch/ui/res/color_resources.dart';
 import 'package:fleasnitch/ui/res/dimen_resources.dart';
 import 'package:fleasnitch/ui/res/strings.dart';
@@ -23,7 +24,7 @@ class _CategoryScreenState extends BaseState<CategoryScreen> with BasicScreen {
       appBar: AppBar(
         title: getTitle(
           categories,
-          fontSize: HOME_TITLE_SIZE,
+          fontSize: APPBAR_FONT_SIZE,
           color: Theme.of(context).secondaryHeaderColor,
           weight: FontWeight.w700,
         ),
@@ -36,7 +37,11 @@ class _CategoryScreenState extends BaseState<CategoryScreen> with BasicScreen {
         ),
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.favorite_border)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart_outlined)),
+          IconButton(
+              onPressed: () {
+                bloc.add(CartEvent());
+              },
+              icon: const Icon(Icons.shopping_cart_outlined)),
         ],
       ),
       body: SafeArea(

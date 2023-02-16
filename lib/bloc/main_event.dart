@@ -43,3 +43,11 @@ class AddDeliveryAddressEvent extends MainEvent {
 class PaymentEvent extends MainEvent {
   PaymentEvent();
 }
+
+class NotificationEvent extends MainEvent {
+  NotificationEvent();
+}
+
+class AccountEvent extends MainEvent {
+  AccountEvent();
+}

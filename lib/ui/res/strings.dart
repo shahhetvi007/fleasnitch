@@ -79,5 +79,13 @@ const String fashion = "Fashion";
 const String grocery = "Grocery";
 const String pharmacy = "Pharmacy";
 
+//account
+const String editProfile = "Edit Profile";
+const String savedAddresses = "Saved Addresses";
+const String becomeASupplier = "Become a Supplier";
+const String yourWishlist = "Your Wishlist";
+const String yourOrders = "Your Orders";
+const String logout = "Logout";
+
 //products
 const String dress = "Dresses";

@@ -822,7 +822,7 @@ class _BottomNavState extends State<BottomNav> {
         break;
 
       case 2:
-        bloc.add(HomeScreenEvent());
+        bloc.add(NotificationEvent());
         break;
 
       case 3:
@@ -830,7 +830,7 @@ class _BottomNavState extends State<BottomNav> {
         break;
 
       case 4:
-        bloc.add(HomeScreenEvent());
+        bloc.add(AccountEvent());
         break;
 
       default:

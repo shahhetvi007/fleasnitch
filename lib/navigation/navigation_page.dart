@@ -1,4 +1,5 @@
 import 'package:fleasnitch/bloc/main_bloc.dart';
+import 'package:fleasnitch/ui/screens/account/account_screen.dart';
 import 'package:fleasnitch/ui/screens/cart/add_new_address_screen.dart';
 import 'package:fleasnitch/ui/screens/cart/cart_screen.dart';
 import 'package:fleasnitch/ui/screens/cart/delivery_address_screen.dart';
@@ -7,6 +8,7 @@ import 'package:fleasnitch/ui/screens/categories/category_screen.dart';
 import 'package:fleasnitch/ui/screens/categories/sub_category_screen.dart';
 import 'package:fleasnitch/ui/screens/home/home_screen.dart';
 import 'package:fleasnitch/ui/screens/login/login_screen.dart';
+import 'package:fleasnitch/ui/screens/notifications/notification_screen.dart';
 import 'package:fleasnitch/ui/screens/products/product_detail_screen.dart';
 import 'package:fleasnitch/ui/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +50,10 @@ class _NavigationPageState extends State<NavigationPage> {
             return DeliveryAddressScreen();
           } else if (state == MainStates.PaymentMethod) {
             return PaymentMethodScreen();
+          } else if (state == MainStates.Notification) {
+            return NotificationScreen();
+          } else if (state == MainStates.Account) {
+            return AccountScreen();
           } else if (state == MainStates.LoggedLoading) {
             return Scaffold(
               body: Center(

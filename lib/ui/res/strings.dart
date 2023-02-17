@@ -87,5 +87,11 @@ const String yourWishlist = "Your Wishlist";
 const String yourOrders = "Your Orders";
 const String logout = "Logout";
 
+//orders
+const String searchByCustomerOrProduct = "Search by Customer, Product or Order ID";
+const String supplier = "Supplier";
+const String rateYourExperience = "Rate your experience";
+const String orderDetails = "Order Details";
+
 //products
 const String dress = "Dresses";

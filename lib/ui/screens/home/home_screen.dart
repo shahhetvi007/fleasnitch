@@ -1,5 +1,4 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:fleasnitch/base/base_screen.dart';
 import 'package:fleasnitch/bloc/main_bloc.dart';
 import 'package:fleasnitch/ui/res/color_resources.dart';

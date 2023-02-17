@@ -51,3 +51,11 @@ class NotificationEvent extends MainEvent {
 class AccountEvent extends MainEvent {
   AccountEvent();
 }
+
+class OrdersEvent extends MainEvent {
+  OrdersEvent();
+}
+
+class OrderDetailEvent extends MainEvent {
+  OrderDetailEvent();
+}

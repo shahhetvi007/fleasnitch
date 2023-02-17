@@ -826,7 +826,7 @@ class _BottomNavState extends State<BottomNav> {
         break;
 
       case 3:
-        bloc.add(HomeScreenEvent());
+        bloc.add(OrdersEvent());
         break;
 
       case 4:

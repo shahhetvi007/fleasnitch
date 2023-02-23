@@ -1,7 +1,8 @@
+import 'package:easy_stepper/easy_stepper.dart';
 import 'package:fleasnitch/bloc/main_bloc.dart';
 import 'package:fleasnitch/ui/res/color_resources.dart';
-import 'package:flutter/material.dart';
-import 'package:status_change/status_change.dart';
+import 'package:im_stepper/stepper.dart';
+// import 'package:status_change/status_change.dart';
 
 import '../../../base/base_screen.dart';
 import '../../../utils/common_widgets.dart';
@@ -15,33 +16,6 @@ class CartScreen extends BaseStatefulWidget {
 }
 
 class _CartScreenState extends BaseState<CartScreen> with BasicScreen {
-  int _processIndex = 1;
-  Color getColor(int index) {
-    if (index == _processIndex) {
-      return primaryColor;
-    } else if (index < _processIndex) {
-      return secondaryColor;
-    } else {
-      return secondaryDarkColor;
-    }
-  }
-
-  final _processes = [
-    'Order Signed',
-    'Order Processed',
-    'Shipped ',
-    'Out for delivery ',
-    'Delivered ',
-  ];
-
-  final _content = [
-    '20/18',
-    '20/18',
-    '20/18',
-    '20/18',
-    '20/18',
-  ];
-
   @override
   Widget buildBody(BuildContext context) {
     return SafeArea(
@@ -74,91 +48,24 @@ class _CartScreenState extends BaseState<CartScreen> with BasicScreen {
             Expanded(
               child: SingleChildScrollView(
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: StatusChange.tileBuilder(
-                      theme: StatusChangeThemeData(
-                        direction: Axis.horizontal,
-                        connectorTheme:
-                            const ConnectorThemeData(space: 1.0, thickness: 1.0),
-                      ),
-                      builder: StatusChangeTileBuilder.connected(
-                        lineWidgetBuilder: (index) {
-                          print('index');
-                          print(index);
-                          if (index != null || index > 0) {
-                            if (index == _processIndex) {
-                              final prevColor = getColor(index - 1);
-                              return DecoratedLineConnector(
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [prevColor, getColor(index + 1)],
-                                  ),
-                                ),
-                              );
-                            } else {
-                              return SolidLineConnector(
-                                color: getColor(index),
-                              );
-                            }
-                          } else {
-                            return null;
-                          }
-                        },
-                        itemWidth: (_) =>
-                            MediaQuery.of(context).size.width / _processes.length,
-                        contentWidgetBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Text(
-                              _processes[index],
-                              style: const TextStyle(
-                                color: Colors
-                                    .blue, // change color with dynamic color --> can find it with example section
-                              ),
-                            ),
-                          );
-                        },
-                        nameWidgetBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Text(
-                              _content[index],
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: getColor(index),
-                              ),
-                            ),
-                          );
-                        },
-                        indicatorWidgetBuilder: (_, index) {
-                          if (index <= _processIndex) {
-                            return DotIndicator(
-                              size: 35.0,
-                              border: Border.all(color: Colors.teal, width: 1),
-                              child: Padding(
-                                padding: const EdgeInsets.all(6.0),
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.teal,
-                                  ),
-                                ),
-                              ),
-                            );
-                          } else {
-                            return const OutlinedDotIndicator(
-                              size: 30,
-                              borderWidth: 1.0,
-                              color: secondaryDarkColor,
-                            );
-                          }
-                        },
-                        itemCount: _processes.length,
-                      ),
-                    ),
-                  ),
+                  cartSteps(0),
+                  const Divider(thickness: 0.5, height: 1),
+                  // Container(
+                  //   height: 100,
+                  //   child: IconStepper(
+                  //     activeStep: 0,
+                  //     icons: const [
+                  //       Icon(Icons.shopping_cart),
+                  //       Icon(Icons.location_on),
+                  //       Icon(Icons.money_outlined),
+                  //       Icon(Icons.summarize),
+                  //     ],
+                  //     stepRadius: size.width * 0.05,
+                  //     scrollingDisabled: true,
+                  //     enableNextPreviousButtons: false,
+                  //
+                  //   ),
+                  // ),
                   cartItem(
                       context,
                       IC_FASHION,

@@ -34,6 +34,7 @@ const String productDetails = "Product Details";
 const String addToCart = "Add to Cart";
 const String buyNow = "Buy Now";
 const String remove = "Remove";
+const String summary = "Summary";
 
 //cart item
 const String cart = "Cart";
@@ -70,6 +71,7 @@ const String saveAddressAndContinue = "Save Address and Continue";
 //payment method
 const String paymentMethod = "Payment Method";
 const String makePayment = "Make Payment";
+const String payment = "Payment";
 
 //Categories
 const String mobiles = "Mobiles";
@@ -92,6 +94,12 @@ const String searchByCustomerOrProduct = "Search by Customer, Product or Order I
 const String supplier = "Supplier";
 const String rateYourExperience = "Rate your experience";
 const String orderDetails = "Order Details";
+const String orderTracking = "Order Tracking";
+const String returnExchangeOrder = "Return / Exchange Order";
+
+//order summary
+const String orderSummary = "Order Summary";
+const String estimatedDelivery = "Estimated Delivery By";
 
 //products
 const String dress = "Dresses";

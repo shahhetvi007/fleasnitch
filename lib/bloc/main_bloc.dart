@@ -14,6 +14,7 @@ enum MainStates {
   AddDeliveryAddress,
   DeliveryAddress,
   PaymentMethod,
+  OrderSummary,
   Notification,
   Account,
   Orders,
@@ -25,7 +26,7 @@ class MainBloc extends Bloc<MainEvent, MainStates> {
   MainBloc() : super(MainStates.SplashIn);
 
   init() {
-    add(OrdersEvent());
+    add(OrderSummaryEvent());
   }
 
   @override
@@ -72,6 +73,9 @@ class MainBloc extends Bloc<MainEvent, MainStates> {
     } else if (event is OrderDetailEvent) {
       yield MainStates.LoggedLoading;
       yield MainStates.OrderDetail;
+    } else if (event is OrderSummaryEvent) {
+      yield MainStates.LoggedLoading;
+      yield MainStates.OrderSummary;
     }
   }
 }

@@ -44,6 +44,10 @@ class PaymentEvent extends MainEvent {
   PaymentEvent();
 }
 
+class OrderSummaryEvent extends MainEvent {
+  OrderSummaryEvent();
+}
+
 class NotificationEvent extends MainEvent {
   NotificationEvent();
 }

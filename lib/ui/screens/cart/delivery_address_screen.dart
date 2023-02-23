@@ -70,6 +70,10 @@ class _DeliveryAddressScreenState extends BaseState<DeliveryAddressScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              cartSteps(1),
+              const Divider(
+                thickness: 0.5,
+              ),
               Container(
                 margin: const EdgeInsets.only(
                     top: VERTICAL_PADDING * 1.5,

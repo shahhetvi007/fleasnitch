@@ -4,8 +4,10 @@ import 'package:fleasnitch/ui/res/color_resources.dart';
 import 'package:fleasnitch/ui/res/dimen_resources.dart';
 import 'package:fleasnitch/ui/res/image_resources.dart';
 import 'package:fleasnitch/ui/res/strings.dart';
+import 'package:fleasnitch/ui/screens/orders/order_detail_screen.dart';
 import 'package:fleasnitch/utils/common_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class OrdersScreen extends BaseStatefulWidget {
   @override
@@ -201,16 +203,20 @@ class _OrdersScreenState extends BaseState<OrdersScreen> with BasicScreen {
                 const Divider(color: itemBackground, thickness: 1.5),
                 getSmallText(rateYourExperience,
                     weight: FontWeight.w700, fontSize: CATEGORY_TEXT_SIZE),
-                SizedBox(
-                  height: 30,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (ctx, i) {
-                      return Icon(Icons.star_rounded, color: grey.withOpacity(0.3));
-                    },
-                    itemCount: 5,
-                  ),
-                ),
+                RatingBar.builder(
+                  itemBuilder: (ctx, i) {
+                    return const Icon(
+                      Icons.star_rounded,
+                      color: primaryColor,
+                    );
+                  },
+                  onRatingUpdate: (rating) {
+                    print(rating);
+                  },
+                  itemSize: 25,
+                  unratedColor: grey.withOpacity(0.3),
+                  glowColor: primaryColor,
+                )
               ],
             ),
           ),

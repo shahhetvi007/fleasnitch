@@ -1,4 +1,5 @@
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
+import 'package:easy_stepper/easy_stepper.dart';
 import 'package:fleasnitch/bloc/main_bloc.dart';
 import 'package:fleasnitch/ui/res/color_resources.dart';
 import 'package:fleasnitch/ui/res/dimen_resources.dart';
@@ -936,5 +937,37 @@ Widget categoryGrid(MainBloc bloc, BuildContext context, String categoryName) {
             }),
       ),
     ],
+  );
+}
+
+Widget cartSteps(int currentStep) {
+  List<EasyStep> getSteps() => [
+        const EasyStep(icon: Icon(Icons.shopping_cart), title: cart),
+        const EasyStep(icon: Icon(Icons.location_on), title: address),
+        const EasyStep(icon: Icon(Icons.money_outlined), title: payment),
+        const EasyStep(icon: Icon(Icons.summarize), title: summary),
+      ];
+  return Container(
+    color: colorWhite,
+    height: deviceHeight * 0.085,
+    child: EasyStepper(
+      steps: getSteps(),
+      activeStep: currentStep,
+      showLoadingAnimation: false,
+      stepRadius: deviceWidth * 0.04,
+      activeStepBorderColor: secondaryDarkColor,
+      activeStepIconColor: secondaryDarkColor,
+      activeStepTextColor: secondaryDarkColor,
+      // activeStepBorderType: BorderType.normal,
+      finishedStepBackgroundColor: secondaryDarkColor,
+      finishedStepTextColor: secondaryDarkColor,
+      defaultStepBorderType: BorderType.normal,
+      lineColor: grey,
+      lineType: LineType.normal,
+      lineLength: deviceWidth * 0.16,
+      borderThickness: 5,
+      // padding: VERTICAL_PADDING,
+      disableScroll: true,
+    ),
   );
 }

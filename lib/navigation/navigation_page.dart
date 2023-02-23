@@ -4,6 +4,7 @@ import 'package:fleasnitch/ui/screens/cart/add_new_address_screen.dart';
 import 'package:fleasnitch/ui/screens/cart/cart_screen.dart';
 import 'package:fleasnitch/ui/screens/cart/delivery_address_screen.dart';
 import 'package:fleasnitch/ui/screens/cart/payment_method_screen.dart';
+import 'package:fleasnitch/ui/screens/cart/summary_screen.dart';
 import 'package:fleasnitch/ui/screens/categories/category_screen.dart';
 import 'package:fleasnitch/ui/screens/categories/sub_category_screen.dart';
 import 'package:fleasnitch/ui/screens/home/home_screen.dart';
@@ -52,6 +53,8 @@ class _NavigationPageState extends State<NavigationPage> {
             return DeliveryAddressScreen();
           } else if (state == MainStates.PaymentMethod) {
             return PaymentMethodScreen();
+          } else if (state == MainStates.OrderSummary) {
+            return SummaryScreen();
           } else if (state == MainStates.Notification) {
             return NotificationScreen();
           } else if (state == MainStates.Account) {

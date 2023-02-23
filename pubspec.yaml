@@ -42,7 +42,10 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   flutter_keyboard_visibility: ^5.4.0
   expandable_page_view: ^1.0.17
-  status_change: ^2.0.0
+  easy_stepper: ^0.3.2
+  im_stepper: ^1.0.1+1
+  flutter_rating_bar: ^4.0.1
+  order_tracker: ^0.0.2
 
 dev_dependencies:
   flutter_test:

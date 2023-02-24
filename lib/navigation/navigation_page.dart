@@ -7,6 +7,7 @@ import 'package:fleasnitch/ui/screens/cart/payment_method_screen.dart';
 import 'package:fleasnitch/ui/screens/cart/summary_screen.dart';
 import 'package:fleasnitch/ui/screens/categories/category_screen.dart';
 import 'package:fleasnitch/ui/screens/categories/sub_category_screen.dart';
+import 'package:fleasnitch/ui/screens/favorites/favorites_screen.dart';
 import 'package:fleasnitch/ui/screens/home/home_screen.dart';
 import 'package:fleasnitch/ui/screens/login/login_screen.dart';
 import 'package:fleasnitch/ui/screens/notifications/notification_screen.dart';
@@ -63,6 +64,8 @@ class _NavigationPageState extends State<NavigationPage> {
             return OrdersScreen();
           } else if (state == MainStates.OrderDetail) {
             return OrderDetailScreen();
+          } else if (state == MainStates.Favorites) {
+            return FavoritesScreen();
           } else if (state == MainStates.LoggedLoading) {
             return Scaffold(
               body: Center(

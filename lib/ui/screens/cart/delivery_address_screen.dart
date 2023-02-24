@@ -1,5 +1,6 @@
 import 'package:fleasnitch/base/base_screen.dart';
 import 'package:fleasnitch/bloc/main_bloc.dart';
+import 'package:fleasnitch/models/address.dart';
 import 'package:fleasnitch/ui/res/color_resources.dart';
 import 'package:fleasnitch/ui/res/dimen_resources.dart';
 import 'package:fleasnitch/ui/res/strings.dart';
@@ -13,28 +14,41 @@ class DeliveryAddressScreen extends BaseStatefulWidget {
 
 class _DeliveryAddressScreenState extends BaseState<DeliveryAddressScreen>
     with BasicScreen {
-  List<Map<String, Object>> address = [
-    {
-      'name': 'Hetvi Shah',
-      'address': 'Iris Watson P.O. Box 283 8562 Fusce Rd.Frederick Nebraska 20620',
-      'number': '9876541230'
-    },
-    {
-      'name': 'Hrithik Roshan',
-      'address': 'Robert Robertson, 1234 NW Bobcat Lane, St. Robert,',
-      'number': '9876541230'
-    },
-    {
-      'name': 'Deepika',
-      'address': 'Cecilia Chapman 711-2880 Nulla St.Mankato Mississippi 96522',
-      'number': '9876541230'
-    },
+  List<Address> addresses = [
+    Address(
+        name: 'Hetvi Shah',
+        buildingName: 'Iris Watson',
+        roadName: ' Fusce Rd',
+        pincode: '20620',
+        city: 'Frederick',
+        state: 'Nebraska',
+        mobileNo: '9876541230',
+        isSelected: true),
+    Address(
+        name: 'Hrithik',
+        houseNo: 'Robert Robertson',
+        roadName: ' NW Bobcat Lane',
+        pincode: '206205',
+        city: 'St. Robert',
+        state: 'Nebraska',
+        mobileNo: '9876541230',
+        isSelected: false),
+    Address(
+        name: 'Deepika',
+        houseNo: 'Cecilia Chapman',
+        roadName: ' 711-2880 Nulla',
+        pincode: '96522',
+        city: 'St.Mankato',
+        state: 'Mississippi',
+        mobileNo: '9876541230',
+        isSelected: false),
   ];
-  Object? selectedVal;
+
+  late Address selectedAdd;
 
   @override
   void initState() {
-    selectedVal = address[0].values.first;
+    selectedAdd = addresses[0];
     super.initState();
   }
 
@@ -143,9 +157,22 @@ class _DeliveryAddressScreenState extends BaseState<DeliveryAddressScreen>
               ListView.separated(
                 shrinkWrap: true,
                 itemBuilder: (ctx, i) {
-                  return customRadio(address[i], selectedVal!);
+                  return customRadio(
+                      address: addresses[i],
+                      val: addresses[i],
+                      groupVal: selectedAdd,
+                      isSelected: addresses[i].isSelected,
+                      onChanged: (val) {
+                        setState(() {
+                          selectedAdd = val;
+                          for (var element in addresses) {
+                            element.isSelected = false;
+                          }
+                          addresses[i].isSelected = true;
+                        });
+                      });
                 },
-                itemCount: address.length,
+                itemCount: addresses.length,
                 separatorBuilder: (ctx, i) {
                   return const Divider(thickness: 0.5);
                 },
@@ -157,8 +184,12 @@ class _DeliveryAddressScreenState extends BaseState<DeliveryAddressScreen>
     );
   }
 
-  Widget customRadio(Map<String, Object> address, Object val) {
-    bool isSelected = selectedVal.toString() == address.toString();
+  Widget customRadio(
+      {required Address address,
+      dynamic val,
+      dynamic groupVal,
+      required bool isSelected,
+      required final ValueChanged<dynamic> onChanged}) {
     return Container(
       color: isSelected ? secondaryColor.withOpacity(0.5) : colorWhite,
       padding: const EdgeInsets.symmetric(
@@ -174,21 +205,37 @@ class _DeliveryAddressScreenState extends BaseState<DeliveryAddressScreen>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    getSmallText(address['name'].toString(),
+                    getSmallText(address.name.toString(),
                         weight: FontWeight.w800, fontSize: HOME_TITLE_SIZE),
-                    getSmallText(address['address'].toString()),
-                    getSmallText(address['number'].toString()),
+                    Wrap(
+                      children: [
+                        getSmallText(address.houseNo != null
+                            ? address.houseNo.toString() + " "
+                            : ""),
+                        getSmallText(address.buildingName != null
+                            ? address.buildingName.toString() + ""
+                            : ""),
+                        getSmallText(address.roadName != null
+                            ? address.roadName.toString() + ", "
+                            : ""),
+                        getSmallText(
+                            address.area != null ? address.area.toString() + ", " : ""),
+                        getSmallText(address.city.toString() + ", "),
+                        getSmallText(address.state.toString() + " - "),
+                        getSmallText(address.pincode.toString() + " "),
+                      ],
+                    ),
+                    getSmallText(address.mobileNo.toString()),
                   ],
                 ),
               ),
               Expanded(
                 child: Radio(
-                  value: address,
-                  groupValue: val,
-                  onChanged: (value) {
-                    setSelectedVal(value!);
-                  },
+                  value: val,
+                  groupValue: groupVal,
+                  onChanged: onChanged,
                   activeColor: primaryColor,
+                  // toggleable: true,
                 ),
               ),
             ],
@@ -221,11 +268,5 @@ class _DeliveryAddressScreenState extends BaseState<DeliveryAddressScreen>
         ],
       ),
     );
-  }
-
-  setSelectedVal(Object value) {
-    setState(() {
-      selectedVal = value;
-    });
   }
 }

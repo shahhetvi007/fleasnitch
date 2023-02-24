@@ -64,7 +64,7 @@ class _AccountScreenState extends BaseState<AccountScreen> with BasicScreen {
                     getSmallText(editProfile,
                         fontSize: CATEGORY_TEXT_SIZE,
                         weight: FontWeight.w600,
-                        color: secondaryColor),
+                        color: secondaryDarkColor),
                   ],
                 ),
               ],
@@ -94,6 +94,9 @@ class _AccountScreenState extends BaseState<AccountScreen> with BasicScreen {
               Icons.favorite_border,
               color: secondaryDarkColor,
             ),
+            onTap: () {
+              bloc.add(FavoritesEvent());
+            },
             title: getSmallText(yourWishlist, weight: FontWeight.w600),
             tileColor: colorWhite,
           ),
@@ -154,7 +157,7 @@ class _AccountScreenState extends BaseState<AccountScreen> with BasicScreen {
                 bottom: 0,
                 child: Icon(
                   Icons.person_add_alt_outlined,
-                  color: secondaryColor,
+                  color: secondaryDarkColor,
                   size: 24,
                 ),
               )

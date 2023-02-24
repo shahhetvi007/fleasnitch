@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fleasnitch/bloc/main_bloc.dart';
+import 'package:fleasnitch/models/size.dart';
 import 'package:fleasnitch/ui/res/color_resources.dart';
 import 'package:fleasnitch/ui/res/dimen_resources.dart';
 import 'package:fleasnitch/ui/res/image_resources.dart';
@@ -22,7 +23,17 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> with Basi
     DRESS,
     DRESS,
   ];
-  List sizeList = ['S', 'M', 'L', 'XL', 'XXL', 'DSDS', 'SDSD', 'FDF', 'SFS'];
+  List<ProductSize> sizeList = [
+    ProductSize('S'),
+    ProductSize('M'),
+    ProductSize('L'),
+    ProductSize('XL'),
+    ProductSize('XXL'),
+    ProductSize('DSDS'),
+    ProductSize('SDSD'),
+    ProductSize('FDF'),
+    ProductSize('SFS'),
+  ];
   @override
   Widget buildBody(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -231,7 +242,18 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> with Basi
                         vertical: VERTICAL_PADDING, horizontal: HORIZONTAL_PADDING),
                     child: ListView.builder(
                       itemBuilder: (ctx, index) {
-                        return sizeContainer(sizeList[index]);
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              for (var element in sizeList) {
+                                element.isSelected = false;
+                              }
+                              sizeList[index].isSelected = true;
+                            });
+                          },
+                          child: sizeContainer(sizeList[index].sizeText,
+                              isSelected: sizeList[index].isSelected),
+                        );
                       },
                       itemCount: sizeList.length,
                       scrollDirection: Axis.horizontal,

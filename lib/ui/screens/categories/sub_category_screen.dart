@@ -83,7 +83,7 @@ class _SubCategoryScreenState extends BaseState<SubCategoryScreen> with BasicScr
                 itemCount: 10,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2, childAspectRatio: 0.7),
-                itemBuilder: (ctx, index) => productItem(bloc)),
+                itemBuilder: (ctx, index) => const ProductItem()),
           ),
         ],
       ),

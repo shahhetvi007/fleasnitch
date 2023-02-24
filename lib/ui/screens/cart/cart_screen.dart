@@ -184,6 +184,8 @@ class _CartScreenState extends BaseState<CartScreen> with BasicScreen {
                             ),
                           ],
                         ),
+                        const SizedBox(height: VERTICAL_PADDING * 2),
+                        discountContainer("100"),
                       ],
                     ),
                   ),

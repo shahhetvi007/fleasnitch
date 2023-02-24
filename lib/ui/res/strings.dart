@@ -67,6 +67,7 @@ const String city = "City";
 const String state = "State";
 const String nearbyLocation = "Nearby Location (optional)";
 const String saveAddressAndContinue = "Save Address and Continue";
+const String typeOfAddress = "Type of Address";
 
 //payment method
 const String paymentMethod = "Payment Method";
@@ -99,7 +100,10 @@ const String returnExchangeOrder = "Return / Exchange Order";
 
 //order summary
 const String orderSummary = "Order Summary";
-const String estimatedDelivery = "Estimated Delivery By";
+const String estimatedDelivery = "Estimated Delivery By ";
+const String payNow = "Pay Now";
+const String discountText = "Yay! Your total discount is ";
 
 //products
 const String dress = "Dresses";
+const String myProducts = "My Products";

@@ -37,7 +37,11 @@ class _HomeScreenState extends BaseState<HomeScreen> with BasicScreen {
             ),
             centerTitle: true,
             actions: [
-              IconButton(onPressed: () {}, icon: const Icon(Icons.favorite_border)),
+              IconButton(
+                  onPressed: () {
+                    bloc.add(FavoritesEvent());
+                  },
+                  icon: const Icon(Icons.favorite_border)),
               IconButton(
                   onPressed: () {
                     bloc.add(CartEvent());
@@ -203,7 +207,7 @@ class _HomeScreenState extends BaseState<HomeScreen> with BasicScreen {
                       itemCount: 10,
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2, childAspectRatio: 0.7),
-                      itemBuilder: (ctx, index) => productItem(bloc)),
+                      itemBuilder: (ctx, index) => const ProductItem()),
                 ],
               ),
             ),

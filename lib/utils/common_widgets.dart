@@ -8,6 +8,8 @@ import 'package:fleasnitch/ui/res/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../models/size.dart';
+
 Text getSmallText(String text,
     {bool bold = false,
     Color color = colorBlack,
@@ -507,88 +509,128 @@ Widget popularProductItem() {
   );
 }
 
-Widget productItem(MainBloc bloc) {
-  return GestureDetector(
-    onTap: () {
-      bloc.add(ProductDetailEvent());
-    },
-    child: Card(
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Expanded(
-          flex: 5,
-          child: SizedBox(
-            width: double.infinity,
-            child: Image.asset(
-              DRESS,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 2,
-          child: Container(
-            margin: const EdgeInsets.all(VERTICAL_PADDING / 1.5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+class ProductItem extends StatefulWidget {
+  const ProductItem({Key? key}) : super(key: key);
+
+  @override
+  State<ProductItem> createState() => _ProductItemState();
+}
+
+class _ProductItemState extends State<ProductItem> {
+  bool isLiked = false;
+  MainBloc bloc = MainBloc();
+  @override
+  Widget build(BuildContext context) {
+    bloc = BlocProvider.of<MainBloc>(context);
+    return GestureDetector(
+      onTap: () {
+        bloc.add(ProductDetailEvent());
+      },
+      child: Card(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Expanded(
+            flex: 5,
+            child: Stack(
               children: [
-                getSmallText('Yellow Attractive Dress',
-                    color: grey,
-                    fontSize: SMALL_TEXT,
-                    weight: FontWeight.w600,
-                    maxLines: 1),
-                Row(
-                  children: [
-                    Flexible(
-                      child: getSmallText(
-                        '₹365',
-                        color: colorBlack,
-                        weight: FontWeight.w700,
-                        maxLines: 1,
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    Flexible(
-                      child: getSmallText(
-                        '400',
-                        color: grey,
-                        fontSize: SMALL_TEXT,
-                        lineThrough: true,
-                        maxLines: 1,
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Flexible(
-                      child: getSmallText(
-                        '15% off',
-                        color: grey,
-                        fontSize: SMALL_TEXT,
-                        maxLines: 1,
-                      ),
-                    ),
-                  ],
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL_PADDING / 2),
-                  decoration: BoxDecoration(
-                    color: grey.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(BORDER_RADIUS / 2),
+                SizedBox(
+                  width: double.infinity,
+                  child: Image.asset(
+                    DRESS,
+                    fit: BoxFit.cover,
                   ),
-                  child: getSmallText(
-                    freeDelivery,
-                    color: colorBlack,
-                    fontSize: SMALLER_TEXT,
-                    weight: FontWeight.w600,
-                    maxLines: 1,
+                ),
+                Positioned(
+                  right: 16,
+                  top: 10,
+                  child: Container(
+                    padding: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: colorWhite.withOpacity(0.8),
+                    ),
+                    child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isLiked = !isLiked;
+                          });
+                        },
+                        child: Icon(
+                          isLiked ? Icons.favorite : Icons.favorite_border,
+                          color: isLiked ? Colors.red : grey,
+                          size: 20,
+                        )),
                   ),
                 ),
               ],
             ),
           ),
-        )
-      ]),
-    ),
-  );
+          Expanded(
+            flex: 2,
+            child: Container(
+              margin: const EdgeInsets.all(VERTICAL_PADDING / 1.5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  getSmallText('Yellow Attractive Dress',
+                      color: grey,
+                      fontSize: SMALL_TEXT,
+                      weight: FontWeight.w600,
+                      maxLines: 1),
+                  Row(
+                    children: [
+                      Flexible(
+                        child: getSmallText(
+                          '₹365',
+                          color: colorBlack,
+                          weight: FontWeight.w700,
+                          maxLines: 1,
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      Flexible(
+                        child: getSmallText(
+                          '400',
+                          color: grey,
+                          fontSize: SMALL_TEXT,
+                          lineThrough: true,
+                          maxLines: 1,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Flexible(
+                        child: getSmallText(
+                          '15% off',
+                          color: grey,
+                          fontSize: SMALL_TEXT,
+                          maxLines: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: HORIZONTAL_PADDING / 2),
+                    decoration: BoxDecoration(
+                      color: grey.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(BORDER_RADIUS / 2),
+                    ),
+                    child: getSmallText(
+                      freeDelivery,
+                      color: colorBlack,
+                      fontSize: SMALLER_TEXT,
+                      weight: FontWeight.w600,
+                      maxLines: 1,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ]),
+      ),
+    );
+  }
 }
 
 Future removeItemBottomSheet(BuildContext context, String image, String itemDescription,
@@ -721,7 +763,7 @@ Future removeItemBottomSheet(BuildContext context, String image, String itemDesc
       });
 }
 
-Future addToCartBottomSheet(BuildContext context, List sizeList) {
+Future addToCartBottomSheet(BuildContext context, List<ProductSize> sizeList) {
   return showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
@@ -755,7 +797,18 @@ Future addToCartBottomSheet(BuildContext context, List sizeList) {
               const SizedBox(height: VERTICAL_PADDING),
               Wrap(
                 children: [
-                  for (int i = 0; i < sizeList.length; i++) sizeContainer(sizeList[i]),
+                  for (int i = 0; i < sizeList.length; i++)
+                    GestureDetector(
+                      onTap: () {
+                        // setState(() {
+                        for (var element in sizeList) {
+                          element.isSelected = false;
+                        }
+                        sizeList[i].isSelected = true;
+                        // });
+                      },
+                      child: sizeContainer(sizeList[i].sizeText),
+                    ),
                 ],
               ),
               const SizedBox(height: VERTICAL_PADDING),
@@ -779,7 +832,7 @@ Future addToCartBottomSheet(BuildContext context, List sizeList) {
       });
 }
 
-Widget sizeContainer(String size) {
+Widget sizeContainer(String size, {bool isSelected = false}) {
   return Container(
     height: 35,
     padding: const EdgeInsets.symmetric(
@@ -787,7 +840,8 @@ Widget sizeContainer(String size) {
     margin: const EdgeInsets.all(VERTICAL_PADDING),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(BORDER_RADIUS * 2),
-      border: Border.all(color: colorBlack),
+      border: Border.all(color: isSelected ? primaryColor : colorBlack),
+      color: isSelected ? primaryColor.withOpacity(0.2) : colorWhite,
     ),
     child: getSmallText(
       size,
@@ -968,6 +1022,24 @@ Widget cartSteps(int currentStep) {
       borderThickness: 5,
       // padding: VERTICAL_PADDING,
       disableScroll: true,
+    ),
+  );
+}
+
+Widget discountContainer(String discount) {
+  return Container(
+    color: secondaryDarkColor.withOpacity(0.1),
+    padding: const EdgeInsets.symmetric(
+        vertical: VERTICAL_PADDING, horizontal: HORIZONTAL_PADDING),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset(IC_DISCOUNT, color: secondaryDarkColor),
+        const SizedBox(width: 4),
+        getSmallText(discountText,
+            fontSize: CATEGORY_TEXT_SIZE, color: secondaryDarkColor),
+        getSmallText(discount, fontSize: CATEGORY_TEXT_SIZE, color: secondaryDarkColor),
+      ],
     ),
   );
 }

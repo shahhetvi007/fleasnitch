@@ -90,6 +90,7 @@ class _AddNewAddressScreenState extends BaseState<AddNewAddressScreen> with Basi
                         padding: const EdgeInsets.symmetric(
                             vertical: VERTICAL_PADDING, horizontal: HORIZONTAL_PADDING),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(VERTICAL_PADDING),
@@ -149,7 +150,12 @@ class _AddNewAddressScreenState extends BaseState<AddNewAddressScreen> with Basi
                               labelText: nearbyLocation,
                               border: false,
                             ),
-                            const SizedBox(height: VERTICAL_PADDING * 1.5),
+                            const SizedBox(height: VERTICAL_PADDING * 2),
+                            getSmallText(
+                              typeOfAddress,
+                              fontSize: CATEGORY_TEXT_SIZE,
+                              weight: FontWeight.w700,
+                            ),
                           ],
                         ),
                       ),

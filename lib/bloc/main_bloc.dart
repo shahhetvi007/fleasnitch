@@ -19,6 +19,7 @@ enum MainStates {
   Account,
   Orders,
   OrderDetail,
+  Favorites,
   LoggedLoading
 }
 
@@ -26,7 +27,7 @@ class MainBloc extends Bloc<MainEvent, MainStates> {
   MainBloc() : super(MainStates.SplashIn);
 
   init() {
-    add(OrderSummaryEvent());
+    add(ProductDetailEvent());
   }
 
   @override
@@ -76,6 +77,9 @@ class MainBloc extends Bloc<MainEvent, MainStates> {
     } else if (event is OrderSummaryEvent) {
       yield MainStates.LoggedLoading;
       yield MainStates.OrderSummary;
+    } else if (event is FavoritesEvent) {
+      yield MainStates.LoggedLoading;
+      yield MainStates.Favorites;
     }
   }
 }

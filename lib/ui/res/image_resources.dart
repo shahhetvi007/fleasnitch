@@ -23,6 +23,7 @@ const IC_FASHION = "assets/images/ic_fashion.png";
 const IC_GROCERY = "assets/images/ic_grocery.png";
 const IC_PHARMACY = "assets/images/ic_pharmacy.png";
 const IC_STORE = "assets/images/ic_store.png";
+const IC_DISCOUNT = "assets/images/ic_discount.png";
 
 //product items
 const IC_DRESS = "assets/images/dress.png";

@@ -344,6 +344,8 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> with BasicScr
                       ),
                     ],
                   ),
+                  const SizedBox(height: VERTICAL_PADDING * 2),
+                  discountContainer("100"),
                 ],
               ),
             ),

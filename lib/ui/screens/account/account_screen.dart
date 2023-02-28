@@ -78,6 +78,9 @@ class _AccountScreenState extends BaseState<AccountScreen> with BasicScreen {
             ),
             title: getSmallText(savedAddresses, weight: FontWeight.w600),
             tileColor: colorWhite,
+            onTap: () {
+              bloc.add(SavedAddressEvent());
+            },
           ),
           const SizedBox(height: VERTICAL_PADDING / 2),
           ListTile(
@@ -108,6 +111,9 @@ class _AccountScreenState extends BaseState<AccountScreen> with BasicScreen {
             ),
             title: getSmallText(yourOrders, weight: FontWeight.w600),
             tileColor: colorWhite,
+            onTap: () {
+              bloc.add(OrdersEvent());
+            },
           ),
           const SizedBox(height: VERTICAL_PADDING / 2),
           ListTile(

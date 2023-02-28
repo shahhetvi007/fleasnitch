@@ -1,6 +1,7 @@
 const SHOPPING_GIF = "assets/images/shopping.gif";
 const PHONE_ICON = "assets/images/phone.png";
 const GOOGLE_ICON = "assets/images/google.png";
+const SHOPPING_DOODLE = "assets/images/shopping_doodle2.jpg";
 
 //Rive Asset
 const CHECK_RIVE = "assets/RiveAssets/check.riv";

@@ -1,4 +1,4 @@
-const String appName = "FLEASNITCH";
+const String appName = "Fleasnitch";
 const String login = "Login";
 const String tagline = "Experience the lifestyle.";
 const String or = "OR";
@@ -68,6 +68,7 @@ const String state = "State";
 const String nearbyLocation = "Nearby Location (optional)";
 const String saveAddressAndContinue = "Save Address and Continue";
 const String typeOfAddress = "Type of Address";
+const String office = "Office";
 
 //payment method
 const String paymentMethod = "Payment Method";
@@ -97,6 +98,7 @@ const String rateYourExperience = "Rate your experience";
 const String orderDetails = "Order Details";
 const String orderTracking = "Order Tracking";
 const String returnExchangeOrder = "Return / Exchange Order";
+const String orderPlacedSuccessfully = "Order Placed Successfully";
 
 //order summary
 const String orderSummary = "Order Summary";
@@ -107,3 +109,4 @@ const String discountText = "Yay! Your total discount is ";
 //products
 const String dress = "Dresses";
 const String myProducts = "My Products";
+const String totalProducts = "Total Products";

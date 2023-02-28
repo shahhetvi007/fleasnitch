@@ -21,6 +21,13 @@ class _SubCategoryScreenState extends BaseState<SubCategoryScreen> with BasicScr
           'Dresses',
           fontSize: APPBAR_FONT_SIZE,
         ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, size: 18),
+          padding: EdgeInsets.zero,
+          onPressed: () {
+            bloc.add(CategoryEvent());
+          },
+        ),
         bottom: const PreferredSize(
           preferredSize: Size(0, 0),
           child: Divider(

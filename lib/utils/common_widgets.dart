@@ -144,21 +144,62 @@ Widget customButton(String text, Function f) {
   );
 }
 
-Widget cartItem(BuildContext context, String image, String itemDescription,
-    String itemPrice, String sizeSelected, String qtySelected, String soldByName) {
-  return Container(
-    color: colorWhite,
-    padding: const EdgeInsets.only(bottom: VERTICAL_PADDING, top: VERTICAL_PADDING * 2),
-    margin: const EdgeInsets.only(bottom: 4),
-    child: Column(
-      children: [
-        // const SizedBox(height: VERTICAL_PADDING * 2),
-        Container(
-          width: double.infinity,
-          // padding: const EdgeInsets.all(VERTICAL_PADDING / 1.5),
-          margin: const EdgeInsets.only(
-              top: VERTICAL_PADDING, left: HORIZONTAL_PADDING, right: HORIZONTAL_PADDING),
-          child: Row(
+class ProductDetailSheet extends StatefulWidget {
+  final String image;
+  final String itemDescription;
+  final String itemPrice;
+  final String selectedSize;
+  final ValueChanged<String> valueChanged;
+  final int quantity;
+  final ValueChanged<int> quantityChanged;
+
+  ProductDetailSheet({
+    required this.image,
+    required this.itemDescription,
+    required this.itemPrice,
+    required this.selectedSize,
+    required this.valueChanged,
+    required this.quantity,
+    required this.quantityChanged,
+  });
+
+  @override
+  State<ProductDetailSheet> createState() => _ProductDetailSheetState();
+}
+
+class _ProductDetailSheetState extends State<ProductDetailSheet> {
+  late String selectedVal;
+  late int qtySelected;
+
+  @override
+  void initState() {
+    selectedVal = widget.selectedSize;
+    qtySelected = widget.quantity;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+          vertical: VERTICAL_PADDING * 2, horizontal: HORIZONTAL_PADDING),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: const Icon(
+                Icons.close,
+                size: 16,
+              ),
+            ),
+          ),
+          const SizedBox(height: VERTICAL_PADDING * 2),
+          Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
@@ -169,7 +210,7 @@ Widget cartItem(BuildContext context, String image, String itemDescription,
                     border: Border.all(color: darkGrey),
                   ),
                   padding: const EdgeInsets.all(VERTICAL_PADDING),
-                  child: Image.asset(image),
+                  child: Image.asset(widget.image),
                 ),
               ),
               const SizedBox(width: HORIZONTAL_PADDING),
@@ -179,246 +220,134 @@ Widget cartItem(BuildContext context, String image, String itemDescription,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     getSmallText(
-                      itemDescription,
+                      widget.itemDescription,
                       color: darkGrey,
                       maxLines: 1,
                       weight: FontWeight.w800,
                       fontSize: CATEGORY_TEXT_SIZE,
                     ),
                     const SizedBox(height: VERTICAL_PADDING / 2),
-                    GestureDetector(
-                      onTap: () {
-                        productDetailBottomSheet(
-                            context, image, itemDescription, itemPrice);
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        color: colorWhite,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                getSmallText(
-                                  itemPrice,
+                    getSmallText(
+                      widget.itemPrice,
+                      color: darkGrey,
+                      maxLines: 1,
+                      fontSize: CATEGORY_TEXT_SIZE,
+                    ),
+                    const SizedBox(height: VERTICAL_PADDING / 2),
+                    Row(
+                      children: [
+                        getSmallText(
+                          size,
+                          color: darkGrey,
+                          fontSize: CATEGORY_TEXT_SIZE,
+                        ),
+                        DropdownButton(
+                            elevation: 6,
+                            borderRadius: BorderRadius.circular(BORDER_RADIUS),
+                            items: sizeList.map<DropdownMenuItem<String>>((e) {
+                              return DropdownMenuItem(
+                                child: getSmallText(
+                                  e.sizeText,
                                   color: darkGrey,
-                                  maxLines: 1,
                                   fontSize: CATEGORY_TEXT_SIZE,
                                 ),
-                                const SizedBox(height: VERTICAL_PADDING / 2),
-                                Row(
-                                  children: [
-                                    getSmallText(
-                                      size,
-                                      color: darkGrey,
-                                      fontSize: CATEGORY_TEXT_SIZE,
-                                    ),
-                                    getSmallText(
-                                      sizeSelected,
-                                      color: darkGrey,
-                                      fontSize: CATEGORY_TEXT_SIZE,
-                                    ),
-                                    const SizedBox(width: HORIZONTAL_PADDING),
-                                    getSmallText(
-                                      qty,
-                                      color: darkGrey,
-                                      fontSize: CATEGORY_TEXT_SIZE,
-                                    ),
-                                    getSmallText(
-                                      qtySelected,
-                                      color: darkGrey,
-                                      fontSize: CATEGORY_TEXT_SIZE,
-                                    ),
-                                  ],
+                                value: e.sizeText,
+                              );
+                            }).toList(),
+                            value: selectedVal,
+                            onChanged: (newVal) {
+                              setState(() {
+                                selectedVal = newVal.toString();
+                              });
+                              widget.valueChanged(selectedVal);
+                            }),
+                        const SizedBox(width: HORIZONTAL_PADDING),
+                        getSmallText(
+                          qty,
+                          color: darkGrey,
+                          fontSize: CATEGORY_TEXT_SIZE,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: grey),
+                            borderRadius: BorderRadius.circular(BORDER_RADIUS / 2),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: HORIZONTAL_PADDING / 2,
+                              vertical: VERTICAL_PADDING / 2),
+                          child: IntrinsicHeight(
+                            child: Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    if (qtySelected > 1) {
+                                      setState(() {
+                                        qtySelected--;
+                                      });
+                                      widget.quantityChanged(qtySelected);
+                                    }
+                                  },
+                                  child: const Icon(
+                                    Icons.remove,
+                                    size: 16,
+                                  ),
                                 ),
-                                const SizedBox(height: VERTICAL_PADDING),
+                                const VerticalDivider(
+                                  thickness: 0.5,
+                                  color: grey,
+                                ),
+                                getSmallText(
+                                  qtySelected.toString(),
+                                  color: darkGrey,
+                                  fontSize: CATEGORY_TEXT_SIZE,
+                                ),
+                                const VerticalDivider(
+                                  thickness: 0.5,
+                                  color: grey,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      qtySelected++;
+                                    });
+                                    widget.quantityChanged(qtySelected);
+                                  },
+                                  child: const Icon(
+                                    Icons.add,
+                                    size: 16,
+                                  ),
+                                ),
                               ],
                             ),
-                            const Icon(
-                              Icons.arrow_forward_ios,
-                              size: 14,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        removeItemBottomSheet(context, image, itemDescription, itemPrice,
-                            sizeSelected, qtySelected);
-                      },
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.close,
-                            size: 16,
                           ),
-                          const SizedBox(width: 4),
-                          getSmallText(
-                            remove,
-                            color: darkGrey,
-                            maxLines: 1,
-                            weight: FontWeight.w700,
-                            fontSize: CATEGORY_TEXT_SIZE,
-                          ),
-                        ],
-                      ),
+                        )
+                      ],
                     ),
                   ],
                 ),
               )
             ],
           ),
-        ),
-        const Divider(thickness: 1),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL_PADDING),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              getSmallText(
-                soldBy + " : " + soldByName,
-                color: darkGrey,
-                fontSize: CATEGORY_TEXT_SIZE,
+          const SizedBox(height: VERTICAL_PADDING),
+          const Divider(thickness: 1),
+          const SizedBox(height: VERTICAL_PADDING),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 40),
               ),
-              getSmallText(
-                freeDelivery,
-                color: darkGrey,
+              child: getSmallText(
+                continueText,
+                weight: FontWeight.w700,
                 fontSize: CATEGORY_TEXT_SIZE,
-              ),
-            ],
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
-Future productDetailBottomSheet(
-    BuildContext context, String image, String itemDescription, String itemPrice) {
-  return showModalBottomSheet(
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(BORDER_RADIUS),
+                color: colorWhite,
+              )),
+        ],
       ),
-      builder: (ctx) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(
-              vertical: VERTICAL_PADDING * 2, horizontal: HORIZONTAL_PADDING),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Icon(
-                    Icons.close,
-                    size: 16,
-                  ),
-                ),
-              ),
-              const SizedBox(height: VERTICAL_PADDING * 2),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(BORDER_RADIUS / 2),
-                        border: Border.all(color: darkGrey),
-                      ),
-                      padding: const EdgeInsets.all(VERTICAL_PADDING),
-                      child: Image.asset(image),
-                    ),
-                  ),
-                  const SizedBox(width: HORIZONTAL_PADDING),
-                  Expanded(
-                    flex: 8,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        getSmallText(
-                          itemDescription,
-                          color: darkGrey,
-                          maxLines: 1,
-                          weight: FontWeight.w800,
-                          fontSize: CATEGORY_TEXT_SIZE,
-                        ),
-                        const SizedBox(height: VERTICAL_PADDING / 2),
-                        getSmallText(
-                          itemPrice,
-                          color: darkGrey,
-                          maxLines: 1,
-                          fontSize: CATEGORY_TEXT_SIZE,
-                        ),
-                        const SizedBox(height: VERTICAL_PADDING / 2),
-                        Row(
-                          children: [
-                            getSmallText(
-                              size,
-                              color: darkGrey,
-                              fontSize: CATEGORY_TEXT_SIZE,
-                            ),
-                            sizeDropDown(['IND-4', 'IND-5', 'IND-6', 'IND-7', 'IND-8']),
-                            const SizedBox(width: HORIZONTAL_PADDING),
-                            getSmallText(
-                              qty,
-                              color: darkGrey,
-                              fontSize: CATEGORY_TEXT_SIZE,
-                            ),
-                            incDecCounter(),
-                          ],
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(height: VERTICAL_PADDING),
-              const Divider(thickness: 1),
-              const SizedBox(height: VERTICAL_PADDING),
-              ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 40),
-                  ),
-                  child: getSmallText(
-                    continueText,
-                    weight: FontWeight.w700,
-                    fontSize: CATEGORY_TEXT_SIZE,
-                    color: colorWhite,
-                  )),
-            ],
-          ),
-        );
-      });
-}
-
-Widget sizeDropDown(List<String> items) {
-  String selectedVal = items[0];
-  return DropdownButton(
-      elevation: 6,
-      borderRadius: BorderRadius.circular(BORDER_RADIUS),
-      items: items.map<DropdownMenuItem<String>>((e) {
-        return DropdownMenuItem(
-          child: getSmallText(
-            e,
-            color: darkGrey,
-            fontSize: CATEGORY_TEXT_SIZE,
-          ),
-          value: e,
-        );
-      }).toList(),
-      value: selectedVal,
-      onChanged: (newVal) {
-        selectedVal = newVal.toString();
-      });
+    );
+  }
 }
 
 Widget incDecCounter() {
@@ -1043,3 +972,11 @@ Widget discountContainer(String discount) {
     ),
   );
 }
+
+List<ProductSize> sizeList = [
+  ProductSize('S'),
+  ProductSize('M'),
+  ProductSize('L'),
+  ProductSize('XL'),
+  ProductSize('XXL'),
+];

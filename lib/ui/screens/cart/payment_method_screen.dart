@@ -45,12 +45,15 @@ class _PaymentMethodScreenState extends BaseState<PaymentMethodScreen> with Basi
             thickness: 0.5,
             height: 1,
           ),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                bloc.add(OrderSummaryEvent());
-              },
-              child: getSmallText(makePayment, color: colorWhite),
+          Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              child: ElevatedButton(
+                onPressed: () {
+                  bloc.add(OrderSummaryEvent());
+                },
+                child: getSmallText(makePayment, color: colorWhite),
+              ),
             ),
           ),
         ],

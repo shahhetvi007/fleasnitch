@@ -30,7 +30,7 @@ class _HomeScreenState extends BaseState<HomeScreen> with BasicScreen {
           // extendBody: true,
           appBar: AppBar(
             title: getTitle(
-              home,
+              appName,
               fontSize: APPBAR_FONT_SIZE,
               color: Theme.of(context).secondaryHeaderColor,
               weight: FontWeight.w700,

@@ -45,7 +45,7 @@ class _LoginScreenState extends BaseState<LoginScreen> with BasicScreen {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: VERTICAL_PADDING * 8),
                   child: getTitle(
-                    appName,
+                    appName.toUpperCase(),
                     color: colorBlack,
                     softWrap: true,
                     fontSize: TAGLINE_FONT_SIZE,

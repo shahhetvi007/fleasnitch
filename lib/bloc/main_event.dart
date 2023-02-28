@@ -67,3 +67,11 @@ class OrderDetailEvent extends MainEvent {
 class FavoritesEvent extends MainEvent {
   FavoritesEvent();
 }
+
+class SavedAddressEvent extends MainEvent {
+  SavedAddressEvent();
+}
+
+class ShopEvent extends MainEvent {
+  ShopEvent();
+}

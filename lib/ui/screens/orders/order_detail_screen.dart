@@ -217,8 +217,8 @@ class _OrderDetailScreenState extends BaseState<OrderDetailScreen> with BasicScr
                   const SizedBox(height: VERTICAL_PADDING),
                   OrderTracker(
                     status: Status.order,
-                    activeColor: Colors.green,
-                    inActiveColor: Colors.grey[300],
+                    activeColor: secondaryDarkColor,
+                    inActiveColor: grey,
                     orderTitleAndDateList: orderList,
                     shippedTitleAndDateList: shippedList,
                     outOfDeliveryTitleAndDateList: outOfDeliveryList,

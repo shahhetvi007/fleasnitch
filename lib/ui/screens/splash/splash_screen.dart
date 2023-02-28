@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:fleasnitch/ui/res/color_resources.dart';
+import 'package:fleasnitch/ui/res/dimen_resources.dart';
+import 'package:fleasnitch/ui/res/strings.dart';
 import 'package:fleasnitch/utils/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,9 +35,13 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     bloc = BlocProvider.of<MainBloc>(context);
     return Scaffold(
-      backgroundColor: colorTransparent,
+      backgroundColor: secondaryColor,
       body: Center(
-        child: getTitle('Fleasnitch'),
+        child: getTitle(
+          appName,
+          fontSize: TAGLINE_FONT_SIZE,
+          weight: FontWeight.w700,
+        ),
       ),
     );
   }

@@ -16,6 +16,8 @@ class CartScreen extends BaseStatefulWidget {
 }
 
 class _CartScreenState extends BaseState<CartScreen> with BasicScreen {
+  String sizeSelected = sizeList[1].sizeText;
+  int quantity = 1;
   @override
   Widget buildBody(BuildContext context) {
     return SafeArea(
@@ -71,24 +73,18 @@ class _CartScreenState extends BaseState<CartScreen> with BasicScreen {
                       IC_FASHION,
                       "Stylish Women Sandal Block Heel Heel Heel Heel Heel Heel ",
                       "₹268",
-                      "IND-5",
-                      "1",
                       "ABC Footwear"),
                   cartItem(
                       context,
                       IC_FASHION,
                       "Stylish Women Sandal Block Heel Heel Heel Heel Heel Heel ",
                       "₹268",
-                      "IND-5",
-                      "1",
                       "Fashion trials"),
                   cartItem(
                       context,
                       IC_FASHION,
                       "Stylish Women Sandal Block Heel Heel Heel Heel Heel Heel ",
                       "₹268",
-                      "IND-5",
-                      "1",
                       "King Rocco"),
                   const SizedBox(height: 4),
                   GestureDetector(
@@ -359,6 +355,179 @@ class _CartScreenState extends BaseState<CartScreen> with BasicScreen {
               ],
             ),
           )
+        ],
+      ),
+    );
+  }
+
+  Widget cartItem(BuildContext context, String image, String itemDescription,
+      String itemPrice, String soldByName) {
+    return Container(
+      color: colorWhite,
+      padding: const EdgeInsets.only(bottom: VERTICAL_PADDING, top: VERTICAL_PADDING * 2),
+      margin: const EdgeInsets.only(bottom: 4),
+      child: Column(
+        children: [
+          // const SizedBox(height: VERTICAL_PADDING * 2),
+          Container(
+            width: double.infinity,
+            // padding: const EdgeInsets.all(VERTICAL_PADDING / 1.5),
+            margin: const EdgeInsets.only(
+                top: VERTICAL_PADDING,
+                left: HORIZONTAL_PADDING,
+                right: HORIZONTAL_PADDING),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(BORDER_RADIUS / 2),
+                      border: Border.all(color: darkGrey),
+                    ),
+                    padding: const EdgeInsets.all(VERTICAL_PADDING),
+                    child: Image.asset(image),
+                  ),
+                ),
+                const SizedBox(width: HORIZONTAL_PADDING),
+                Expanded(
+                  flex: 8,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      getSmallText(
+                        itemDescription,
+                        color: darkGrey,
+                        maxLines: 1,
+                        weight: FontWeight.w800,
+                        fontSize: CATEGORY_TEXT_SIZE,
+                      ),
+                      const SizedBox(height: VERTICAL_PADDING / 2),
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (ctx) {
+                                return ProductDetailSheet(
+                                  image: image,
+                                  itemDescription: itemDescription,
+                                  itemPrice: itemPrice,
+                                  selectedSize: sizeSelected,
+                                  quantity: quantity,
+                                  valueChanged: (val) {
+                                    setState(() {
+                                      sizeSelected = val;
+                                    });
+                                  },
+                                  quantityChanged: (val) {
+                                    setState(() {
+                                      quantity = val;
+                                    });
+                                  },
+                                );
+                              });
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          color: colorWhite,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  getSmallText(
+                                    itemPrice,
+                                    color: darkGrey,
+                                    maxLines: 1,
+                                    fontSize: CATEGORY_TEXT_SIZE,
+                                  ),
+                                  const SizedBox(height: VERTICAL_PADDING / 2),
+                                  Row(
+                                    children: [
+                                      getSmallText(
+                                        size,
+                                        color: darkGrey,
+                                        fontSize: CATEGORY_TEXT_SIZE,
+                                      ),
+                                      getSmallText(
+                                        sizeSelected,
+                                        color: darkGrey,
+                                        fontSize: CATEGORY_TEXT_SIZE,
+                                      ),
+                                      const SizedBox(width: HORIZONTAL_PADDING),
+                                      getSmallText(
+                                        qty,
+                                        color: darkGrey,
+                                        fontSize: CATEGORY_TEXT_SIZE,
+                                      ),
+                                      getSmallText(
+                                        quantity.toString(),
+                                        color: darkGrey,
+                                        fontSize: CATEGORY_TEXT_SIZE,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: VERTICAL_PADDING),
+                                ],
+                              ),
+                              const Icon(
+                                Icons.arrow_forward_ios,
+                                size: 14,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          removeItemBottomSheet(context, image, itemDescription,
+                              itemPrice, sizeSelected, quantity.toString());
+                        },
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.close,
+                              size: 16,
+                            ),
+                            const SizedBox(width: 4),
+                            getSmallText(
+                              remove,
+                              color: darkGrey,
+                              maxLines: 1,
+                              weight: FontWeight.w700,
+                              fontSize: CATEGORY_TEXT_SIZE,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          const Divider(thickness: 1),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL_PADDING),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                getSmallText(
+                  soldBy + " : " + soldByName,
+                  color: darkGrey,
+                  fontSize: CATEGORY_TEXT_SIZE,
+                ),
+                getSmallText(
+                  freeDelivery,
+                  color: darkGrey,
+                  fontSize: CATEGORY_TEXT_SIZE,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

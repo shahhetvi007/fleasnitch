@@ -1,5 +1,6 @@
 import 'package:fleasnitch/bloc/main_bloc.dart';
 import 'package:fleasnitch/ui/screens/account/account_screen.dart';
+import 'package:fleasnitch/ui/screens/account/saved_addresses.dart';
 import 'package:fleasnitch/ui/screens/cart/add_new_address_screen.dart';
 import 'package:fleasnitch/ui/screens/cart/cart_screen.dart';
 import 'package:fleasnitch/ui/screens/cart/delivery_address_screen.dart';
@@ -14,6 +15,7 @@ import 'package:fleasnitch/ui/screens/notifications/notification_screen.dart';
 import 'package:fleasnitch/ui/screens/orders/order_detail_screen.dart';
 import 'package:fleasnitch/ui/screens/orders/orders_screen.dart';
 import 'package:fleasnitch/ui/screens/products/product_detail_screen.dart';
+import 'package:fleasnitch/ui/screens/shop/shop_screen.dart';
 import 'package:fleasnitch/ui/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,6 +68,10 @@ class _NavigationPageState extends State<NavigationPage> {
             return OrderDetailScreen();
           } else if (state == MainStates.Favorites) {
             return FavoritesScreen();
+          } else if (state == MainStates.SavedAddresses) {
+            return SavedAddresses();
+          } else if (state == MainStates.Shop) {
+            return ShopScreen();
           } else if (state == MainStates.LoggedLoading) {
             return Scaffold(
               body: Center(

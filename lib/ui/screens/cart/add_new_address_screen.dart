@@ -13,6 +13,9 @@ class AddNewAddressScreen extends BaseStatefulWidget {
 
 class _AddNewAddressScreenState extends BaseState<AddNewAddressScreen> with BasicScreen {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool isHomeSelected = true;
+  bool isOfficeSelected = false;
+
   @override
   Widget buildBody(BuildContext context) {
     return SafeArea(
@@ -156,6 +159,25 @@ class _AddNewAddressScreenState extends BaseState<AddNewAddressScreen> with Basi
                               fontSize: CATEGORY_TEXT_SIZE,
                               weight: FontWeight.w700,
                             ),
+                            const SizedBox(height: VERTICAL_PADDING * 1.5),
+                            Row(
+                              children: [
+                                typeOfAdd(home, isHomeSelected, () {
+                                  setState(() {
+                                    isHomeSelected = true;
+                                    isOfficeSelected = false;
+                                  });
+                                }),
+                                const SizedBox(width: HORIZONTAL_PADDING),
+                                typeOfAdd(office, isOfficeSelected, () {
+                                  setState(() {
+                                    isOfficeSelected = true;
+                                    isHomeSelected = false;
+                                  });
+                                }),
+                              ],
+                            ),
+                            const SizedBox(height: VERTICAL_PADDING),
                           ],
                         ),
                       ),
@@ -184,6 +206,21 @@ class _AddNewAddressScreenState extends BaseState<AddNewAddressScreen> with Basi
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget typeOfAdd(String text, bool isSelected, Function() onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(VERTICAL_PADDING),
+        decoration: BoxDecoration(
+          border: Border.all(color: isSelected ? primaryColor : grey),
+          borderRadius: BorderRadius.circular(BORDER_RADIUS * 2),
+          color: isSelected ? primaryColor.withOpacity(0.1) : colorWhite,
+        ),
+        child: getSmallText(text),
       ),
     );
   }

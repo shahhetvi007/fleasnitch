@@ -8,6 +8,7 @@ import 'package:fleasnitch/ui/res/strings.dart';
 import 'package:fleasnitch/utils/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:fleasnitch/base/base_screen.dart';
+import 'package:like_button/like_button.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -146,12 +147,15 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> with Basi
                               ),
                               Column(
                                 children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: const Icon(
-                                      Icons.favorite_border,
-                                      size: 16,
-                                    ),
+                                  // GestureDetector(
+                                  //   onTap: () {},
+                                  //   child: const Icon(
+                                  //     Icons.favorite_border,
+                                  //     size: 16,
+                                  //   ),
+                                  // ),
+                                  const LikeButton(
+                                    size: 17,
                                   ),
                                   const SizedBox(height: 2),
                                   getSmallText(
@@ -170,6 +174,7 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> with Basi
                                     child: const Icon(
                                       Icons.share,
                                       size: 16,
+                                      color: grey,
                                     ),
                                   ),
                                   const SizedBox(height: 2),
@@ -231,9 +236,8 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> with Basi
                       ),
                     ),
                     Container(
-                      height: 65,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: VERTICAL_PADDING, horizontal: HORIZONTAL_PADDING),
+                      height: 50,
+                      alignment: Alignment.center,
                       child: ListView.builder(
                         itemBuilder: (ctx, index) {
                           return GestureDetector(

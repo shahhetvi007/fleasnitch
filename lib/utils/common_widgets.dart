@@ -7,6 +7,7 @@ import 'package:fleasnitch/ui/res/image_resources.dart';
 import 'package:fleasnitch/ui/res/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:like_button/like_button.dart';
 
 import '../models/size.dart';
 
@@ -21,7 +22,7 @@ Text getSmallText(String text,
     bool lineThrough = false}) {
   return Text(
     text,
-    // textAlign: align,
+    textAlign: isCenter ? TextAlign.center : TextAlign.start,
     maxLines: maxLines,
     style: TextStyle(
         decoration: lineThrough ? TextDecoration.lineThrough : null,
@@ -469,25 +470,43 @@ class _ProductItemState extends State<ProductItem> {
                   ),
                 ),
                 Positioned(
-                  right: 16,
+                  right: 6,
                   top: 10,
                   child: Container(
-                    padding: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: colorWhite.withOpacity(0.8),
+                    // padding: const EdgeInsets.all(6),
+                    // decoration: BoxDecoration(
+                    //   shape: BoxShape.circle,
+                    //   color: colorWhite.withOpacity(0.8),
+                    // ),
+                    // child: GestureDetector(
+                    //     onTap: () {
+                    //       setState(() {
+                    //         isLiked = !isLiked;
+                    //       });
+                    //     },
+                    //     child: Icon(
+                    //       isLiked ? Icons.favorite : Icons.favorite_border,
+                    //       color: isLiked ? Colors.red : grey,
+                    //       size: 20,
+                    //     )),
+                    child: LikeButton(
+                      size: 25,
+                      padding: EdgeInsets.all(6),
+                      circleColor:
+                          CircleColor(start: Color(0xff00ddff), end: Color(0xff0099cc)),
+                      bubblesColor: BubblesColor(
+                        dotPrimaryColor: Color(0xff33b5e5),
+                        dotSecondaryColor: Color(0xff0099cc),
+                      ),
+                      likeBuilder: (bool isLiked) {
+                        return Icon(
+                          Icons.favorite_border,
+                          color: isLiked ? Colors.deepPurpleAccent : Colors.purple,
+                          size: 24,
+                        );
+                      },
+                      // likeCount: 665,
                     ),
-                    child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isLiked = !isLiked;
-                          });
-                        },
-                        child: Icon(
-                          isLiked ? Icons.favorite : Icons.favorite_border,
-                          color: isLiked ? Colors.red : grey,
-                          size: 20,
-                        )),
                   ),
                 ),
               ],
@@ -763,9 +782,9 @@ Future addToCartBottomSheet(BuildContext context, List<ProductSize> sizeList) {
 
 Widget sizeContainer(String size, {bool isSelected = false}) {
   return Container(
-    height: 35,
+    alignment: Alignment.center,
     padding: const EdgeInsets.symmetric(
-        vertical: VERTICAL_PADDING, horizontal: HORIZONTAL_PADDING),
+        horizontal: HORIZONTAL_PADDING, vertical: VERTICAL_PADDING),
     margin: const EdgeInsets.all(VERTICAL_PADDING),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(BORDER_RADIUS * 2),
@@ -775,6 +794,7 @@ Widget sizeContainer(String size, {bool isSelected = false}) {
     child: getSmallText(
       size,
       weight: FontWeight.w600,
+      isCenter: true,
     ),
   );
 }

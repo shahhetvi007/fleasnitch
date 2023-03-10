@@ -88,7 +88,8 @@ Widget commonTextFormField({
   TextInputType keyboardType = TextInputType.text,
   TextInputAction textInputAction = TextInputAction.next,
   TextCapitalization textCapitalization = TextCapitalization.sentences,
-  int maxLines = 1,
+  int? maxLines = 1,
+  int? minLines = 1,
   TextEditingController? controller,
   String? Function(String?)? validator,
   void Function(String)? onTextChanged,
@@ -99,6 +100,8 @@ Widget commonTextFormField({
     textCapitalization: textCapitalization,
     controller: controller,
     validator: validator,
+    maxLines: maxLines,
+    minLines: minLines,
     autovalidateMode: AutovalidateMode.onUserInteraction,
     onChanged: onTextChanged,
     obscureText: obscureText,
@@ -111,7 +114,8 @@ Widget commonTextFormField({
             color: colorBlack, fontFamily: 'Nunito', fontSize: CATEGORY_TEXT_SIZE),
         prefixIcon: prefixIcon,
         prefixIconColor: colorBlack,
-        contentPadding: EdgeInsets.zero,
+        contentPadding: const EdgeInsets.all(8),
+        alignLabelWithHint: true,
         border: border
             ? const OutlineInputBorder()
             : const UnderlineInputBorder(borderSide: BorderSide(color: grey)),
@@ -242,6 +246,7 @@ class _ProductDetailSheetState extends State<ProductDetailSheet> {
                           color: darkGrey,
                           fontSize: CATEGORY_TEXT_SIZE,
                         ),
+                        const SizedBox(width: 4),
                         DropdownButton(
                             elevation: 6,
                             borderRadius: BorderRadius.circular(BORDER_RADIUS),
@@ -268,6 +273,7 @@ class _ProductDetailSheetState extends State<ProductDetailSheet> {
                           color: darkGrey,
                           fontSize: CATEGORY_TEXT_SIZE,
                         ),
+                        const SizedBox(width: 4),
                         Container(
                           decoration: BoxDecoration(
                             border: Border.all(color: grey),
@@ -473,36 +479,19 @@ class _ProductItemState extends State<ProductItem> {
                   right: 6,
                   top: 10,
                   child: Container(
-                    // padding: const EdgeInsets.all(6),
-                    // decoration: BoxDecoration(
-                    //   shape: BoxShape.circle,
-                    //   color: colorWhite.withOpacity(0.8),
-                    // ),
-                    // child: GestureDetector(
-                    //     onTap: () {
-                    //       setState(() {
-                    //         isLiked = !isLiked;
-                    //       });
-                    //     },
-                    //     child: Icon(
-                    //       isLiked ? Icons.favorite : Icons.favorite_border,
-                    //       color: isLiked ? Colors.red : grey,
-                    //       size: 20,
-                    //     )),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: colorWhite.withOpacity(0.8),
+                    ),
                     child: LikeButton(
-                      size: 25,
-                      padding: EdgeInsets.all(6),
-                      circleColor:
-                          CircleColor(start: Color(0xff00ddff), end: Color(0xff0099cc)),
-                      bubblesColor: BubblesColor(
-                        dotPrimaryColor: Color(0xff33b5e5),
-                        dotSecondaryColor: Color(0xff0099cc),
-                      ),
+                      size: 20,
+                      likeCountPadding: const EdgeInsets.all(0),
+                      padding: const EdgeInsets.all(6),
                       likeBuilder: (bool isLiked) {
                         return Icon(
-                          Icons.favorite_border,
-                          color: isLiked ? Colors.deepPurpleAccent : Colors.purple,
-                          size: 24,
+                          isLiked ? Icons.favorite : Icons.favorite_border,
+                          color: isLiked ? Colors.pink : grey,
+                          size: 20,
                         );
                       },
                       // likeCount: 665,
@@ -711,78 +700,94 @@ Future removeItemBottomSheet(BuildContext context, String image, String itemDesc
       });
 }
 
-Future addToCartBottomSheet(BuildContext context, List<ProductSize> sizeList) {
-  return showModalBottomSheet(
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(BORDER_RADIUS),
-      ),
-      builder: (ctx) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(
-              vertical: VERTICAL_PADDING, horizontal: HORIZONTAL_PADDING),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+class AddToCart extends StatefulWidget {
+  final List<ProductSize> sizes;
+  final ValueChanged<Object> selectedSizeChanged;
+
+  AddToCart({required this.sizes, required this.selectedSizeChanged});
+
+  @override
+  State<AddToCart> createState() => _AddToCartState();
+}
+
+class _AddToCartState extends State<AddToCart> {
+  late List sizeLists = [];
+
+  @override
+  void initState() {
+    sizeLists = widget.sizes;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+          vertical: VERTICAL_PADDING, horizontal: HORIZONTAL_PADDING),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: const Icon(
+                Icons.close,
+                size: 16,
+              ),
+            ),
+          ),
+          const SizedBox(height: VERTICAL_PADDING * 2),
+          getSmallText(
+            selectSize,
+            weight: FontWeight.w800,
+          ),
+          const SizedBox(height: VERTICAL_PADDING),
+          Wrap(
+            direction: Axis.horizontal,
             children: [
-              Container(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
+              for (int i = 0; i < sizeLists.length; i++)
+                GestureDetector(
                   onTap: () {
-                    Navigator.pop(context);
+                    setState(() {
+                      for (var element in sizeLists) {
+                        element.isSelected = false;
+                      }
+                      sizeLists[i].isSelected = true;
+                    });
+                    widget.selectedSizeChanged(sizeLists);
                   },
-                  child: const Icon(
-                    Icons.close,
-                    size: 16,
-                  ),
+                  child: sizeContainer(sizeLists[i].sizeText,
+                      isSelected: sizeLists[i].isSelected),
                 ),
-              ),
-              const SizedBox(height: VERTICAL_PADDING * 2),
-              getSmallText(
-                selectSize,
-                weight: FontWeight.w800,
-              ),
-              const SizedBox(height: VERTICAL_PADDING),
-              Wrap(
-                children: [
-                  for (int i = 0; i < sizeList.length; i++)
-                    GestureDetector(
-                      onTap: () {
-                        // setState(() {
-                        for (var element in sizeList) {
-                          element.isSelected = false;
-                        }
-                        sizeList[i].isSelected = true;
-                        // });
-                      },
-                      child: sizeContainer(sizeList[i].sizeText),
-                    ),
-                ],
-              ),
-              const SizedBox(height: VERTICAL_PADDING),
-              const Divider(thickness: 1),
-              const SizedBox(height: VERTICAL_PADDING),
-              ElevatedButton.icon(
-                  icon: const Icon(Icons.shopping_cart_outlined, color: colorWhite),
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 40),
-                  ),
-                  label: getSmallText(
-                    addToCart,
-                    weight: FontWeight.w700,
-                    fontSize: CATEGORY_TEXT_SIZE,
-                    color: colorWhite,
-                  )),
             ],
           ),
-        );
-      });
+          const SizedBox(height: VERTICAL_PADDING),
+          const Divider(thickness: 1),
+          const SizedBox(height: VERTICAL_PADDING),
+          ElevatedButton.icon(
+              icon: const Icon(Icons.shopping_cart_outlined, color: colorWhite),
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 40),
+              ),
+              label: getSmallText(
+                addToCart,
+                weight: FontWeight.w700,
+                fontSize: CATEGORY_TEXT_SIZE,
+                color: colorWhite,
+              )),
+        ],
+      ),
+    );
+  }
 }
 
 Widget sizeContainer(String size, {bool isSelected = false}) {
   return Container(
-    alignment: Alignment.center,
     padding: const EdgeInsets.symmetric(
         horizontal: HORIZONTAL_PADDING, vertical: VERTICAL_PADDING),
     margin: const EdgeInsets.all(VERTICAL_PADDING),
@@ -988,6 +993,168 @@ Widget discountContainer(String discount) {
         getSmallText(discountText,
             fontSize: CATEGORY_TEXT_SIZE, color: secondaryDarkColor),
         getSmallText(discount, fontSize: CATEGORY_TEXT_SIZE, color: secondaryDarkColor),
+      ],
+    ),
+  );
+}
+
+Widget typeOfAdd(String text, bool isSelected, Function() onTap) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Container(
+      padding: const EdgeInsets.all(VERTICAL_PADDING),
+      decoration: BoxDecoration(
+        border: Border.all(color: isSelected ? primaryColor : grey),
+        borderRadius: BorderRadius.circular(BORDER_RADIUS * 2),
+        color: isSelected ? primaryColor.withOpacity(0.1) : colorWhite,
+      ),
+      child: getSmallText(text),
+    ),
+  );
+}
+
+class SupplierBottomNav extends StatefulWidget {
+  int currentIndex;
+
+  SupplierBottomNav(this.currentIndex);
+
+  @override
+  State<SupplierBottomNav> createState() => _SupplierBottomNavState();
+}
+
+class _SupplierBottomNavState extends State<SupplierBottomNav> {
+  MainBloc bloc = MainBloc();
+  // int _currentIndex = 0;
+
+  void changePage(int index) {
+    setState(() {
+      widget.currentIndex = index;
+    });
+    switch (index) {
+      case 0:
+        bloc.add(SupplierHomeEvent());
+        break;
+
+      case 1:
+        bloc.add(SupplierHomeEvent());
+        break;
+
+      case 2:
+        bloc.add(NotificationEvent());
+        break;
+
+      case 3:
+        bloc.add(SupplierHomeEvent());
+        break;
+
+      case 4:
+        bloc.add(SupplierAccountEvent());
+        break;
+
+      default:
+        bloc.add(SupplierHomeEvent());
+        break;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    bloc = BlocProvider.of<MainBloc>(context);
+    return Container(
+      color: Colors.transparent,
+      child: DotNavigationBar(
+        backgroundColor: Theme.of(context).accentColor,
+        enablePaddingAnimation: false,
+        dotIndicatorColor: colorTransparent,
+        paddingR: const EdgeInsets.only(bottom: VERTICAL_PADDING / 2, right: 0),
+        marginR: EdgeInsets.only(
+          left: deviceWidth * 0.1,
+          right: deviceWidth * 0.1,
+          bottom: VERTICAL_PADDING * 2.5,
+        ),
+        currentIndex: widget.currentIndex,
+        onTap: (index) {
+          changePage(index);
+        },
+        items: [
+          DotNavigationBarItem(
+            icon: const Icon(Icons.home_outlined),
+          ),
+          DotNavigationBarItem(
+            icon: const Icon(Icons.category_outlined),
+          ),
+          DotNavigationBarItem(
+            icon: const Icon(Icons.notifications_none),
+          ),
+          DotNavigationBarItem(
+            icon: const Icon(Icons.shopping_bag_outlined),
+          ),
+          DotNavigationBarItem(
+            icon: const Icon(Icons.account_circle_outlined),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+Widget supplierItem() {
+  return Container(
+    color: colorWhite,
+    height: deviceHeight * 0.14,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 2,
+          child: Container(
+            height: deviceHeight * 0.14,
+            child: Image.asset(
+              DRESS,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 8,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+                vertical: VERTICAL_PADDING / 2, horizontal: HORIZONTAL_PADDING / 2),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                getSmallText(
+                  "Stylish Women Sandal Block Heel Heel Heel Heel Heel Heel ",
+                  color: darkGrey,
+                  maxLines: 1,
+                  weight: FontWeight.w800,
+                ),
+                getSmallText(
+                  'Fabric : Crepe',
+                  color: darkGrey,
+                  fontSize: CATEGORY_TEXT_SIZE,
+                ),
+                getSmallText(
+                  'Sleeve length : Short Sleeve',
+                  color: darkGrey,
+                  fontSize: CATEGORY_TEXT_SIZE,
+                ),
+                getSmallText(
+                  'Pattern : Floral',
+                  color: darkGrey,
+                  fontSize: CATEGORY_TEXT_SIZE,
+                ),
+                getSmallText(
+                  'Net quantity : 1',
+                  color: darkGrey,
+                  fontSize: CATEGORY_TEXT_SIZE,
+                ),
+              ],
+            ),
+          ),
+        ),
       ],
     ),
   );

@@ -49,6 +49,8 @@ dependencies:
   confetti: ^0.7.0
   share_plus: ^6.3.1
   like_button: ^2.0.5
+  image_picker: ^0.8.6+4
+  permission_handler: ^10.2.0
 
 dev_dependencies:
   flutter_test:

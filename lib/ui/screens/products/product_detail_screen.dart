@@ -154,8 +154,15 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> with Basi
                                   //     size: 16,
                                   //   ),
                                   // ),
-                                  const LikeButton(
-                                    size: 17,
+                                  LikeButton(
+                                    size: 16,
+                                    likeBuilder: (bool isLiked) {
+                                      return Icon(
+                                        isLiked ? Icons.favorite : Icons.favorite_border,
+                                        color: isLiked ? Colors.pink : colorBlack,
+                                        size: 16,
+                                      );
+                                    },
                                   ),
                                   const SizedBox(height: 2),
                                   getSmallText(
@@ -174,7 +181,6 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> with Basi
                                     child: const Icon(
                                       Icons.share,
                                       size: 16,
-                                      color: grey,
                                     ),
                                   ),
                                   const SizedBox(height: 2),
@@ -238,6 +244,8 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> with Basi
                     Container(
                       height: 50,
                       alignment: Alignment.center,
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: HORIZONTAL_PADDING / 2),
                       child: ListView.builder(
                         itemBuilder: (ctx, index) {
                           return GestureDetector(
@@ -257,6 +265,7 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> with Basi
                         scrollDirection: Axis.horizontal,
                       ),
                     ),
+                    const SizedBox(height: VERTICAL_PADDING),
                     divider(),
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -351,7 +360,17 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> with Basi
                     padding: const EdgeInsets.all(VERTICAL_PADDING),
                     child: OutlinedButton.icon(
                       onPressed: () {
-                        addToCartBottomSheet(context, sizeList);
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (ctx) {
+                              return AddToCart(
+                                  sizes: sizeList,
+                                  selectedSizeChanged: (list) {
+                                    setState(() {
+                                      sizeList = list as List<ProductSize>;
+                                    });
+                                  });
+                            });
                       },
                       label: getSmallText(addToCart, weight: FontWeight.w700),
                       icon: const Icon(Icons.shopping_cart_outlined),
@@ -397,4 +416,75 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> with Basi
           fit: BoxFit.cover,
         ));
   }
+
+  // Future addToCartBottomSheet() {
+  //   return showModalBottomSheet(
+  //       context: context,
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(BORDER_RADIUS),
+  //       ),
+  //       builder: (ctx) {
+  //         return Padding(
+  //           padding: const EdgeInsets.symmetric(
+  //               vertical: VERTICAL_PADDING, horizontal: HORIZONTAL_PADDING),
+  //           child: Column(
+  //             mainAxisSize: MainAxisSize.min,
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               Container(
+  //                 alignment: Alignment.centerRight,
+  //                 child: GestureDetector(
+  //                   onTap: () {
+  //                     Navigator.pop(context);
+  //                   },
+  //                   child: const Icon(
+  //                     Icons.close,
+  //                     size: 16,
+  //                   ),
+  //                 ),
+  //               ),
+  //               const SizedBox(height: VERTICAL_PADDING * 2),
+  //               getSmallText(
+  //                 selectSize,
+  //                 weight: FontWeight.w800,
+  //               ),
+  //               const SizedBox(height: VERTICAL_PADDING),
+  //               Wrap(
+  //                 direction: Axis.horizontal,
+  //                 children: [
+  //                   for (int i = 0; i < sizeList.length; i++)
+  //                     GestureDetector(
+  //                       onTap: () {
+  //                         setState(() {
+  //                           for (var element in sizeList) {
+  //                             element.isSelected = false;
+  //                           }
+  //                           sizeList[i].isSelected = true;
+  //                         });
+  //                       },
+  //                       child: sizeContainer(sizeList[i].sizeText,
+  //                           isSelected: sizeList[i].isSelected),
+  //                     ),
+  //                 ],
+  //               ),
+  //               const SizedBox(height: VERTICAL_PADDING),
+  //               const Divider(thickness: 1),
+  //               const SizedBox(height: VERTICAL_PADDING),
+  //               ElevatedButton.icon(
+  //                   icon: const Icon(Icons.shopping_cart_outlined, color: colorWhite),
+  //                   onPressed: () {},
+  //                   style: ElevatedButton.styleFrom(
+  //                     minimumSize: const Size(double.infinity, 40),
+  //                   ),
+  //                   label: getSmallText(
+  //                     addToCart,
+  //                     weight: FontWeight.w700,
+  //                     fontSize: CATEGORY_TEXT_SIZE,
+  //                     color: colorWhite,
+  //                   )),
+  //             ],
+  //           ),
+  //         );
+  //       });
+  // }
 }

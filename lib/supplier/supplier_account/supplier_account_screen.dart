@@ -10,12 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class AccountScreen extends BaseStatefulWidget {
+class SupplierAccountScreen extends BaseStatefulWidget {
   @override
-  _AccountScreenState createState() => _AccountScreenState();
+  _SupplierAccountScreenState createState() => _SupplierAccountScreenState();
 }
 
-class _AccountScreenState extends BaseState<AccountScreen> with BasicScreen {
+class _SupplierAccountScreenState extends BaseState<SupplierAccountScreen>
+    with BasicScreen {
   File? imagePicked;
   @override
   Widget buildBody(BuildContext context) {
@@ -35,14 +36,6 @@ class _AccountScreenState extends BaseState<AccountScreen> with BasicScreen {
             color: colorBlack,
           ),
         ),
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-          IconButton(
-              onPressed: () {
-                bloc.add(CartEvent());
-              },
-              icon: const Icon(Icons.shopping_cart_outlined)),
-        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +71,7 @@ class _AccountScreenState extends BaseState<AccountScreen> with BasicScreen {
               Icons.save_as,
               color: secondaryDarkColor,
             ),
-            title: getSmallText(savedAddresses, weight: FontWeight.w600),
+            title: getSmallText(savedAddress, weight: FontWeight.w600),
             tileColor: colorWhite,
             onTap: () {
               bloc.add(SavedAddressEvent());
@@ -87,37 +80,13 @@ class _AccountScreenState extends BaseState<AccountScreen> with BasicScreen {
           const SizedBox(height: VERTICAL_PADDING / 2),
           ListTile(
             leading: const Icon(
-              Icons.add_shopping_cart_outlined,
-              color: secondaryDarkColor,
-            ),
-            title: getSmallText(becomeASupplier, weight: FontWeight.w600),
-            tileColor: colorWhite,
-            onTap: () {
-              bloc.add(SupplierLoginEvent());
-            },
-          ),
-          const SizedBox(height: VERTICAL_PADDING / 2),
-          ListTile(
-            leading: const Icon(
-              Icons.favorite_border,
-              color: secondaryDarkColor,
-            ),
-            onTap: () {
-              bloc.add(FavoritesEvent());
-            },
-            title: getSmallText(yourWishlist, weight: FontWeight.w600),
-            tileColor: colorWhite,
-          ),
-          const SizedBox(height: VERTICAL_PADDING / 2),
-          ListTile(
-            leading: const Icon(
               Icons.shopping_bag_outlined,
               color: secondaryDarkColor,
             ),
-            title: getSmallText(yourOrders, weight: FontWeight.w600),
+            title: getSmallText(yourSelling, weight: FontWeight.w600),
             tileColor: colorWhite,
             onTap: () {
-              bloc.add(OrdersEvent());
+              // bloc.add(OrdersEvent());
             },
           ),
           const SizedBox(height: VERTICAL_PADDING / 2),
@@ -131,7 +100,7 @@ class _AccountScreenState extends BaseState<AccountScreen> with BasicScreen {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNav(4),
+      bottomNavigationBar: SupplierBottomNav(4),
     );
   }
 

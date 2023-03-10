@@ -90,6 +90,10 @@ const String becomeASupplier = "Become a Supplier";
 const String yourWishlist = "Your Wishlist";
 const String yourOrders = "Your Orders";
 const String logout = "Logout";
+const String camera = "Camera";
+const String gallery = "Gallery";
+const String addProfilePhoto = "Add Profile Photo";
+const String editPhoto = "Edit Photo";
 
 //orders
 const String searchByCustomerOrProduct = "Search by Customer, Product or Order ID";
@@ -110,3 +114,41 @@ const String discountText = "Yay! Your total discount is ";
 const String dress = "Dresses";
 const String myProducts = "My Products";
 const String totalProducts = "Total Products";
+
+//supplier login
+const String createSupplierAcc = "Create Supplier Account";
+const String sellYourProducts = "Sell your products to crores of buyers";
+const String makePassStrong = "Make your password strong by adding";
+const String min8Chars = "Minimum 8 characters (letters & numbers)";
+const String min1SpecialChar = "Minimum 1 special character (@ # \$ % ! ^ & *)";
+const String min1Caps = "Minimum 1 capital letter (A-Z)";
+const String min1Num = "Minimum 1 number (0-9)";
+const String byClicking = "By clicking you agree to our ";
+const String termsAndConditions = "Terms & Conditions ";
+const String and = "and ";
+const String privacyPolicy = "Privacy Policy.";
+const String completeAccDetails = "Complete Account Details";
+const String pickupAdd = "Pickup Address";
+const String bankDetails = "Bank Details";
+const String supplierDetails = "SupplierDetails";
+const String bankName = "Bank Name";
+const String bankAccountName = "Bank Account Name";
+const String accountNo = "Account Number";
+const String ifsc = "IFSC code";
+const String shopName = "Shop Name";
+const String saveAndContinue = "Save and Continue";
+
+//addNewItem
+const String addNewItem = "Add New Item";
+const String itemDetails = "Item Details";
+const String itemName = "Item Name";
+const String itemSizes = "Item Sizes";
+const String itemPrice = "Item Price";
+const String tags = "Tags";
+const String hashtags = "Hashtags";
+const String category = "Category";
+const String addImages = "Add Images";
+const String addItem = "Add Item";
+
+const String yourSelling = "Your Selling";
+const String savedAddress = "Saved Address";

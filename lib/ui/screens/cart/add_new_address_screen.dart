@@ -209,19 +209,4 @@ class _AddNewAddressScreenState extends BaseState<AddNewAddressScreen> with Basi
       ),
     );
   }
-
-  Widget typeOfAdd(String text, bool isSelected, Function() onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(VERTICAL_PADDING),
-        decoration: BoxDecoration(
-          border: Border.all(color: isSelected ? primaryColor : grey),
-          borderRadius: BorderRadius.circular(BORDER_RADIUS * 2),
-          color: isSelected ? primaryColor.withOpacity(0.1) : colorWhite,
-        ),
-        child: getSmallText(text),
-      ),
-    );
-  }
 }

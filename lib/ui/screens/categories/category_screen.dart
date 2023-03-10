@@ -45,98 +45,101 @@ class _CategoryScreenState extends BaseState<CategoryScreen> with BasicScreen {
         ],
       ),
       body: SafeArea(
-        child: Row(
-          children: [
-            SizedBox(
-              width: size.width * 0.25,
-              child: ListView.separated(
-                  controller: _categoryController,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedIndex = index;
-                          _pageController.jumpToPage(selectedIndex);
-                        });
-                      },
-                      child: Container(
-                        child: Row(
-                          children: [
-                            AnimatedContainer(
-                              duration: const Duration(milliseconds: 500),
-                              height: (selectedIndex == index) ? size.height * 0.1 : 0,
-                              color: primaryColor,
-                              width: 4,
-                            ),
-                            Expanded(
-                              child: AnimatedContainer(
-                                alignment: Alignment.center,
+        child: Container(
+          // margin: EdgeInsets.all(8),
+          child: Row(
+            children: [
+              SizedBox(
+                width: size.width * 0.25,
+                child: ListView.separated(
+                    controller: _categoryController,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedIndex = index;
+                            _pageController.jumpToPage(selectedIndex);
+                          });
+                        },
+                        child: Container(
+                          child: Row(
+                            children: [
+                              AnimatedContainer(
                                 duration: const Duration(milliseconds: 500),
-                                height: size.height * 0.1,
-                                color: (selectedIndex == index)
-                                    ? colorWhite
-                                    : grey.withOpacity(0.1),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.stream,
-                                      color: (selectedIndex == index)
-                                          ? primaryColor
-                                          : colorBlack,
-                                    ),
-                                    const SizedBox(height: VERTICAL_PADDING / 2),
-                                    getSmallText(
-                                      'Jewellery',
-                                      color: (selectedIndex == index)
-                                          ? primaryColor
-                                          : colorBlack,
-                                      weight: FontWeight.w700,
-                                    )
-                                  ],
+                                height: (selectedIndex == index) ? size.height * 0.1 : 0,
+                                color: primaryColor,
+                                width: 4,
+                              ),
+                              Expanded(
+                                child: AnimatedContainer(
+                                  alignment: Alignment.center,
+                                  duration: const Duration(milliseconds: 500),
+                                  height: size.height * 0.1,
+                                  color: (selectedIndex == index)
+                                      ? colorWhite
+                                      : grey.withOpacity(0.1),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.stream,
+                                        color: (selectedIndex == index)
+                                            ? primaryColor
+                                            : colorBlack,
+                                      ),
+                                      const SizedBox(height: VERTICAL_PADDING / 2),
+                                      getSmallText(
+                                        'Jewellery',
+                                        color: (selectedIndex == index)
+                                            ? primaryColor
+                                            : colorBlack,
+                                        weight: FontWeight.w700,
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const Divider(height: 1);
-                  },
-                  itemCount: 10),
-            ),
-            Flexible(
-              child: SingleChildScrollView(
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 500),
-                  height: size.height,
-                  child: PageView.builder(
-                    controller: _pageController,
-                    scrollDirection: Axis.vertical,
-                    physics: const ScrollPhysics(),
-                    pageSnapping: false,
-                    itemCount: 10,
-                    itemBuilder: (ctx, index) {
-                      return categoryGrid(bloc, context, 'Jewellery');
+                      );
                     },
-                    onPageChanged: (val) {
-                      setState(() {
-                        selectedIndex = val;
-                        // _pageController.addListener(() {
-                        //   setState(() {
-                        //     atEdge = _pageController.offset.isFinite;
-                        //   });
-                        //   print(atEdge);
-                        // });
-                      });
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const Divider(height: 1);
                     },
+                    itemCount: 10),
+              ),
+              Flexible(
+                child: SingleChildScrollView(
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 500),
+                    height: size.height,
+                    child: PageView.builder(
+                      controller: _pageController,
+                      scrollDirection: Axis.vertical,
+                      physics: const ScrollPhysics(),
+                      pageSnapping: false,
+                      itemCount: 10,
+                      itemBuilder: (ctx, index) {
+                        return categoryGrid(bloc, context, 'Jewellery');
+                      },
+                      onPageChanged: (val) {
+                        setState(() {
+                          selectedIndex = val;
+                          // _pageController.addListener(() {
+                          //   setState(() {
+                          //     atEdge = _pageController.offset.isFinite;
+                          //   });
+                          //   print(atEdge);
+                          // });
+                        });
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNav(1),

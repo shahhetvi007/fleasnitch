@@ -75,3 +75,23 @@ class SavedAddressEvent extends MainEvent {
 class ShopEvent extends MainEvent {
   ShopEvent();
 }
+
+class SupplierLoginEvent extends MainEvent {
+  SupplierLoginEvent();
+}
+
+class SupplierDetailsEvent extends MainEvent {
+  SupplierDetailsEvent();
+}
+
+class SupplierHomeEvent extends MainEvent {
+  SupplierHomeEvent();
+}
+
+class AddNewItemEvent extends MainEvent {
+  AddNewItemEvent();
+}
+
+class SupplierAccountEvent extends MainEvent {
+  SupplierAccountEvent();
+}

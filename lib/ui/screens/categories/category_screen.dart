@@ -26,7 +26,10 @@ class _CategoryScreenState extends BaseState<CategoryScreen> with BasicScreen {
   @override
   void initState() {
     rowCount = (itemCount / 3).ceil();
-
+    gridHeight = (rowCount * (deviceHeight * 0.086 + CATEGORY_TEXT_SIZE + 16)) +
+        APPBAR_FONT_SIZE +
+        VERTICAL_PADDING +
+        10;
     super.initState();
   }
 

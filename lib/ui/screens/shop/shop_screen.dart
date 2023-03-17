@@ -95,14 +95,11 @@ class _ShopScreenState extends BaseState<ShopScreen> with BasicScreen {
                     fontSize: HOME_TITLE_SIZE,
                     weight: FontWeight.w900,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL_PADDING),
-                    child: Column(
-                      children: [
-                        getSmallText('122', weight: FontWeight.w700, maxLines: 1),
-                        getSmallText(totalProducts, color: grey),
-                      ],
-                    ),
+                  Column(
+                    children: [
+                      getSmallText('122', weight: FontWeight.w700, maxLines: 1),
+                      getSmallText(totalProducts, color: grey),
+                    ],
                   ),
                   const SizedBox(height: VERTICAL_PADDING * 1.5),
                   GridView.builder(

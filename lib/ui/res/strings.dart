@@ -146,6 +146,7 @@ const String itemDetails = "Item Details";
 const String itemName = "Item Name";
 const String itemSizes = "Item Sizes";
 const String itemPrice = "Item Price";
+const String itemQuantity = "Item Quantity";
 const String tags = "Tags";
 const String hashtags = "Hashtags";
 const String category = "Category";

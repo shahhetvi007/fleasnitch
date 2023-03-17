@@ -55,6 +55,8 @@ class _SupplierAccountScreenState extends BaseState<SupplierAccountScreen>
                   'Hetvi Shah',
                   weight: FontWeight.w800,
                 ),
+                getSmallText('122', weight: FontWeight.w700, maxLines: 1),
+                getSmallText(totalProducts, color: grey),
                 // getSmallText(editProfile,
                 //     fontSize: CATEGORY_TEXT_SIZE,
                 //     weight: FontWeight.w600,
@@ -115,8 +117,8 @@ class _SupplierAccountScreenState extends BaseState<SupplierAccountScreen>
         ),
         (imagePicked != null)
             ? Container(
-                height: 60,
-                width: 60,
+                height: 100,
+                width: 100,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(

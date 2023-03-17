@@ -79,6 +79,7 @@ class _SupplierSellingScreenState extends BaseState<SupplierSellingScreen>
                       '156465635867',
                       IC_DRESS,
                       "Stylish Women Sandal Block Heel Heel Heel Heel Heel Heel ",
+                      "₹268",
                       "Delivered on 04 January, 2023");
                 },
                 separatorBuilder: (ctx, i) {
@@ -96,7 +97,7 @@ class _SupplierSellingScreenState extends BaseState<SupplierSellingScreen>
   }
 
   Widget soldOrderItem(String date, String orderID, String image, String itemDescription,
-      String deliveryDetail) {
+      String itemPrice, String deliveryDetail) {
     return Container(
       color: colorWhite,
       child: Column(
@@ -144,13 +145,13 @@ class _SupplierSellingScreenState extends BaseState<SupplierSellingScreen>
                               borderRadius: BorderRadius.circular(BORDER_RADIUS / 2),
                               border: Border.all(color: darkGrey),
                             ),
-                            padding: const EdgeInsets.all(VERTICAL_PADDING),
+                            padding: const EdgeInsets.all(VERTICAL_PADDING / 2),
                             child: Image.asset(image),
                           ),
                         ),
                         const SizedBox(width: HORIZONTAL_PADDING),
                         Expanded(
-                          flex: 8,
+                          flex: 7,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -181,6 +182,13 @@ class _SupplierSellingScreenState extends BaseState<SupplierSellingScreen>
                                     )
                                   ],
                                 ),
+                              ),
+                              const SizedBox(height: VERTICAL_PADDING / 2),
+                              getSmallText(
+                                itemPrice,
+                                color: darkGrey,
+                                maxLines: 1,
+                                fontSize: CATEGORY_TEXT_SIZE,
                               ),
                             ],
                           ),

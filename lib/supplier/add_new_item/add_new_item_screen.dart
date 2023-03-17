@@ -101,6 +101,14 @@ class _AddNewItemScreenState extends BaseState<AddNewItemScreen> with BasicScree
                 const SizedBox(height: VERTICAL_PADDING * 3),
                 commonTextFormField(
                   context: context,
+                  hintText: itemQuantity,
+                  labelText: itemQuantity,
+                  keyboardType: TextInputType.number,
+                  border: true,
+                ),
+                const SizedBox(height: VERTICAL_PADDING * 3),
+                commonTextFormField(
+                  context: context,
                   hintText: itemPrice,
                   labelText: itemPrice,
                   border: true,

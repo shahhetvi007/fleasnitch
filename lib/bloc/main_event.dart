@@ -95,3 +95,15 @@ class AddNewItemEvent extends MainEvent {
 class SupplierAccountEvent extends MainEvent {
   SupplierAccountEvent();
 }
+
+class SupplierCategoryEvent extends MainEvent {
+  SupplierCategoryEvent();
+}
+
+class SupplierNotificationEvent extends MainEvent {
+  SupplierNotificationEvent();
+}
+
+class SupplierSellingEvent extends MainEvent {
+  SupplierSellingEvent();
+}

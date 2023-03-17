@@ -25,8 +25,8 @@ mixin BasicScreen<Screen extends BaseStatefulWidget> on BaseState<Screen> {
 
   @override
   Widget build(BuildContext context) {
-    bloc = BlocProvider.of<MainBloc>(context);
     Globals.globalContext = context;
+    bloc = BlocProvider.of<MainBloc>(context);
     return Scaffold(
       backgroundColor: colorTransparent,
       resizeToAvoidBottomInset: false,

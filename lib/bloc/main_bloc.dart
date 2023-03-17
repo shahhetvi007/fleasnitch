@@ -27,6 +27,9 @@ enum MainStates {
   SupplierHome,
   AddNewItem,
   SupplierAccount,
+  SupplierCategory,
+  SupplierNotification,
+  SupplierSelling,
   LoggedLoading
 }
 
@@ -34,7 +37,7 @@ class MainBloc extends Bloc<MainEvent, MainStates> {
   MainBloc() : super(MainStates.SplashIn);
 
   init() {
-    add(SupplierHomeEvent());
+    add(SupplierAccountEvent());
   }
 
   @override
@@ -108,6 +111,15 @@ class MainBloc extends Bloc<MainEvent, MainStates> {
     } else if (event is SupplierAccountEvent) {
       yield MainStates.LoggedLoading;
       yield MainStates.SupplierAccount;
+    } else if (event is SupplierCategoryEvent) {
+      yield MainStates.LoggedLoading;
+      yield MainStates.SupplierCategory;
+    } else if (event is SupplierNotificationEvent) {
+      yield MainStates.LoggedLoading;
+      yield MainStates.SupplierNotification;
+    } else if (event is SupplierSellingEvent) {
+      yield MainStates.LoggedLoading;
+      yield MainStates.SupplierSelling;
     }
   }
 }

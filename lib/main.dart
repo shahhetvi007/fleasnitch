@@ -1,6 +1,7 @@
 import 'package:fleasnitch/bloc/main_bloc.dart';
 import 'package:fleasnitch/navigation/navigation_page.dart';
 import 'package:fleasnitch/ui/res/color_resources.dart';
+import 'package:fleasnitch/utils/common_widgets.dart';
 import 'package:fleasnitch/utils/shared_pref_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

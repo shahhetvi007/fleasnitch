@@ -51,7 +51,7 @@ class _SupplierHomeScreenState extends BaseState<SupplierHomeScreen> with BasicS
               separatorBuilder: (ctx, index) {
                 return const SizedBox(height: VERTICAL_PADDING * 1.5);
               },
-              itemCount: 4,
+              itemCount: 10,
             ),
           ),
           bottomNavigationBar: isKeyboardVisible ? null : SupplierBottomNav(0),

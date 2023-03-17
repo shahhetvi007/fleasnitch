@@ -35,6 +35,7 @@ const String addToCart = "Add to Cart";
 const String buyNow = "Buy Now";
 const String remove = "Remove";
 const String summary = "Summary";
+const String businessAccount = "Business Account";
 
 //cart item
 const String cart = "Cart";
@@ -99,6 +100,7 @@ const String editPhoto = "Edit Photo";
 const String searchByCustomerOrProduct = "Search by Customer, Product or Order ID";
 const String supplier = "Supplier";
 const String rateYourExperience = "Rate your experience";
+const String orderId = "Order Id";
 const String orderDetails = "Order Details";
 const String orderTracking = "Order Tracking";
 const String returnExchangeOrder = "Return / Exchange Order";

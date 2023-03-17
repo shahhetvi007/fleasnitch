@@ -1,5 +1,6 @@
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:easy_stepper/easy_stepper.dart';
+import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:fleasnitch/bloc/main_bloc.dart';
 import 'package:fleasnitch/ui/res/color_resources.dart';
 import 'package:fleasnitch/ui/res/dimen_resources.dart';
@@ -889,7 +890,15 @@ class _BottomNavState extends State<BottomNav> {
   }
 }
 
-Widget categoryGrid(MainBloc bloc, BuildContext context, String categoryName) {
+Widget categoryGrid(
+    MainBloc bloc, BuildContext context, String categoryName, int itemCount) {
+  int rowCount = (itemCount / 3).ceil();
+  double gridHeight = (rowCount * (deviceHeight * 0.086 + CATEGORY_TEXT_SIZE + 16)) +
+      APPBAR_FONT_SIZE +
+      VERTICAL_PADDING +
+      10;
+  ScrollController controller = ScrollController();
+
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -903,46 +912,54 @@ Widget categoryGrid(MainBloc bloc, BuildContext context, String categoryName) {
         ),
       ),
       Expanded(
-        child: GridView.builder(
-            itemCount: 30,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate:
-                const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-            itemBuilder: (ctx, index) {
-              return Column(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (ctx) => SubCategoryScreen()));
-                      bloc.add(SubCategoryEvent());
-                    },
-                    child: Card(
-                      shape: const CircleBorder(),
-                      elevation: 5,
-                      color: colorWhite,
-                      child: Container(
-                        height: deviceHeight * 0.086,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
-                        child: Image.asset(
-                          IC_DRESS,
-                          fit: BoxFit.cover,
+        child: SizedBox(
+          width: deviceWidth * 0.75,
+          height: gridHeight,
+          child: GridView.builder(
+              itemCount: itemCount,
+              shrinkWrap: true,
+              controller: controller,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate:
+                  const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+              itemBuilder: (ctx, index) {
+                return Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(builder: (ctx) => SubCategoryScreen()));
+                        bloc.add(SubCategoryEvent());
+                      },
+                      child: Card(
+                        shape: const CircleBorder(),
+                        elevation: 5,
+                        color: colorWhite,
+                        child: Container(
+                          height: deviceHeight * 0.086,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: Image.asset(
+                            IC_DRESS,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
+                      onVerticalDragEnd: (scaleEnd) {
+                        print('end');
+                      },
                     ),
-                  ),
-                  getSmallText(
-                    dress,
-                    color: grey,
-                    weight: FontWeight.w500,
-                    fontSize: CATEGORY_TEXT_SIZE,
-                  )
-                ],
-              );
-            }),
+                    getSmallText(
+                      dress,
+                      color: grey,
+                      weight: FontWeight.w500,
+                      fontSize: CATEGORY_TEXT_SIZE,
+                    )
+                  ],
+                );
+              }),
+        ),
       ),
     ],
   );
@@ -1036,15 +1053,15 @@ class _SupplierBottomNavState extends State<SupplierBottomNav> {
         break;
 
       case 1:
-        bloc.add(SupplierHomeEvent());
+        bloc.add(SupplierCategoryEvent());
         break;
 
       case 2:
-        bloc.add(NotificationEvent());
+        bloc.add(SupplierNotificationEvent());
         break;
 
       case 3:
-        bloc.add(SupplierHomeEvent());
+        bloc.add(SupplierSellingEvent());
         break;
 
       case 4:

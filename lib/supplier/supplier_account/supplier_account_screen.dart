@@ -24,11 +24,12 @@ class _SupplierAccountScreenState extends BaseState<SupplierAccountScreen>
       backgroundColor: itemBackground,
       appBar: AppBar(
         title: getTitle(
-          account,
+          businessAccount,
           fontSize: APPBAR_FONT_SIZE,
           color: Theme.of(context).secondaryHeaderColor,
           weight: FontWeight.w700,
         ),
+        centerTitle: true,
         bottom: const PreferredSize(
           preferredSize: Size(0, 0),
           child: Divider(
@@ -42,26 +43,22 @@ class _SupplierAccountScreenState extends BaseState<SupplierAccountScreen>
         children: [
           Container(
             padding: const EdgeInsets.symmetric(
-                vertical: VERTICAL_PADDING, horizontal: HORIZONTAL_PADDING),
+                vertical: VERTICAL_PADDING * 1.5, horizontal: HORIZONTAL_PADDING),
             width: double.infinity,
             color: colorWhite,
-            child: Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 addProfile(),
-                const SizedBox(width: HORIZONTAL_PADDING),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    getTitle(
-                      'Hetvi Shah',
-                      weight: FontWeight.w800,
-                    ),
-                    getSmallText(editProfile,
-                        fontSize: CATEGORY_TEXT_SIZE,
-                        weight: FontWeight.w600,
-                        color: secondaryDarkColor),
-                  ],
+                const SizedBox(height: VERTICAL_PADDING),
+                getTitle(
+                  'Hetvi Shah',
+                  weight: FontWeight.w800,
                 ),
+                // getSmallText(editProfile,
+                //     fontSize: CATEGORY_TEXT_SIZE,
+                //     weight: FontWeight.w600,
+                //     color: secondaryDarkColor),
               ],
             ),
           ),
@@ -109,8 +106,8 @@ class _SupplierAccountScreenState extends BaseState<SupplierAccountScreen>
       onTap: chooseImageSourceType,
       child: Stack(children: [
         Container(
-          height: 60,
-          width: 60,
+          height: 100,
+          width: 100,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: secondaryColor.withOpacity(0.2),
@@ -137,7 +134,7 @@ class _SupplierAccountScreenState extends BaseState<SupplierAccountScreen>
                 child: Icon(
                   Icons.person_add_alt_outlined,
                   color: secondaryDarkColor,
-                  size: 24,
+                  size: 32,
                 ),
               )
       ]),

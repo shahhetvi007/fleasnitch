@@ -156,9 +156,38 @@ class _AddNewItemScreenState extends BaseState<AddNewItemScreen> with BasicScree
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3, crossAxisSpacing: 4, mainAxisSpacing: 4),
                       itemBuilder: (ctx, index) {
-                        return Image.file(
-                          images[index],
-                          fit: BoxFit.cover,
+                        return Stack(
+                          children: [
+                            SizedBox(
+                              width: double.infinity,
+                              child: Image.file(
+                                images[index],
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            Positioned(
+                              right: 0,
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    images.removeAt(index);
+                                  });
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: colorBlack.withOpacity(0.5),
+                                  ),
+                                  child: const Icon(
+                                    Icons.close,
+                                    size: 18,
+                                    color: colorWhite,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         );
                       }),
                 ElevatedButton(

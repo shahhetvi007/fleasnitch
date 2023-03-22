@@ -1,10 +1,17 @@
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fleasnitch/bloc/main_bloc.dart';
+import 'package:fleasnitch/helper/auth_helper.dart';
 import 'package:fleasnitch/ui/res/dimen_resources.dart';
 import 'package:fleasnitch/ui/res/image_resources.dart';
 import 'package:fleasnitch/ui/res/strings.dart';
 import 'package:fleasnitch/utils/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../../base/base_screen.dart';
 import '../../res/color_resources.dart';
@@ -17,6 +24,10 @@ class LoginScreen extends BaseStatefulWidget {
 class _LoginScreenState extends BaseState<LoginScreen> with BasicScreen {
   bool isSignInDialogShown = false;
   bool isSignUp = false;
+  // final FirebaseAuth auth = FirebaseAuth.instance;
+  // UserCredential? user;
+  bool isSigningIn = false;
+
   @override
   Widget buildBody(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
@@ -57,6 +68,28 @@ class _LoginScreenState extends BaseState<LoginScreen> with BasicScreen {
             ),
           ),
         ),
+        if (isSigningIn)
+          Center(
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.7,
+              padding: const EdgeInsets.all(HORIZONTAL_PADDING),
+              decoration: BoxDecoration(
+                color: colorWhite,
+                borderRadius: BorderRadius.circular(BORDER_RADIUS),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const CircularProgressIndicator(),
+                  const SizedBox(width: HORIZONTAL_PADDING),
+                  getSmallText("Signing In",
+                      weight: FontWeight.w800,
+                      fontSize: HOME_TITLE_SIZE,
+                      color: primaryColor),
+                ],
+              ),
+            ),
+          ),
         AnimatedPositioned(
           bottom: isSignInDialogShown ? -40 : 0,
           duration: const Duration(milliseconds: 240),
@@ -171,6 +204,10 @@ class _LoginScreenState extends BaseState<LoginScreen> with BasicScreen {
                           // const SizedBox(height: VERTICAL_PADDING * 2),
                           dontHaveAccountText(context, setState),
                           // Spacer(),
+                          if (isSigningIn)
+                            const Center(
+                              child: CircularProgressIndicator(),
+                            ),
                         ],
                       ),
                       Positioned(
@@ -218,28 +255,56 @@ class _LoginScreenState extends BaseState<LoginScreen> with BasicScreen {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Container(
-          padding: const EdgeInsets.all(VERTICAL_PADDING),
-          child: Image.asset(
-            GOOGLE_ICON,
-            width: ICON_SIZE,
-            height: ICON_SIZE,
-          ),
-          decoration: BoxDecoration(
-            border: Border.all(color: colorBlack),
-            borderRadius: BorderRadius.circular(BORDER_RADIUS),
+        GestureDetector(
+          onTap: () async {
+            setState(() {
+              isSigningIn = true;
+            });
+            await AuthHelper().googleSignIn(context);
+            if (AuthHelper().user != null) {
+              bloc.add(HomeScreenEvent());
+            }
+            setState(() {
+              isSigningIn = false;
+            });
+          },
+          child: Container(
+            padding: const EdgeInsets.all(VERTICAL_PADDING),
+            child: Image.asset(
+              GOOGLE_ICON,
+              width: ICON_SIZE,
+              height: ICON_SIZE,
+            ),
+            decoration: BoxDecoration(
+              border: Border.all(color: colorBlack),
+              borderRadius: BorderRadius.circular(BORDER_RADIUS),
+            ),
           ),
         ),
-        Container(
-          padding: const EdgeInsets.all(VERTICAL_PADDING),
-          child: Image.asset(
-            PHONE_ICON,
-            width: ICON_SIZE,
-            height: ICON_SIZE,
-          ),
-          decoration: BoxDecoration(
-            border: Border.all(color: colorBlack),
-            borderRadius: BorderRadius.circular(BORDER_RADIUS),
+        GestureDetector(
+          onTap: () async {
+            setState(() {
+              isSigningIn = true;
+            });
+            await AuthHelper().appleSignIn(context);
+            if (AuthHelper().user != null) {
+              bloc.add(HomeScreenEvent());
+            }
+            setState(() {
+              isSigningIn = false;
+            });
+          },
+          child: Container(
+            padding: const EdgeInsets.all(VERTICAL_PADDING),
+            child: Image.asset(
+              APPLE_ICON,
+              width: ICON_SIZE,
+              height: ICON_SIZE,
+            ),
+            decoration: BoxDecoration(
+              border: Border.all(color: colorBlack),
+              borderRadius: BorderRadius.circular(BORDER_RADIUS),
+            ),
           ),
         )
       ],

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>40733796832-j92dnam04u22vffeat1pohvr623meqth.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.40733796832-j92dnam04u22vffeat1pohvr623meqth</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>40733796832-mkuftlmt11tnb8n6t6k6gkhvf8sjo23v.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAShyQyyPctMuqtMrIc8LjoY5uoav6dcyk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>40733796832</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.fleasnitch</string>
+	<key>PROJECT_ID</key>
+	<string>fleasnitch</string>
+	<key>STORAGE_BUCKET</key>
+	<string>fleasnitch.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:40733796832:ios:6013bf81dfe77b7ca3a385</string>
+</dict>
+</plist>

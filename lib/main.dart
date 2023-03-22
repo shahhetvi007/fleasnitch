@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:fleasnitch/bloc/main_bloc.dart';
 import 'package:fleasnitch/navigation/navigation_page.dart';
 import 'package:fleasnitch/ui/res/color_resources.dart';
@@ -11,6 +12,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // SharedPreference initialization
   await SharedPrefHelper.createInstance();
+  await Firebase.initializeApp();
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider<MainBloc>(

@@ -1,3 +1,4 @@
+import 'package:fleasnitch/helper/auth_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,7 +38,7 @@ class MainBloc extends Bloc<MainEvent, MainStates> {
   MainBloc() : super(MainStates.SplashIn);
 
   init() {
-    add(SupplierAccountEvent());
+    add(AuthHelper().user != null ? HomeScreenEvent() : LoginEvent());
   }
 
   @override

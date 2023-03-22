@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "40733796832",
+    "project_id": "fleasnitch",
+    "storage_bucket": "fleasnitch.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40733796832:android:c4f48d6a11747018a3a385",
+        "android_client_info": {
+          "package_name": "com.example.fleasnitch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "40733796832-mkuftlmt11tnb8n6t6k6gkhvf8sjo23v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fleasnitch",
+            "certificate_hash": "c00f9669f19fe7a8558e19456c6b5d55ed61aea2"
+          }
+        },
+        {
+          "client_id": "40733796832-mf6fc73arc13jq4o4oo65d17kj1tdmac.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDy8D2DX_2QWzGbb7MKUOKxAV2bp_2hN70"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "40733796832-mf6fc73arc13jq4o4oo65d17kj1tdmac.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

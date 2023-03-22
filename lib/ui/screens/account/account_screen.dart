@@ -1,12 +1,15 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fleasnitch/base/base_screen.dart';
 import 'package:fleasnitch/bloc/main_bloc.dart';
+import 'package:fleasnitch/helper/auth_helper.dart';
 import 'package:fleasnitch/ui/res/color_resources.dart';
 import 'package:fleasnitch/ui/res/dimen_resources.dart';
 import 'package:fleasnitch/ui/res/strings.dart';
 import 'package:fleasnitch/utils/common_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -17,6 +20,7 @@ class AccountScreen extends BaseStatefulWidget {
 
 class _AccountScreenState extends BaseState<AccountScreen> with BasicScreen {
   File? imagePicked;
+  bool isSigningOut = false;
   @override
   Widget buildBody(BuildContext context) {
     return Scaffold(
@@ -44,89 +48,94 @@ class _AccountScreenState extends BaseState<AccountScreen> with BasicScreen {
               icon: const Icon(Icons.shopping_cart_outlined)),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(
-                vertical: VERTICAL_PADDING, horizontal: HORIZONTAL_PADDING),
-            width: double.infinity,
-            color: colorWhite,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+      body: isSigningOut
+          ? const Center(child: CircularProgressIndicator())
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                addProfile(),
-                const SizedBox(height: VERTICAL_PADDING),
-                getTitle(
-                  'Hetvi Shah',
-                  weight: FontWeight.w800,
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: VERTICAL_PADDING, horizontal: HORIZONTAL_PADDING),
+                  width: double.infinity,
+                  color: colorWhite,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      addProfile(),
+                      const SizedBox(height: VERTICAL_PADDING),
+                      getTitle(
+                        AuthHelper().user.displayName,
+                        weight: FontWeight.w800,
+                      ),
+                      getSmallText(editProfile,
+                          fontSize: CATEGORY_TEXT_SIZE,
+                          weight: FontWeight.w600,
+                          color: secondaryDarkColor),
+                    ],
+                  ),
                 ),
-                getSmallText(editProfile,
-                    fontSize: CATEGORY_TEXT_SIZE,
-                    weight: FontWeight.w600,
-                    color: secondaryDarkColor),
+                const SizedBox(height: VERTICAL_PADDING),
+                ListTile(
+                  leading: const Icon(
+                    Icons.save_as,
+                    color: secondaryDarkColor,
+                  ),
+                  title: getSmallText(savedAddresses, weight: FontWeight.w600),
+                  tileColor: colorWhite,
+                  onTap: () {
+                    bloc.add(SavedAddressEvent());
+                  },
+                ),
+                const SizedBox(height: VERTICAL_PADDING / 2),
+                ListTile(
+                  leading: const Icon(
+                    Icons.add_shopping_cart_outlined,
+                    color: secondaryDarkColor,
+                  ),
+                  title: getSmallText(becomeASupplier, weight: FontWeight.w600),
+                  tileColor: colorWhite,
+                  onTap: () {
+                    bloc.add(SupplierLoginEvent());
+                  },
+                ),
+                const SizedBox(height: VERTICAL_PADDING / 2),
+                ListTile(
+                  leading: const Icon(
+                    Icons.favorite_border,
+                    color: secondaryDarkColor,
+                  ),
+                  onTap: () {
+                    bloc.add(FavoritesEvent());
+                  },
+                  title: getSmallText(yourWishlist, weight: FontWeight.w600),
+                  tileColor: colorWhite,
+                ),
+                const SizedBox(height: VERTICAL_PADDING / 2),
+                ListTile(
+                  leading: const Icon(
+                    Icons.shopping_bag_outlined,
+                    color: secondaryDarkColor,
+                  ),
+                  title: getSmallText(yourOrders, weight: FontWeight.w600),
+                  tileColor: colorWhite,
+                  onTap: () {
+                    bloc.add(OrdersEvent());
+                  },
+                ),
+                const SizedBox(height: VERTICAL_PADDING / 2),
+                ListTile(
+                  leading: const Icon(
+                    Icons.logout,
+                    color: secondaryDarkColor,
+                  ),
+                  title: getSmallText(logout, weight: FontWeight.w600),
+                  tileColor: colorWhite,
+                  onTap: () {
+                    logoutDialog();
+                  },
+                ),
               ],
             ),
-          ),
-          const SizedBox(height: VERTICAL_PADDING),
-          ListTile(
-            leading: const Icon(
-              Icons.save_as,
-              color: secondaryDarkColor,
-            ),
-            title: getSmallText(savedAddresses, weight: FontWeight.w600),
-            tileColor: colorWhite,
-            onTap: () {
-              bloc.add(SavedAddressEvent());
-            },
-          ),
-          const SizedBox(height: VERTICAL_PADDING / 2),
-          ListTile(
-            leading: const Icon(
-              Icons.add_shopping_cart_outlined,
-              color: secondaryDarkColor,
-            ),
-            title: getSmallText(becomeASupplier, weight: FontWeight.w600),
-            tileColor: colorWhite,
-            onTap: () {
-              bloc.add(SupplierLoginEvent());
-            },
-          ),
-          const SizedBox(height: VERTICAL_PADDING / 2),
-          ListTile(
-            leading: const Icon(
-              Icons.favorite_border,
-              color: secondaryDarkColor,
-            ),
-            onTap: () {
-              bloc.add(FavoritesEvent());
-            },
-            title: getSmallText(yourWishlist, weight: FontWeight.w600),
-            tileColor: colorWhite,
-          ),
-          const SizedBox(height: VERTICAL_PADDING / 2),
-          ListTile(
-            leading: const Icon(
-              Icons.shopping_bag_outlined,
-              color: secondaryDarkColor,
-            ),
-            title: getSmallText(yourOrders, weight: FontWeight.w600),
-            tileColor: colorWhite,
-            onTap: () {
-              bloc.add(OrdersEvent());
-            },
-          ),
-          const SizedBox(height: VERTICAL_PADDING / 2),
-          ListTile(
-            leading: const Icon(
-              Icons.logout,
-              color: secondaryDarkColor,
-            ),
-            title: getSmallText(logout, weight: FontWeight.w600),
-            tileColor: colorWhite,
-          ),
-        ],
-      ),
       bottomNavigationBar: BottomNav(4),
     );
   }
@@ -273,5 +282,36 @@ class _AccountScreenState extends BaseState<AccountScreen> with BasicScreen {
       print('No image selected');
       Navigator.pop(context);
     }
+  }
+
+  logoutDialog() {
+    return showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: getTitle(logout, weight: FontWeight.w800),
+            content: getSmallText(logoutText),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: getSmallText(no)),
+              TextButton(
+                  onPressed: () async {
+                    setState(() {
+                      isSigningOut = true;
+                    });
+                    await AuthHelper().signOut(context);
+                    bloc.add(LoginEvent());
+                    setState(() {
+                      isSigningOut = false;
+                    });
+                  },
+                  child: getSmallText(yes,
+                      color: secondaryDarkColor, weight: FontWeight.w800)),
+            ],
+          );
+        });
   }
 }

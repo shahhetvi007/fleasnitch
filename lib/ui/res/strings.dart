@@ -155,3 +155,8 @@ const String addItem = "Add Item";
 
 const String yourSelling = "Your Selling";
 const String savedAddress = "Saved Address";
+
+//logout
+const String logoutText = "Are you sure you want to logout?";
+const String yes = "Yes";
+const String no = "No";

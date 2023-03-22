@@ -51,6 +51,10 @@ dependencies:
   like_button: ^2.0.5
   image_picker: ^0.8.6+4
   permission_handler: ^10.2.0
+  google_sign_in: ^6.0.2
+  firebase_core: ^2.8.0
+  firebase_auth: ^4.3.0
+  sign_in_with_apple: ^4.3.0
 
 dev_dependencies:
   flutter_test:

@@ -95,6 +95,7 @@ const String camera = "Camera";
 const String gallery = "Gallery";
 const String addProfilePhoto = "Add Profile Photo";
 const String editPhoto = "Edit Photo";
+const String getReward = 'Get Reward';
 
 //orders
 const String searchByCustomerOrProduct = "Search by Customer, Product or Order ID";

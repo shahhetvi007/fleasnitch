@@ -38,7 +38,8 @@ class MainBloc extends Bloc<MainEvent, MainStates> {
   MainBloc() : super(MainStates.SplashIn);
 
   init() {
-    add(AuthHelper().user != null ? HomeScreenEvent() : LoginEvent());
+    // add(AuthHelper().user != null ? HomeScreenEvent() : LoginEvent());
+    add(HomeScreenEvent());
   }
 
   @override

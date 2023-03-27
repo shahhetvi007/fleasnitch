@@ -1,12 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fleasnitch/base/base_screen.dart';
 import 'package:fleasnitch/bloc/main_bloc.dart';
+import 'package:fleasnitch/helper/ad_helper.dart';
 import 'package:fleasnitch/ui/res/color_resources.dart';
 import 'package:fleasnitch/ui/res/image_resources.dart';
 import 'package:fleasnitch/ui/res/strings.dart';
 import 'package:fleasnitch/utils/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../res/dimen_resources.dart';
@@ -19,6 +21,55 @@ class HomeScreen extends BaseStatefulWidget {
 class _HomeScreenState extends BaseState<HomeScreen> with BasicScreen {
   int _carouselActiveIndex = 0;
   List bannerList = [BANNER2, BANNER1, BANNER3, BANNER11, BANNER12, BANNER13];
+  InterstitialAd? _interstitialAd;
+  int _numInterstitialLoadAttempts = 0;
+  int maxFailedLoadAttempts = 3;
+
+  void _createInterstitialAd() {
+    InterstitialAd.load(
+        adUnitId: AdHelper.interstitialAdUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(onAdLoaded: (ad) {
+          print('$ad loaded');
+          _interstitialAd = ad;
+          _numInterstitialLoadAttempts = 0;
+          _interstitialAd!.setImmersiveMode(true);
+        }, onAdFailedToLoad: (err) {
+          print('InterstitialAd failed to load: $err');
+          _numInterstitialLoadAttempts += 1;
+          _interstitialAd = null;
+          if (_numInterstitialLoadAttempts < maxFailedLoadAttempts) {
+            _createInterstitialAd();
+          }
+        }));
+  }
+
+  void _showInterstitialAd() {
+    if (_interstitialAd == null) {
+      print('Warning: attempt to show interstitial ad before loaded');
+      return;
+    }
+    _interstitialAd!.fullScreenContentCallback =
+        FullScreenContentCallback(onAdShowedFullScreenContent: (ad) {
+      print('$ad onAdShowedFullScreenContent');
+    }, onAdDismissedFullScreenContent: (ad) {
+      print('$ad onAdDismissedFullScreenContent');
+      ad.dispose();
+      bloc.add(CartEvent());
+    }, onAdFailedToShowFullScreenContent: (ad, err) {
+      print('$ad onAdFailedToShowFullScreenContent $err');
+      ad.dispose();
+      _createInterstitialAd();
+    });
+    _interstitialAd!.show();
+    _interstitialAd = null;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _createInterstitialAd();
+  }
 
   @override
   Widget buildBody(BuildContext context) {
@@ -44,7 +95,8 @@ class _HomeScreenState extends BaseState<HomeScreen> with BasicScreen {
                   icon: const Icon(Icons.favorite_border)),
               IconButton(
                   onPressed: () {
-                    bloc.add(CartEvent());
+                    // bloc.add(CartEvent());
+                    _showInterstitialAd();
                   },
                   icon: const Icon(Icons.shopping_cart_outlined)),
             ],

@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fleasnitch/base/base_screen.dart';
 import 'package:fleasnitch/bloc/main_bloc.dart';
+import 'package:fleasnitch/helper/ad_helper.dart';
 import 'package:fleasnitch/helper/auth_helper.dart';
 import 'package:fleasnitch/ui/res/color_resources.dart';
 import 'package:fleasnitch/ui/res/dimen_resources.dart';
 import 'package:fleasnitch/ui/res/strings.dart';
 import 'package:fleasnitch/utils/common_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -21,6 +23,88 @@ class AccountScreen extends BaseStatefulWidget {
 class _AccountScreenState extends BaseState<AccountScreen> with BasicScreen {
   File? imagePicked;
   bool isSigningOut = false;
+
+  late BannerAd _bannerAd;
+  bool _isBannerAdReady = false;
+
+  RewardedAd? _rewardedAd;
+  int _numRewardedLoadAttempts = 0;
+  int maxFailedLoadAttempts = 3;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadBannerAd();
+    _createRewardedAd();
+  }
+
+  void _loadBannerAd() {
+    _bannerAd = BannerAd(
+      size: AdSize.banner,
+      adUnitId: AdHelper.bannerAdUnitId,
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          setState(() {
+            _isBannerAdReady = true;
+          });
+        },
+        onAdFailedToLoad: (ad, err) {
+          setState(() {
+            _isBannerAdReady = false;
+          });
+          ad.dispose();
+        },
+      ),
+      request: const AdRequest(),
+    );
+    _bannerAd.load();
+  }
+
+  void _createRewardedAd() {
+    RewardedAd.load(
+        adUnitId: AdHelper.rewardedAdUnitId,
+        request: AdRequest(),
+        rewardedAdLoadCallback: RewardedAdLoadCallback(
+          onAdLoaded: (ad) {
+            print('$ad loaded');
+            _rewardedAd = ad;
+            _numRewardedLoadAttempts = 0;
+          },
+          onAdFailedToLoad: (err) {
+            print('Rewarded failed to load $err');
+            _rewardedAd = null;
+            _numRewardedLoadAttempts += 1;
+            if (_numRewardedLoadAttempts < maxFailedLoadAttempts) {
+              _createRewardedAd();
+            }
+          },
+        ));
+  }
+
+  void _showRewardedAd() {
+    if (_rewardedAd == null) {
+      print('Warning: attempt to show rewarded ad before loaded');
+      return;
+    }
+    _rewardedAd!.fullScreenContentCallback =
+        FullScreenContentCallback(onAdShowedFullScreenContent: (ad) {
+      print('$ad onAdShowedFullScreenContent');
+    }, onAdDismissedFullScreenContent: (ad) {
+      print('$ad onAdDismissedFullScreenContent');
+      ad.dispose();
+      _createRewardedAd();
+    }, onAdFailedToShowFullScreenContent: (ad, err) {
+      print('$ad onAdFailedToShowFullScreenContent $err');
+      ad.dispose();
+      _createRewardedAd();
+    });
+    _rewardedAd!.setImmersiveMode(true);
+    _rewardedAd!.show(onUserEarnedReward: (ad, reward) {
+      print('Reward earned $reward');
+    });
+    _rewardedAd = null;
+  }
+
   @override
   Widget buildBody(BuildContext context) {
     return Scaffold(
@@ -65,6 +149,7 @@ class _AccountScreenState extends BaseState<AccountScreen> with BasicScreen {
                       const SizedBox(height: VERTICAL_PADDING),
                       getTitle(
                         AuthHelper().user.displayName,
+                        // "",
                         weight: FontWeight.w800,
                       ),
                       getSmallText(editProfile,
@@ -125,6 +210,19 @@ class _AccountScreenState extends BaseState<AccountScreen> with BasicScreen {
                 const SizedBox(height: VERTICAL_PADDING / 2),
                 ListTile(
                   leading: const Icon(
+                    Icons.monetization_on,
+                    color: secondaryDarkColor,
+                  ),
+                  title: getSmallText(getReward, weight: FontWeight.w600),
+                  tileColor: colorWhite,
+                  onTap: () {
+                    // bloc.add(OrdersEvent());
+                    _showRewardedAd();
+                  },
+                ),
+                const SizedBox(height: VERTICAL_PADDING / 2),
+                ListTile(
+                  leading: const Icon(
                     Icons.logout,
                     color: secondaryDarkColor,
                   ),
@@ -134,6 +232,19 @@ class _AccountScreenState extends BaseState<AccountScreen> with BasicScreen {
                     logoutDialog();
                   },
                 ),
+                if (_isBannerAdReady)
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        height: _bannerAd.size.height.toDouble(),
+                        width: _bannerAd.size.width.toDouble(),
+                        child: AdWidget(
+                          ad: _bannerAd,
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
       bottomNavigationBar: BottomNav(4),
